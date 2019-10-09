@@ -12,7 +12,7 @@
 
 ## 수정 숙지사항
 
-- 클래스 설계 초안 : [Link](https://docs.google.com/spreadsheets/d/1PVZchS14VfmCkylUdj8NwkVeO3vs1CFWEiR1zr4sDdg/edit#gid=415600084)
+- 클래스 설계는 <b>[문서](https://docs.google.com/spreadsheets/d/1PVZchS14VfmCkylUdj8NwkVeO3vs1CFWEiR1zr4sDdg/edit#gid=415600084)</b>를 참조
 
 - 코드를 작성하기 전 위 설계안을 한번씩 확인해주시길 바랍니다. 작업 시에도 가능하면 설계 보고서를 먼저 업데이트 후 코드를 작성해주세요. 처음에는 불필요하고 느려보여도 결과적으로는 더 빠를 가능성이 높고, 팀원이 코드를 해독하기 쉬워집니다.
 
