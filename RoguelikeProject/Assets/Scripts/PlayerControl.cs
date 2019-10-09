@@ -8,7 +8,6 @@ public class PlayerControl : MonoBehaviour
     public static int knowHP; // 4로 시작하는 이유 : 5부터 하면 0이 되었을때 끝나는데 그러면 초기값이 0이라서 GameManger에서 Invoke할때 잘안됨.
     public double invincible;
     public GameObject makeBullet;
-
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Item")
@@ -18,6 +17,8 @@ public class PlayerControl : MonoBehaviour
                 life++;
         }
     }
+
+
 
     void OnCollisionStay2D(Collision2D col)
     {
@@ -56,27 +57,26 @@ public class PlayerControl : MonoBehaviour
         horizontal = (int)(Input.GetAxisRaw("Horizontal"));
         vertical = (int)(Input.GetAxisRaw("Vertical"));
         GetComponent<Rigidbody2D>().AddForce(new Vector2(horizontal, vertical) * .5f, ForceMode2D.Impulse);
-        
+
         if (Input.GetMouseButtonDown(0))
         {
-            //마우스 좌표 얻음
+            //마우스 위치 받아옴
             Vector3 mousePosition = Input.mousePosition;
             mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
             Vector2 direction = new Vector2(
             mousePosition.x - transform.position.x,
             mousePosition.y - transform.position.y);
 
-            direction.Normalize();//정규화
-
+            direction.Normalize();
             //총알 생성 위치는 player부터 마우스방향으로 1만큼 떨어진 위치
             Vector3 pos = transform.position;
             pos.x += direction.x;
             pos.y += direction.y;
-
             //총알 복사해서 생성
             GameObject ins = Instantiate(makeBullet, pos, transform.rotation) as GameObject;
 
-            ins.GetComponent<Rigidbody2D>().AddForce(direction * 1000.0f); // 총알을 direction방향으로 1000만큼의 힘으로 던진다.
+            ins.GetComponent<Rigidbody2D>().AddForce(direction * 300.0f);
         }
     }
 }
