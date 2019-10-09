@@ -28,4 +28,14 @@ public class Unit : MonoBehaviour
         //데미지가 있다면 데미지도 받습니다.
         currentHP -= strike.attackType.damage;
     }
+
+    public virtual void Destroy()
+    {
+        if (currentHP <= 0)
+        {
+            //일단은 HP가 0이 되면 오브젝트를 파괴하도록 했습니다.
+            //플레이어 등의 경우 단순 오브젝트 파괴는 문제가 될 수 있으므로 각 유닛별 다른 처리가 필요할 것입니다.
+            Destroy(gameObject);
+        }
+    }
 }
