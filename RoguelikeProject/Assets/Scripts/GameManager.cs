@@ -17,9 +17,10 @@ public class GameManager : MonoBehaviour
     public GameObject wall;
 
     public GameObject SpawnedPlayer;
-    public GameObject SpawnedEnemy;
-    public GameObject SpawnedRandEnemy;
-    public GameObject SpawnedItem;
+    public GameObject[] SpawnedEnemy = new GameObject[4];
+    public GameObject[] SpawnedRandEnemy = new GameObject[4];
+    public GameObject SpawnedItem1;
+    public GameObject SpawnedItem2;
 
     public double density;
     public int smoothness;
@@ -33,8 +34,9 @@ public class GameManager : MonoBehaviour
         InitGame();
         AstarPath.active.Scan(); // 이거를 해야 벽하고 부딪히네요
     }
-	void InitGame() {
-		SetupScene();
+    void InitGame()
+    {
+        BoardSetup();
 
         levelImage = GameObject.Find("LevelImage");
 
@@ -44,7 +46,7 @@ public class GameManager : MonoBehaviour
 
         SpawnedPlayer.SetActive(true);
     }
-    // Update is called once per frame
+
     void Update()
     {
         if (PlayerControl.knowHP < 0)
@@ -82,6 +84,9 @@ public class GameManager : MonoBehaviour
         }
 
         map = new int[width, height];
+        ArrayList listX = new ArrayList();
+        ArrayList listY = new ArrayList();
+
         RandomFillMap();
         for (int i = 0; i < smoothness; ++i)
         {
@@ -99,40 +104,50 @@ public class GameManager : MonoBehaviour
                     GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
                     instance.transform.SetParent(boardHolder);
                 }
+                else
+                {
+                    listX.Add(x);
+                    listY.Add(y);
+                }
             }
         }
 
-        while (true)
+        // 플레이어, 적, 아이템 위치 결정.
+        int index = Random.Range(0, listX.Count);
+        SpawnedPlayer.transform.position = new Vector3((int)listX[index], (int)listY[index], -10);
+        listX.RemoveAt(index);
+        listY.RemoveAt(index);
+
+        for (int i = 0; i < 4; i++)
         {
-            int playerX = Random.Range(1, width - 1);
-            int playerY = Random.Range(1, height - 1);
-            int enemyX = Random.Range(1, width - 1);
-            int enemyY = Random.Range(1, height - 1);
-            int enemyRandX = Random.Range(1, width - 1);
-            int enemyRandY = Random.Range(1, height - 1);
-            int item1X = Random.Range(1, width - 1);
-            int item1Y = Random.Range(1, height - 1);
-            int item2X = Random.Range(1, width - 1);
-            int item2Y = Random.Range(1, height - 1);
-            int item3X = Random.Range(1, width - 1);
-            int item3Y = Random.Range(1, height - 1);
+            index = Random.Range(0, listX.Count);
+            SpawnedEnemy[i].transform.position = new Vector3((int)listX[index], (int)listY[index], -10);
+            listX.RemoveAt(index);
+            listY.RemoveAt(index);
 
-            if (map[playerX, playerY] == 0 && map[enemyX, enemyY] == 0 && map[enemyRandX, enemyRandY] == 0 && map[item1X, item1Y] == 0 && map[item2X, item2Y] == 0 && map[item3X, item3Y] == 0)
-            {
-                SpawnedPlayer.transform.position = new Vector3(playerX, playerY, -10);
-                SpawnedEnemy.transform.position = new Vector3(enemyX, enemyY, -10);
-                SpawnedRandEnemy.transform.position = new Vector3(enemyRandX, enemyRandY, -10);
-                GameObject item1 = Instantiate(SpawnedItem, new Vector3(item1X, item1Y, -10), Quaternion.identity) as GameObject;
-                GameObject item2 = Instantiate(SpawnedItem, new Vector3(item2X, item2Y, -10), Quaternion.identity) as GameObject;
-                GameObject item3 = Instantiate(SpawnedItem, new Vector3(item3X, item3Y, -10), Quaternion.identity) as GameObject;
-                break;
-            }
+            index = Random.Range(0, listX.Count);
+            SpawnedRandEnemy[i].transform.position = new Vector3((int)listX[index], (int)listY[index], -10);
+            listX.RemoveAt(index);
+            listY.RemoveAt(index);
         }
 
-    }
-    public void SetupScene()
-    {
-        BoardSetup();
+        GameObject[] healtem = new GameObject[10];
+        for (int i = 0; i < 10; i++)
+        {
+            index = Random.Range(0, listX.Count);
+            healtem[i] = Instantiate(SpawnedItem1, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
+            listX.RemoveAt(index);
+            listY.RemoveAt(index);
+        }
+
+        GameObject[] tutem = new GameObject[5];
+        for (int i = 0; i < 5; i++)
+        {
+            index = Random.Range(0, listX.Count);
+            tutem[i] = Instantiate(SpawnedItem2, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
+            listX.RemoveAt(index);
+            listY.RemoveAt(index);
+        }
     }
 
     void RandomFillMap()

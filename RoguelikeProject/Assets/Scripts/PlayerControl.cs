@@ -11,11 +11,17 @@ public class PlayerControl : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Item")
+        if (col.gameObject.name == "item(Clone)") // 이름으로 가져옴
         {
             Destroy(col.gameObject);
-            if (life < 4)
+            if (life < 4) // 4보다 작을때만 추가(안그러면 index 범위 벗어남)
                 life++;
+        }
+        if (col.gameObject.name == "tumang(Clone)") // 투명망토
+        {
+            Destroy(col.gameObject);
+            GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 30); /// 투명해짐
+            invincible = 5; // 무적시간
         }
     }
 
@@ -28,7 +34,7 @@ public class PlayerControl : MonoBehaviour
                 invincible += 1.0;
                 life--;
                 Vector2 moveR = transform.position - col.transform.position;
-                GetComponent<Rigidbody2D>().AddForce(moveR * 10, ForceMode2D.Impulse);
+                GetComponent<Rigidbody2D>().AddForce(moveR * 5f, ForceMode2D.Impulse);
                 StartCoroutine("TurnColor"); // 깜빡 거리기
             }
 
@@ -48,15 +54,18 @@ public class PlayerControl : MonoBehaviour
     }
     void Update()
     {
-        if (invincible >= 0)
+        if (invincible > 0)
             invincible -= 0.02;
+        else
+            GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 255); // 밝기 원래대로.
+
         knowHP = life;
         int horizontal = 0;
         int vertical = 0;
         horizontal = (int)(Input.GetAxisRaw("Horizontal"));
         vertical = (int)(Input.GetAxisRaw("Vertical"));
         GetComponent<Rigidbody2D>().AddForce(new Vector2(horizontal, vertical) * .5f, ForceMode2D.Impulse);
-        
+
         if (Input.GetMouseButtonDown(0))
         {
             //마우스 좌표 얻음

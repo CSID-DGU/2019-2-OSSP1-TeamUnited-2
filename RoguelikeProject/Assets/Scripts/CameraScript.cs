@@ -5,15 +5,9 @@ using UnityEngine;
 public class CameraScript : MonoBehaviour
 {
     public GameObject player;
-
-    Transform AT;
-    void Start()
-    {
-        AT = player.transform;
-    }
     void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, AT.position, 2f * Time.deltaTime);
-        transform.Translate(0, 0, -10);
+        transform.position = Vector3.Lerp(transform.position, player.transform.position, 2f * Time.deltaTime);
+        transform.Translate(Vector3.back);
     }
 }
