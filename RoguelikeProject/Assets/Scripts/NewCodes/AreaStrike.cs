@@ -11,9 +11,9 @@ public class AreaStrike : MonoBehaviour
     public GameObject attacker;
 
 
-    private Strike strike;
-    public void Activate
+    public void Activate()
     {
+        Strike strike;
         // TODO :: 범위 내 GameObject 객체를 추출하여, 해당 객체가 Unit이라면 GetStrike를 호출하며 Strike 객체를 전달한다.
     }
 }
