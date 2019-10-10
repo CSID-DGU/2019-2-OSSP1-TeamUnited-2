@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 4
-  invincible: 0
+  invincible: 10
   makeBullet:
   - {fileID: 0}
   - {fileID: 0}
