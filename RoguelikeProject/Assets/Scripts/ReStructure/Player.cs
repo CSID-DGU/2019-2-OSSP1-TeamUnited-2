@@ -36,5 +36,19 @@ public class Player : Unit
 
         // --for debug--
         faceArrow.transform.position = (Vector2)((Vector2) transform.position + faceDirection);
+
+        // 마우스 입력를 Wieldable 객체로 연결
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("left mouse pushed");
+            // mainHand.OnPush();
+            mainHand.holding = true;
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            Debug.Log("left mouse released");
+            // mainHand.OnRelease();
+            mainHand.holding = false;
+        }
     }
 }

@@ -7,5 +7,6 @@ public class Wieldable : MonoBehaviour
     public bool autoFire;
     public double cooldown;
     protected double cooldownWait;
+    public bool holding;
     
 }
