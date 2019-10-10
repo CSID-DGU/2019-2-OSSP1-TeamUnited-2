@@ -131,11 +131,14 @@ public class GameManager : MonoBehaviour
             listY.RemoveAt(index);
         }
 
+        Transform ItemsParent = new GameObject("Items").transform; // 아이템들의 부모 설정.
+
         GameObject[] healtem = new GameObject[10];
         for (int i = 0; i < 10; i++)
         {
             index = Random.Range(0, listX.Count);
             healtem[i] = Instantiate(SpawnedItem1, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
+            healtem[i].transform.SetParent(ItemsParent);
             listX.RemoveAt(index);
             listY.RemoveAt(index);
         }
@@ -145,6 +148,7 @@ public class GameManager : MonoBehaviour
         {
             index = Random.Range(0, listX.Count);
             tutem[i] = Instantiate(SpawnedItem2, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
+            tutem[i].transform.SetParent(ItemsParent);
             listX.RemoveAt(index);
             listY.RemoveAt(index);
         }

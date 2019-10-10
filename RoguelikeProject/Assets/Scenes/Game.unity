@@ -397,6 +397,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6638464269740965970, guid: 58996ba4e6d151a4f8c8a4104dbea4d6,
+        type: 3}
+      propertyPath: makeBullet.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6638464269740965970, guid: 58996ba4e6d151a4f8c8a4104dbea4d6,
+        type: 3}
+      propertyPath: makeBullet.Array.data[0]
+      value: 
+      objectReference: {fileID: 3937628576515295931, guid: f7e76968a545cf94fbfdaa24f63fbe41,
+        type: 3}
+    - target: {fileID: 6638464269740965970, guid: 58996ba4e6d151a4f8c8a4104dbea4d6,
+        type: 3}
+      propertyPath: makeBullet.Array.data[1]
+      value: 
+      objectReference: {fileID: 8402981998046470415, guid: 351827a81bd92e24dac0c80ffc7d6fa9,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58996ba4e6d151a4f8c8a4104dbea4d6, type: 3}
 --- !u!1001 &796229695
@@ -1138,36 +1155,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1414528969}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1450363278
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1450363279}
-  m_Layer: 0
-  m_Name: Items
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1450363279
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1450363278}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.732221, y: 12.425975, z: -1.015625}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1461215102
 GameObject:
   m_ObjectHideFlags: 0
