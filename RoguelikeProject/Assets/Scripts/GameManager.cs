@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     public double density;
     public int smoothness;
+    public int postsmooth;
     private int[,] map;
     private Transform boardHolder;
 
@@ -91,6 +92,10 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < smoothness; ++i)
         {
             SmoothMap();
+        }
+        for (int i = 0; i < postsmooth; ++i)
+        {
+            SmoothMapPsudo();
         }
 
         for (int y = 0; y < height; ++y)
@@ -176,9 +181,8 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    void SmoothMap()
+    void SmoothMapPsudo()
     {
-        // int[,] nextMap = new int[width, height];
         for (int x = 0; x < width; ++x)
         {
             for (int y = 0; y < height; ++y)
@@ -191,8 +195,26 @@ public class GameManager : MonoBehaviour
                     map[x, y] = 0;
             }
         }
-        // map = nextMap;
     }
+
+    void SmoothMap()
+    {
+        int[,] nextMap = new int[width, height];
+        for (int x = 0; x < width; ++x)
+        {
+            for (int y = 0; y < height; ++y)
+            {
+                int neighbourWallTiles = GetSurroundingWallCount(x, y);
+
+                if (neighbourWallTiles > 4)
+                    nextMap[x, y] = 1;
+                else if (neighbourWallTiles < 4)
+                    nextMap[x, y] = 0;
+            }
+        }
+        map = nextMap;
+    }
+
     int GetSurroundingWallCount(int gridX, int gridY)
     {
         int wallCount = 0;
