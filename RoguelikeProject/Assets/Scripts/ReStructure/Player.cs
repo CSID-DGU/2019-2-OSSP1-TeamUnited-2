@@ -17,7 +17,7 @@ public class Player : Unit
         faceArrow = Instantiate(faceArrow, (Vector2)transform.position, transform.rotation) as GameObject;
     }
 
-    new void GetStrike(Strike strike)
+    public new void GetStrike(Strike strike)
     // Unit의 GetStrike를 공유합니다, 다만 플레이어는 데미지를 입을 경우 추가적인 무적 타임이 존재합니다.
     {
         base.GetStrike(strike);
