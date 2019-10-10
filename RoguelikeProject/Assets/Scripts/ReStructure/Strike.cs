@@ -8,7 +8,7 @@ public class Strike : MonoBehaviour
     public AttackTypeBase attackType;
     public GameObject attacker;
 
-    Strike(Vector2 attackPosition, int damage, double force, GameObject attacker = null)
+    public Strike(Vector2 attackPosition, int damage, double force, GameObject attacker = null)
     {
         this.attackPosition = attackPosition;
         this.attackType = new AttackTypeBase(damage, force);
