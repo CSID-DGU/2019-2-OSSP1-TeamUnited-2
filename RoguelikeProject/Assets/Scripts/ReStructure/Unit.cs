@@ -8,7 +8,7 @@ public class Unit : MonoBehaviour
     protected int currentHP;
     public double maxSpeed;
     public double acceleration;
-    public Vector2 face;
+    public Vector2 faceDirection;
 
     protected void Move(Vector2 direction)
     {
