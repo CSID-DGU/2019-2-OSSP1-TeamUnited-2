@@ -44,8 +44,8 @@ public class Player : Unit
         keyboardDirection.Normalize();
         Move(keyboardDirection);
 
-        // 키보드를 입력받아 faceDirection의 위치를 조절해줍니다.
-        // TODO :: 현재 faceDirection에 마우스 위치를 그냥 대입하도록 되어있습니다, 시간지연을 넣는 편이 부드러울 것입니다.
+        // 캐릭터의 방향을 마우스 방향으로 맞추어 줍니다.
+        // TODO :: 현재 마우스 방향으로 즉시 회전하게 되어있습니다, 시간지연을 넣는 편이 부드러울 것입니다.
         Vector3 mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
         Vector2 mouseDirection = (Vector2)(mousePosition - transform.position);
@@ -71,5 +71,12 @@ public class Player : Unit
         
         // 무기들의 owner 링크 처리
         mainHand.owner = gameObject;
+
+        // 무기들의 aim 처리
+        mainHand.aim = faceDirection;
+
+        // 무기들의 인스턴스 위치/방향을 유닛과 맞춰준다.
+        mainHand.transform.position = transform.position;
+        mainHand.transform.rotation = transform.rotation;
     }
 }
