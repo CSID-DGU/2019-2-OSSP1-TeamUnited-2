@@ -17,10 +17,11 @@ public class GameManager : MonoBehaviour
     public GameObject wall;
 
     public GameObject SpawnedPlayer;
-    public GameObject[] SpawnedEnemy = new GameObject[4];
-    public GameObject[] SpawnedRandEnemy = new GameObject[4];
+    public GameObject[] SpawnedEnemy;
+    public GameObject[] SpawnedRandEnemy;
     public GameObject SpawnedItem1;
     public GameObject SpawnedItem2;
+    public GameObject SpawnedItem3;
 
     public double density;
     public int smoothness;
@@ -32,11 +33,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        InitGame();
-        AstarPath.active.Scan(); // 이거를 해야 벽하고 부딪히네요
-    }
-    void InitGame()
-    {
         BoardSetup();
 
         levelImage = GameObject.Find("LevelImage");
@@ -46,6 +42,8 @@ public class GameManager : MonoBehaviour
         levelImage.SetActive(false);
 
         SpawnedPlayer.SetActive(true);
+
+        AstarPath.active.Scan(); // 이거를 해야 벽하고 부딪히네요
     }
 
     void Update()
@@ -61,6 +59,7 @@ public class GameManager : MonoBehaviour
             levelImage.SetActive(false);
         }
     }
+
     void nextScene()
     {
         SceneManager.LoadScene("Main", LoadSceneMode.Single);
@@ -149,11 +148,18 @@ public class GameManager : MonoBehaviour
         }
 
         GameObject[] tutem = new GameObject[5];
+        GameObject[] bomtem = new GameObject[5];
         for (int i = 0; i < 5; i++)
         {
             index = Random.Range(0, listX.Count);
             tutem[i] = Instantiate(SpawnedItem2, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
             tutem[i].transform.SetParent(ItemsParent);
+            listX.RemoveAt(index);
+            listY.RemoveAt(index);
+
+            index = Random.Range(0, listX.Count);
+            bomtem[i] = Instantiate(SpawnedItem3, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
+            bomtem[i].transform.SetParent(ItemsParent);
             listX.RemoveAt(index);
             listY.RemoveAt(index);
         }
