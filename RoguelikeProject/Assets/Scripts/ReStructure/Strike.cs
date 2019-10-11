@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Strike : MonoBehaviour
+public class Strike
 {
     public Vector2 attackPosition;
     public AttackTypeBase attackType;

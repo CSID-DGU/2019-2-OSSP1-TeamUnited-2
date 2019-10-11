@@ -58,13 +58,13 @@ public class Player : Unit
         // 마우스 입력를 Wieldable 객체로 연결
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("left mouse pushed");
+            // Debug.Log("left mouse pushed");
             mainHand.OnPush(); // 추후 해당 부분이 구현되면 주석을 해제해주세요.
             mainHand.holding = true;
         }
         if (Input.GetMouseButtonUp(0))
         {
-            Debug.Log("left mouse released");
+            // Debug.Log("left mouse released");
             // mainHand.OnRelease(); // 추후 해당 부분이 구현되면 주석을 해제해주세요.
             mainHand.holding = false;
         }

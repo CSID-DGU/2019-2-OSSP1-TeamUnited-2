@@ -51,7 +51,7 @@ MonoBehaviour:
   maxSpeed: 5
   acceleration: 1
   faceDirection: {x: 0, y: 0}
-  mainHand: {fileID: 0}
+  mainHand: {fileID: 350891713008431030, guid: fa8ab87752704a24c946612d51e9b787, type: 3}
   faceArrow: {fileID: 1431474610208893003, guid: f1766503911121d40a2cac0d7008f7f0,
     type: 3}
 --- !u!114 &6638464269740965970

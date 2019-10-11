@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackTypeBase : MonoBehaviour
+public class AttackTypeBase
 {
     public int damage;
     public double force;
