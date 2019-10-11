@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ProjectileOnHit : MonoBehaviour
 {
-    protected AttackTypeBase singleAttack;
     public int damage;
     public double force;
     public GameObject areaStrikeGenerator;
@@ -14,8 +13,6 @@ public class ProjectileOnHit : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        // 공격을 위한 객체를 생성합니다.
-        singleAttack = new AttackTypeBase(damage, force);
 
         // 범위공격 객체는 생성과 동시에 작동합니다.
         // areaStrikeGenerator = new GameObject();
@@ -23,7 +20,7 @@ public class ProjectileOnHit : MonoBehaviour
         // areaStrikeGenerator.GetComponent<AreaStrike>().SetStatus(damage, force, radius);
 
         // 맞은 대상에게 strike 객체를 전달하여 데미지를 입힙니다.
-        Strike strike = new Strike(singleAttack, transform.position);
+        Strike strike = new Strike(damage, force, transform.position);
         if (col.gameObject.GetComponent<Unit>())
         {
             col.gameObject.GetComponent<Unit>().GetStrike(strike);

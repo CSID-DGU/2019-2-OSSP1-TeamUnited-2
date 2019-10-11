@@ -6,8 +6,8 @@ public class Strike
 {
     public Vector2 attackPosition;
     public AttackTypeBase attackType;
-    int damage;
-    double force;
+    public int damage;
+    public double force;
     public GameObject attacker;
 
     public Strike(int damage, double force, Vector2 attackPosition, GameObject attacker = null)
