@@ -10,8 +10,11 @@ public class Wieldable : MonoBehaviour
     public double[] cooldown;
     protected double cooldownWait;
     public GameObject owner;
+    public Vector2 aim;
+
     public void OnPush()
     {
+        
         Vector3 mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
