@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class AreaStrike : MonoBehaviour
 {
-    // public Vector2 centorPosition;
-    public double radius;
     // public AttackTypeArea attackType;
     public int damage;
     public double force;
@@ -14,12 +12,12 @@ public class AreaStrike : MonoBehaviour
     public GameObject attacker;
 
 
-    public void SetStatus(int damage, double force, double radius)
-    {
-        this.damage = damage;
-        this.force = force;
-        this.radius = radius;
-    }
+    // public void SetStatus(int damage, double force, double radius)
+    // {
+    //     this.damage = damage;
+    //     this.force = force;
+    //     this.radius = radius;
+    // }
     public void SetAttacker(Vector2 attackerPosition, GameObject attacker = null)
     {
         this.attackerPosition = attackerPosition;

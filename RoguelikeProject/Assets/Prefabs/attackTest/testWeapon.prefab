@@ -25,11 +25,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2618062061517797899}
-  m_LocalRotation: {x: 0, y: 0, z: -0.000000082945924, w: 1}
-  m_LocalPosition: {x: 25.217852, y: 2.2348595, z: -10}
+  m_LocalRotation: {x: 0, y: 0, z: -0.9914371, w: -0.1305856}
+  m_LocalPosition: {x: 9.738989, y: 20.095003, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2180497679416509856}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -91,12 +90,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f10b554b25798e04cbb2d80ac0ad0535, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   bulletType:
   - {fileID: 1417382109342578088, guid: 301764c5d5b416549b5ce57a1556eef4, type: 3}
   autoFire: 0
   holding: 0
   cooldown: []
   owner: {fileID: 0}
-  aim: {x: 0.3643772, y: 0.9312514}
+  aim: {x: 0.53647184, y: 0.84391826}
