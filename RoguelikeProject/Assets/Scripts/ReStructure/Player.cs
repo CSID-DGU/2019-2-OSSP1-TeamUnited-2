@@ -73,6 +73,10 @@ public class Player : Unit
         mainHand.owner = gameObject;
 
         // 무기들의 aim 처리
-        // mainHand.aim = faceDirection;
+        mainHand.aim = faceDirection;
+
+        // 무기들의 인스턴스 위치/방향을 유닛과 맞춰준다.
+        mainHand.transform.position = transform.position;
+        mainHand.transform.rotation = transform.rotation;
     }
 }
