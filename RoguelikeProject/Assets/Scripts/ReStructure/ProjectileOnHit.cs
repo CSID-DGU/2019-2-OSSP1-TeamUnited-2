@@ -6,6 +6,16 @@ public class ProjectileOnHit : MonoBehaviour
 {
     public AttackTypeBase singleAttack;
     public GameObject areaStrikeGenerator;
+    public int damage;
+    public double force;
+
+    private void Start()
+    {
+        if (singleAttack == null)
+        {
+            singleAttack = new AttackTypeBase(damage, force);
+        }
+    }
 
     void OnTriggerEnter2D(Collider2D col)
     {
