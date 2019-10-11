@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class AreaStrike : MonoBehaviour
 {
-    public Vector2 centorPosition;
+    // public Vector2 centorPosition;
     public double radius;
     public AttackTypeArea attackType;
     public Vector2 attackerPosition;
     public GameObject attacker;
 
 
+    public void SetAttacker(Vector2 attackerPosition, GameObject attacker = null)
+    {
+        this.attackerPosition = attackerPosition;
+        this.attacker = attacker;
+    }
     public void Activate()
     {
         Strike strike;
