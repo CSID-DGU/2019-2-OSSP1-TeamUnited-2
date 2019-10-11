@@ -71,8 +71,5 @@ public class Player : Unit
         
         // 무기들의 owner 링크 처리
         mainHand.owner = gameObject;
-
-        //        
-
     }
 }
