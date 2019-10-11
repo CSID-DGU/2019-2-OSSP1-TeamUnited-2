@@ -10,7 +10,7 @@ public class PlayerControl : MonoBehaviour
     public GameObject[] makeBullet;
 
     private static int weaponFlag;
-    private Transform bullets;    
+    private Transform bullets;
     private int bulletIndex;
 
     void OnCollisionEnter2D(Collision2D col)
@@ -56,13 +56,14 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         knowHP = life;
-        bullets= new GameObject("Bullets").transform;
+        bullets = new GameObject("Bullets").transform;
     }
     void Update()
     {
         if (invincible > 0)
             invincible -= 0.02;
-        else { 
+        else
+        {
             GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 255); // 밝기 원래대로.
             bulletIndex = 0; // 총도 기본총으로
         }

@@ -54,13 +54,13 @@ public class Player : Unit
         faceDirection = direction;
 
         // --for debug-- 플레이어가 보는 방향을 포현
-        faceArrow.transform.position = (Vector2)((Vector2) transform.position + faceDirection);
+        faceArrow.transform.position = (Vector2)((Vector2)transform.position + faceDirection);
 
         // 마우스 입력를 Wieldable 객체로 연결
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("left mouse pushed");
-            // mainHand.OnPush(); // 추후 해당 부분이 구현되면 주석을 해제해주세요.
+            mainHand.OnPush(); // 추후 해당 부분이 구현되면 주석을 해제해주세요.
             mainHand.holding = true;
         }
         if (Input.GetMouseButtonUp(0))
