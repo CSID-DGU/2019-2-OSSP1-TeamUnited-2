@@ -9,7 +9,7 @@ public class ProjectileOnHit : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        Strike strike = new Strike(singleAttack);
+        Strike strike = new Strike(singleAttack, transform.position, gameObject);
         if (col.gameObject.GetComponent<Unit>())
         {
             col.gameObject.GetComponent<Unit>().getStrike(strike);
