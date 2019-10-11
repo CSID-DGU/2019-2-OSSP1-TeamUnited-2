@@ -5,7 +5,17 @@ using UnityEngine;
 public class ProjectileOnHit : MonoBehaviour
 {
     public AttackTypeBase singleAttack;
+    public int damage;
+    public double force;
     public GameObject areaStrikeGenerator;
+
+    void start()
+    {
+        if (singleAttack == null)
+        {
+            singleAttack = new AttackTypeBase(damage, force);
+        }
+    }
 
     void OnTriggerEnter2D(Collider2D col)
     {
