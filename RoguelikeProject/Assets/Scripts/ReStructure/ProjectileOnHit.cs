@@ -7,7 +7,12 @@ public class ProjectileOnHit : MonoBehaviour
     public int damage;
     public double force;
     public GameObject areaEffect;
+    protected GameObject attacker;
 
+    public void SetAttacker(GameObject attacker)
+    {
+        this.attacket = attacker;
+    }
     void OnTriggerEnter2D(Collider2D col)
     {
 
