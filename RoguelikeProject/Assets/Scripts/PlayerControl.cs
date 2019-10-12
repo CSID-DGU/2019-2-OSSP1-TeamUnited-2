@@ -9,7 +9,7 @@ public class PlayerControl : MonoBehaviour
     public GameObject[] makeBullet;
 
     private static int weaponFlag;
-    private Transform bullets;    
+    private Transform bullets;
     private int bulletIndex;
     private int itemTime, invincible;
 
@@ -62,7 +62,7 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         knowHP = life;
-        bullets= new GameObject("Bullets").transform;
+        bullets = new GameObject("Bullets").transform;
     }
     void Update()
     {
