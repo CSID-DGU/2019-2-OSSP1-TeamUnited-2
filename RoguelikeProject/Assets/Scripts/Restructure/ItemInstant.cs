@@ -10,7 +10,7 @@ public class ItemInstant : MonoBehaviour
     {
         if (col.GetComponent<Player>())
         {
-            
+            col.GetComponent<Player>().GetDamage(-HPMod);
         }
     }
 }
