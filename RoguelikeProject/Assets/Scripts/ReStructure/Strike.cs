@@ -5,7 +5,6 @@ using UnityEngine;
 public class Strike
 {
     public Vector2 attackPosition;
-    public AttackTypeBase attackType;
     public int damage;
     public double force;
     public GameObject attacker;
