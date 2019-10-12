@@ -16,6 +16,20 @@ public class Player : Unit
         invincible = 5.0;
         faceArrow = Instantiate(faceArrow, (Vector2)transform.position, transform.rotation) as GameObject;
     }
+    
+    public override void GetDamage(int damage)
+    {
+        //회복인 경우
+        if (damage < 0)
+        {
+            currentHP -= damage;
+            if (currentHP > HP)
+                currentHP = HP;
+        }
+
+        if (invincible < 0)
+            currentHP -= damage;
+    }
 
     public new void GetStrike(Strike strike)
     // Unit의 GetStrike를 공유합니다, 다만 플레이어는 데미지를 입을 경우 추가적인 무적 타임이 존재합니다.
