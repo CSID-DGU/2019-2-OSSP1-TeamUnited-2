@@ -12,5 +12,7 @@ public class ItemWieldable : MonoBehaviour
         {
             col.GetComponent<Player>().Wield(weapon);
         }
+
+        Destroy(gameObject);
     }
 }
