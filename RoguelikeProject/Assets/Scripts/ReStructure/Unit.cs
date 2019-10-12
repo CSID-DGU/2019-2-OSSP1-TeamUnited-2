@@ -10,6 +10,12 @@ public class Unit : MonoBehaviour
     public double acceleration;
     public Vector2 faceDirection;
 
+    protected void Start()
+    {
+        currentHP = HP;
+        Debug.Log("HP set");
+    }
+
     protected void Move(Vector2 direction)
     {
         // TODO :: 최대속도 구현 해야함, 현재 무한가속
