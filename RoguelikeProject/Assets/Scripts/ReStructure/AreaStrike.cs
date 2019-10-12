@@ -41,8 +41,6 @@ public class AreaStrike : MonoBehaviour
             }
         }
         // StartCoroutine(SelfDestruct());
-        // AddComponent<SelfDestructor>;
-        Debug.Log(strike.force);
         Destroy(gameObject);
     }
 }
