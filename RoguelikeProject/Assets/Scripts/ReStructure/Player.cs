@@ -80,12 +80,12 @@ public class Player : Unit
         if (Input.GetMouseButtonDown(0))
         {
             mainHand.OnPush();
-            mainHand.holding = true;
+            mainHand.SetHold();
         }
         if (Input.GetMouseButtonUp(0))
         {
             mainHand.OnRelease();
-            mainHand.holding = false;
+            mainHand.SetUnhold();
         }
         
         // 무기들의 소유자 링크 처리

@@ -6,11 +6,20 @@ public class Wieldable : MonoBehaviour
 {
     public GameObject[] bulletType;
     public bool autoFire;
-    public bool holding;
+    protected bool holding;
     public double[] cooldown;
     protected double cooldownWait;
     public GameObject owner;
     public Vector2 aim;
+
+    public void SetHold()
+    {
+        holding = true;
+    }
+    public void SetUnhold()
+    {
+        holding = false;
+    }
 
     public void OnPush()
     {
