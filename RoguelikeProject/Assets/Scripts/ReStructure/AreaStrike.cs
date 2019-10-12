@@ -8,16 +8,9 @@ public class AreaStrike : MonoBehaviour
     public int damage;
     public double force;
     public double radius;
-    public Vector2 attackerPosition;
-    public GameObject attacker;
+    protected Vector2 attackerPosition;
+    protected GameObject attacker;
 
-
-    // public void SetStatus(int damage, double force, double radius)
-    // {
-    //     this.damage = damage;
-    //     this.force = force;
-    //     this.radius = radius;
-    // }
     public void SetAttacker(Vector2 attackerPosition, GameObject attacker = null)
     {
         this.attackerPosition = attackerPosition;
@@ -35,7 +28,6 @@ public class AreaStrike : MonoBehaviour
                 col.gameObject.GetComponent<Unit>().GetStrike(strike);
             }
         }
-
         Destroy(gameObject);
     }
 }

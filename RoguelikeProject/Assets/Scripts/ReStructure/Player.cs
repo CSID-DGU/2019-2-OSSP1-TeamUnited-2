@@ -21,7 +21,7 @@ public class Player : Unit
     // Unit의 GetStrike를 공유합니다, 다만 플레이어는 데미지를 입을 경우 추가적인 무적 타임이 존재합니다.
     {
         base.GetStrike(strike);
-        if (strike.attackType.damage > 0)
+        if (strike.damage > 0)
             invincible += 1.0;
     }
 
@@ -58,21 +58,19 @@ public class Player : Unit
         // 마우스 입력를 Wieldable 객체로 연결
         if (Input.GetMouseButtonDown(0))
         {
-            // Debug.Log("left mouse pushed");
-            mainHand.OnPush(); // 추후 해당 부분이 구현되면 주석을 해제해주세요.
+            mainHand.OnPush();
             mainHand.holding = true;
         }
         if (Input.GetMouseButtonUp(0))
         {
-            // Debug.Log("left mouse released");
             // mainHand.OnRelease(); // 추후 해당 부분이 구현되면 주석을 해제해주세요.
             mainHand.holding = false;
         }
         
-        // 무기들의 owner 링크 처리
+        // 무기들의 소유자 링크 처리
         mainHand.owner = gameObject;
 
-        // 무기들의 aim 처리
+        // 무기들의 조준점 처리
         mainHand.aim = faceDirection;
 
         // 무기들의 인스턴스 위치/방향을 유닛과 맞춰준다.

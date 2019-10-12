@@ -48,8 +48,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 2
   force: 1
-  areaStrikeGenerator: {fileID: 4864773603658844884, guid: 3dc59a52e3478d04d8a3408e3073d474,
+  areaEffect: {fileID: 4864773603658844884, guid: 3dc59a52e3478d04d8a3408e3073d474,
     type: 3}
+  areaDamage: 0
+  areaForce: 0
+  areaRadius: 0
 --- !u!212 &3823234243384223716
 SpriteRenderer:
   m_ObjectHideFlags: 0

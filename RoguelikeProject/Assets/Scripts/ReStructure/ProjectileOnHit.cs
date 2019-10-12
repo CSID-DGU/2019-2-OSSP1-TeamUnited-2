@@ -6,10 +6,7 @@ public class ProjectileOnHit : MonoBehaviour
 {
     public int damage;
     public double force;
-    public GameObject areaStrikeGenerator;
-    // public int areaDamage;
-    // public double areaforce;
-    // public double radius;
+    public GameObject areaEffect;
 
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -23,11 +20,13 @@ public class ProjectileOnHit : MonoBehaviour
         Strike strike = new Strike(damage, force, transform.position);
         if (col.gameObject.GetComponent<Unit>())
         {
+            Debug.Log("Someone Hit");
             col.gameObject.GetComponent<Unit>().GetStrike(strike);
         }
 
         // 범위 공격을 하는 객체를 생성하여, 작동합니다.
-        GameObject instance = Instantiate(areaStrikeGenerator, transform.position, Quaternion.identity) as GameObject;
+        GameObject instance = Instantiate(areaEffect, transform.position, Quaternion.identity) as GameObject;
+
 
         Destroy(gameObject);
     }
