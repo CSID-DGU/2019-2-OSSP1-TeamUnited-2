@@ -15,12 +15,6 @@ public class ProjectileOnHit : MonoBehaviour
     }
     void OnTriggerStay2D(Collider2D col)
     {
-
-        // 범위공격 객체는 생성과 동시에 작동합니다.
-        // areaStrikeGenerator = new GameObject();
-        // areaStrikeGenerator.AddComponent<AreaStrike>();
-        // areaStrikeGenerator.GetComponent<AreaStrike>().SetStatus(damage, force, radius);
-
         // 공격자는 투사체에 면역입니다. (일단은)
         if (col == attacker)
             return;
