@@ -198,7 +198,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86ebf3c4b42174d2a9d3c1dfd2476f32, type: 2}
+      objectReference: {fileID: 2100000, guid: 0f239eb41e29343e28970d1c5e9adede, type: 2}
     - target: {fileID: 9005390976539452098, guid: a723301da2a15450183b3e720c8c2ca9,
         type: 3}
       propertyPath: m_Color.r
@@ -218,6 +218,21 @@ PrefabInstance:
         type: 3}
       propertyPath: maxSpeed
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005390976539452157, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: constrainInsideGraph
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005390976539452157, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: whenCloseToDestination
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005390976539452097, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a723301da2a15450183b3e720c8c2ca9, type: 3}
@@ -310,6 +325,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6662752627325133359, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4,
+        type: 3}
+      propertyPath: constrainInsideGraph
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4, type: 3}
 --- !u!4 &337078623 stripped
@@ -400,7 +420,7 @@ PrefabInstance:
     - target: {fileID: 6638464269740965970, guid: 58996ba4e6d151a4f8c8a4104dbea4d6,
         type: 3}
       propertyPath: makeBullet.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6638464269740965970, guid: 58996ba4e6d151a4f8c8a4104dbea4d6,
         type: 3}
@@ -517,6 +537,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662752627325133359, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4,
+        type: 3}
+      propertyPath: constrainInsideGraph
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4, type: 3}
@@ -733,6 +758,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6662752627325133359, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4,
+        type: 3}
+      propertyPath: constrainInsideGraph
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4, type: 3}
 --- !u!4 &1200310241 stripped
@@ -871,6 +901,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005390976539452157, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: constrainInsideGraph
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005390976539452157, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: whenCloseToDestination
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005390976539452097, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a723301da2a15450183b3e720c8c2ca9, type: 3}
@@ -1166,6 +1211,21 @@ PrefabInstance:
       propertyPath: maxSpeed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9005390976539452157, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: constrainInsideGraph
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005390976539452157, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: whenCloseToDestination
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005390976539452097, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a723301da2a15450183b3e720c8c2ca9, type: 3}
 --- !u!4 &1414528970 stripped
@@ -1422,6 +1482,21 @@ PrefabInstance:
         type: 3}
       propertyPath: maxSpeed
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005390976539452157, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: constrainInsideGraph
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005390976539452157, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: whenCloseToDestination
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005390976539452097, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a723301da2a15450183b3e720c8c2ca9, type: 3}
@@ -1862,6 +1937,12 @@ PrefabInstance:
       propertyPath: postsmooth
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4357949787478446540, guid: 53a49fa310d7dc14ba3ecc62066c985b,
+        type: 3}
+      propertyPath: SpawnedItem3
+      value: 
+      objectReference: {fileID: 4709412813962144011, guid: 077fb715da3e8a84f9a0141db0b53cc0,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53a49fa310d7dc14ba3ecc62066c985b, type: 3}
 --- !u!1001 &6662752626442177511
@@ -1940,6 +2021,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662752627325133359, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4,
+        type: 3}
+      propertyPath: constrainInsideGraph
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4, type: 3}

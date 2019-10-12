@@ -6,12 +6,12 @@ public class PlayerControl : MonoBehaviour
 {
     public int life;
     public static int knowHP; // 4로 시작하는 이유 : 5부터 하면 0이 되었을때 끝나는데 그러면 초기값이 0이라서 GameManger에서 Invoke할때 잘안됨.
-    public double invincible;
     public GameObject[] makeBullet;
 
     private static int weaponFlag;
     private Transform bullets;
     private int bulletIndex;
+    private int itemTime, invincible;
 
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -25,8 +25,14 @@ public class PlayerControl : MonoBehaviour
         {
             Destroy(col.gameObject);
             GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 30); /// 투명해짐
-            invincible = 5; // 무적시간
-            bulletIndex = 1; // 임시로 투명망토 아이템 이용.
+            invincible = 300;
+        }
+
+        if (col.gameObject.name == "bomb(Clone)") // 폭탄 아이템
+        {
+            Destroy(col.gameObject);
+            bulletIndex = 1;
+            itemTime = 600; // 지속시간(약 10초)
         }
     }
 
@@ -36,7 +42,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (invincible <= 0)
             {
-                invincible += 1.0;
+                invincible += 100;
                 life--;
                 Vector2 moveR = transform.position - col.transform.position;
                 GetComponent<Rigidbody2D>().AddForce(moveR * 5f, ForceMode2D.Impulse);
@@ -61,12 +67,16 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         if (invincible > 0)
-            invincible -= 0.02;
+            invincible--;
         else
-        {
             GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 255); // 밝기 원래대로.
-            bulletIndex = 0; // 총도 기본총으로
-        }
+
+        if (itemTime > 0)
+            itemTime--;
+        else
+            bulletIndex = 0;
+
+
 
         knowHP = life;
         int horizontal = 0;
