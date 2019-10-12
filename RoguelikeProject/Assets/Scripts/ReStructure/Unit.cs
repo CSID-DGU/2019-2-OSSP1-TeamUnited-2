@@ -13,7 +13,6 @@ public class Unit : MonoBehaviour
     protected void Start()
     {
         currentHP = HP;
-        Debug.Log("HP set");
     }
 
     protected void Move(Vector2 direction)
