@@ -16,6 +16,11 @@ public class AreaStrike : MonoBehaviour
         this.attackerPosition = attackerPosition;
         this.attacker = attacker;
     }
+    protected IEnumerator SelfDestruct()
+    {
+        yield return new WaitForSeconds(5);
+        Destroy(gameObject);
+    }
     public void Awake()
     {
         Strike strike = new Strike(damage, force, transform.position, gameObject);
@@ -28,6 +33,6 @@ public class AreaStrike : MonoBehaviour
                 col.gameObject.GetComponent<Unit>().GetStrike(strike);
             }
         }
-        Destroy(gameObject);
+        StartCoroutine(SelfDestruct());
     }
 }

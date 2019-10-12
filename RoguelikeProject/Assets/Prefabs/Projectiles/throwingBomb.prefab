@@ -48,8 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   force: 0
-  areaEffect: {fileID: 4864773603658844884, guid: accaf1db71a735345b51cf72262d195b,
-    type: 3}
+  areaEffect: {fileID: 139366, guid: fee3759de2db36348a8ccdeb173b0241, type: 3}
 --- !u!212 &3823234243384223716
 SpriteRenderer:
   m_ObjectHideFlags: 0
