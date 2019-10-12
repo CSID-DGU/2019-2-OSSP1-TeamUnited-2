@@ -14,11 +14,16 @@ public class ProjectileOnHit : MonoBehaviour
     {
         this.attacker = attacker;
     }
-    void OnTriggerStay2D(Collider2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
         // 공격자는 투사체에 면역입니다. (일단은)
         if (col == attacker)
             return;
+
+        // 형체가 없는 대상에는 반응하지 않습니다.
+        if (col.GetComponent<Rigidbody2D>() == null)
+            return;
+        
 
         // 대상이 유닛인 경우 맞은 대상에게 strike 객체를 전달하여 데미지를 입힙니다.
         if (col.gameObject.GetComponent<Unit>())

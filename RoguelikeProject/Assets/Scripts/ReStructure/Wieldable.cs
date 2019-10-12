@@ -38,6 +38,6 @@ public class Wieldable : MonoBehaviour
 
     protected void Update()
     {
-
+        // TODO :: 무기가 해제당했을 경우 소유자를 해제해 주는 것이 만약을 위해 안전할 것입니다.
     }
 }
