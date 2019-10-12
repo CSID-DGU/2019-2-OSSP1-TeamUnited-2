@@ -16,12 +16,19 @@ public class AreaStrike : MonoBehaviour
         this.attackerPosition = attackerPosition;
         this.attacker = attacker;
     }
+    public void SetStatus(int damage, double force, double radius)
+    {
+        this.damage = damage;
+        this.force = force;
+        this.radius = radius;
+    }
+
     protected IEnumerator SelfDestruct()
     {
         yield return new WaitForSeconds(5);
         Destroy(gameObject);
     }
-    public void Awake()
+    public void Activate()
     {
         Strike strike = new Strike(damage, force, transform.position, gameObject);
         // TODO :: 범위 내 GameObject 객체를 추출하여, 해당 객체가 Unit이라면 GetStrike를 호출하며 Strike 객체를 전달한다.
@@ -33,6 +40,9 @@ public class AreaStrike : MonoBehaviour
                 col.gameObject.GetComponent<Unit>().GetStrike(strike);
             }
         }
-        StartCoroutine(SelfDestruct());
+        // StartCoroutine(SelfDestruct());
+        // AddComponent<SelfDestructor>;
+        Debug.Log(strike.force);
+        Destroy(gameObject);
     }
 }

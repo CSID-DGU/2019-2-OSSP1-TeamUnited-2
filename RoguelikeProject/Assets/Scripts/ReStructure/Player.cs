@@ -15,7 +15,7 @@ public class Player : Unit
         invincible = 5.0;
         faceArrow = Instantiate(faceArrow, (Vector2)transform.position, transform.rotation) as GameObject;
     }
-    
+
     public override int GetDamage(int damage)
     // 플레이어의 HP조작은 반드시 이 메서드를 통해서만 이루어져야 합니다.
     {
@@ -44,7 +44,7 @@ public class Player : Unit
         // 피해인 경우
         else
         {
-           currentHP -= damage; 
+           currentHP -= damage;
         }
 
         return actualDamage;
@@ -75,7 +75,7 @@ public class Player : Unit
         // 무적의 처리와 스프라이트 깜빡임의 처리
         if (invincible > 0.0)
         {
-            invincible -= (1.0 / 60.0);
+            invincible -= Time.deltaTime;
             if (invincible % 0.5 > 0.25)
                 GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 90);
             else
@@ -111,7 +111,7 @@ public class Player : Unit
             mainHand.OnRelease();
             mainHand.SetUnhold();
         }
-        
+
         // 무기들의 소유자 링크 처리
         mainHand.owner = gameObject;
 
