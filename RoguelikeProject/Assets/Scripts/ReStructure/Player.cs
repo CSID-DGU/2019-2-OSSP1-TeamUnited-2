@@ -16,6 +16,21 @@ public class Player : Unit
         invincible = 5.0;
         faceArrow = Instantiate(faceArrow, (Vector2)transform.position, transform.rotation) as GameObject;
     }
+    
+    public override void GetDamage(int damage)
+    // 플레이어의 HP조작은 반드시 이 메서드를 통해서만 이루어져야 합니다.
+    {
+        // 회복인 경우
+        if (damage < 0)
+        {
+            currentHP -= damage;
+            if (currentHP > HP)
+                currentHP = HP;
+        }
+        // 피해인 경우
+        else if (invincible < 0)
+            currentHP -= damage;
+    }
 
     public new void GetStrike(Strike strike)
     // Unit의 GetStrike를 공유합니다, 다만 플레이어는 데미지를 입을 경우 추가적인 무적 타임이 존재합니다.
@@ -23,6 +38,12 @@ public class Player : Unit
         base.GetStrike(strike);
         if (strike.damage > 0)
             invincible += 1.0;
+    }
+
+    public void Wield(Wieldable weapon)
+    {
+        mainHand = weapon;
+        // TODO :: 버려진 무기에 대한 처리도 해야 할 것입니다.
     }
 
     new void Update()
@@ -59,12 +80,12 @@ public class Player : Unit
         if (Input.GetMouseButtonDown(0))
         {
             mainHand.OnPush();
-            mainHand.holding = true;
+            mainHand.SetHold();
         }
         if (Input.GetMouseButtonUp(0))
         {
-            // mainHand.OnRelease(); // 추후 해당 부분이 구현되면 주석을 해제해주세요.
-            mainHand.holding = false;
+            mainHand.OnRelease();
+            mainHand.SetUnhold();
         }
         
         // 무기들의 소유자 링크 처리
