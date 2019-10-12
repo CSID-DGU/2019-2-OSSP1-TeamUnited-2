@@ -36,8 +36,8 @@ public class Player : Unit
     // Unit의 GetStrike를 공유합니다, 다만 플레이어는 데미지를 입을 경우 추가적인 무적 타임이 존재합니다.
     {
         base.GetStrike(strike);
-        if (strike.damage > 0)
-            invincible += 1.0;
+        if (strike.damage > 0 && invincible < 0)
+            invincible = 1.0;
     }
 
     public void Wield(Wieldable weapon)
@@ -51,7 +51,7 @@ public class Player : Unit
         // 무적의 처리와 스프라이트 깜빡임의 처리
         if (invincible > 0.0)
         {
-            invincible -= (1.0 / 60.0);
+            invincible -= Time.deltaTime;
             if (invincible % 0.5 > 0.25)
                 GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 90);
             else

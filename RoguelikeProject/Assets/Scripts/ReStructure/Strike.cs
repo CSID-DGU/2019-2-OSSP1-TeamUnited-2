@@ -14,6 +14,7 @@ public class Strike
         this.damage = damage;
         this.force = force;
         this.attackPosition = attackPosition;
+        this.attacker = attacker;
     }
 
 
