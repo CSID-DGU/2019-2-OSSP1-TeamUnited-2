@@ -11,8 +11,8 @@ public class ItemWieldable : MonoBehaviour
         if (col.GetComponent<Player>())
         {
             col.GetComponent<Player>().Wield(weapon);
+            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
-
-        Destroy(gameObject);
     }
 }
