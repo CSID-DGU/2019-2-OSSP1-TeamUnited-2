@@ -25,6 +25,11 @@ public class Unit : MonoBehaviour
         GetComponent<Rigidbody2D>().AddForce(direction * (float)acceleration, ForceMode2D.Impulse);
     }
 
+    public void GetDamage(int damage)
+    {
+        currentHP -= damage;
+    }
+
     public void GetStrike (Strike strike)
     // 모든 유닛의 모든 피격은 이 메서드를 사용해야만 합니다. 
     // 직접적인 HP, transform 등의 조작은 나중에 큰 문제를 야기할 수 있습니다.
@@ -39,7 +44,6 @@ public class Unit : MonoBehaviour
 
         // 데미지가 있다면 데미지도 받습니다.
         currentHP -= strike.damage;
-        Debug.Log(currentHP);
     }
 
     protected void Update()
