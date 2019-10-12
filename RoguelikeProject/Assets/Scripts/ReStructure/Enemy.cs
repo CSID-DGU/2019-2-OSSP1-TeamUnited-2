@@ -8,9 +8,8 @@ public class Enemy : Unit
     protected GameObject target;
     public int att;
 
-    // Update is called once per frame
-    void Update()
+    protected new void Update()
     {
-        
+        base.Update();
     }
 }

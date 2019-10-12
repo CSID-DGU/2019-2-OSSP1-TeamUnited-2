@@ -33,9 +33,10 @@ public class Unit : MonoBehaviour
 
         // 데미지가 있다면 데미지도 받습니다.
         currentHP -= strike.damage;
+        Debug.Log(currentHP);
     }
 
-    void Update()
+    protected void Update()
     {
         if (currentHP < 0)
         {
