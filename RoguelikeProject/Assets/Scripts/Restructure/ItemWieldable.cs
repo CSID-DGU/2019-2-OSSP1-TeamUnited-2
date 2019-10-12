@@ -6,7 +6,7 @@ public class ItemWieldable : MonoBehaviour
 {
     public Wieldable weapon;
 
-    protected override OnTriggerStay2D(Collider2D col)
+    protected void OnTriggerStay2D(Collider2D col)
     {
         if (col.GetComponent<Player>())
         {

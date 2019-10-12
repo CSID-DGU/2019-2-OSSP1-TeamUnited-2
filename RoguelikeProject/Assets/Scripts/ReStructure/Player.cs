@@ -18,6 +18,7 @@ public class Player : Unit
     }
     
     public override void GetDamage(int damage)
+    // 플레이어의 HP조작은 반드시 이 메서드를 통해서만 이루어져야 합니다.
     {
         // 회복인 경우
         if (damage < 0)

@@ -10,6 +10,7 @@ public class ProjectileOnHit : MonoBehaviour
     protected GameObject attacker;
 
     public void SetAttacker(GameObject attacker)
+    // 공격자가 투사체에 영향받지 않기를 원한다면 설정합니다 (옵션)
     {
         this.attacker = attacker;
     }
