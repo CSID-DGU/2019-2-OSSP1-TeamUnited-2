@@ -11,7 +11,7 @@ public class ProjectileOnHit : MonoBehaviour
 
     public void SetAttacker(GameObject attacker)
     {
-        this.attacket = attacker;
+        this.attacker = attacker;
     }
     void OnTriggerStay2D(Collider2D col)
     {
@@ -20,11 +20,10 @@ public class ProjectileOnHit : MonoBehaviour
             return;
 
         // 대상이 유닛인 경우 맞은 대상에게 strike 객체를 전달하여 데미지를 입힙니다.
-        GameObject targetUnit = col.gameObject.GetComponent<Unit>();
-        if (targetUnit)
+        if (col.gameObject.GetComponent<Unit>())
         {
             Strike strike = new Strike(damage, force, transform.position);
-            targetUnit.GetStrike(strike);
+            col.gameObject.GetComponent<Unit>().GetStrike(strike);
         }
 
         // 범위 공격을 하는 객체를 생성하여, 작동합니다.
