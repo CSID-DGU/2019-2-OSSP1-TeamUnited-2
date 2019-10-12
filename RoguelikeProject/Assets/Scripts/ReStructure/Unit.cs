@@ -10,6 +10,12 @@ public class Unit : MonoBehaviour
     public double acceleration;
     public Vector2 faceDirection;
 
+    protected void Start()
+    {
+        currentHP = HP;
+        Debug.Log("HP set");
+    }
+
     protected void Move(Vector2 direction)
     {
         // TODO :: 최대속도 구현 해야함, 현재 무한가속
@@ -17,6 +23,11 @@ public class Unit : MonoBehaviour
         // 호출시 단위속도만큼 이동합니다. Update등의 지속호출과 연계하여야 제대로 된 움직임이 나옵니다.
         direction.Normalize();
         GetComponent<Rigidbody2D>().AddForce(direction * (float)acceleration, ForceMode2D.Impulse);
+    }
+
+    public void GetDamage(int damage)
+    {
+        currentHP -= damage;
     }
 
     public void GetStrike (Strike strike)
@@ -35,7 +46,7 @@ public class Unit : MonoBehaviour
         currentHP -= strike.damage;
     }
 
-    void Update()
+    protected void Update()
     {
         if (currentHP < 0)
         {
