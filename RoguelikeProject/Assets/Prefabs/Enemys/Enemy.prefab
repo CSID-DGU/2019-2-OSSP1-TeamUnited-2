@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25bea1a3802474771b117e6a51222600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 20
+  HP: 10
   maxSpeed: 2
   acceleration: 2
   faceDirection: {x: 0, y: 0}
