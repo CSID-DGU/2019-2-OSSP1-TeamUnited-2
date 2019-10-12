@@ -10,7 +10,7 @@ public class ItemWieldable : MonoBehaviour
     {
         if (col.GetComponent<Player>())
         {
-            
+            col.GetComponent<Player>().Wield(weapon);
         }
     }
 }

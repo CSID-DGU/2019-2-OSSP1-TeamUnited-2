@@ -19,15 +19,15 @@ public class Player : Unit
     
     public override void GetDamage(int damage)
     {
-        //회복인 경우
+        // 회복인 경우
         if (damage < 0)
         {
             currentHP -= damage;
             if (currentHP > HP)
                 currentHP = HP;
         }
-
-        if (invincible < 0)
+        // 피해인 경우
+        else if (invincible < 0)
             currentHP -= damage;
     }
 
@@ -37,6 +37,12 @@ public class Player : Unit
         base.GetStrike(strike);
         if (strike.damage > 0)
             invincible += 1.0;
+    }
+
+    public void Wield(Wieldable weapon)
+    {
+        mainHand = weapon;
+        // TODO :: 버려진 무기에 대한 처리도 해야 할 것입니다.
     }
 
     new void Update()
@@ -77,7 +83,7 @@ public class Player : Unit
         }
         if (Input.GetMouseButtonUp(0))
         {
-            // mainHand.OnRelease(); // 추후 해당 부분이 구현되면 주석을 해제해주세요.
+            mainHand.OnRelease();
             mainHand.holding = false;
         }
         
