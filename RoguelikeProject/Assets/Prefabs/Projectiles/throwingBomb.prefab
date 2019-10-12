@@ -50,7 +50,7 @@ MonoBehaviour:
   force: 0
   areaDamage: 2
   areaForce: 3
-  radius: 3
+  areaRadius: 3
   Animation: {fileID: 7323742082746974975, guid: c80fb908485c2ad43b038e090aacf051,
     type: 3}
 --- !u!212 &3823234243384223716

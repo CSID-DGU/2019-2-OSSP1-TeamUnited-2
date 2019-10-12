@@ -8,7 +8,7 @@ public class ProjectileOnHit : MonoBehaviour
     public double force;
     public int areaDamage;
     public double areaForce;
-    public double radius;
+    public double areaRadius;
     public GameObject Animation;
     protected GameObject areaEffect;
     protected GameObject attacker;
@@ -36,12 +36,12 @@ public class ProjectileOnHit : MonoBehaviour
         }
 
         // 범위 공격을 하는 객체를 생성하여, 작동합니다.
-        GameObject sample = new GameObject();
-        areaEffect = Instantiate(sample, transform.position, Quaternion.identity) as GameObject;
+        areaEffect = new GameObject();
+        areaEffect.transform.position = transform.position;
+        // areaEffect = Instantiate(sample, transform.position, Quaternion.identity) as GameObject;
         areaEffect.AddComponent<AreaStrike>();
-        areaEffect.GetComponent<AreaStrike>().SetStatus(damage, force, radius);
+        areaEffect.GetComponent<AreaStrike>().SetStatus(areaDamage, areaForce, areaRadius);
         areaEffect.GetComponent<AreaStrike>().Activate();
-        Destroy(sample);
 
         // 애니메이션을 재생합니다
         if (Animation)

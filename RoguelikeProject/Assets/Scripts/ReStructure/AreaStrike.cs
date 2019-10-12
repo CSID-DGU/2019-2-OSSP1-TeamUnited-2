@@ -40,7 +40,7 @@ public class AreaStrike : MonoBehaviour
                 col.gameObject.GetComponent<Unit>().GetStrike(strike);
             }
         }
-        StartCoroutine(SelfDestruct());
+        // StartCoroutine(SelfDestruct());
         // AddComponent<SelfDestructor>;
         Debug.Log(strike.force);
         Destroy(gameObject);
