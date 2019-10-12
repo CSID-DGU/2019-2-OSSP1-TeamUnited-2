@@ -27,25 +27,16 @@ public class Player : Unit
         {
             // 최대 HP를 넘길 수 없습니다.
             if (currentHP - damage > HP)
-            {
                 actualDamage = currentHP - HP;
-                currentHP = HP;
-            }
-            else
-            {
-                currentHP -= damage;
-            }
         }
         // 피해이지만 무적인 경우
         else if (invincible > 0)
         {
             actualDamage = 0;
         }
-        // 피해인 경우
-        else
-        {
-           currentHP -= damage;
-        }
+        
+        // 실제 피해 연산 (회복일 수 있습니다)
+        currentHP -= actualDamage;
 
         return actualDamage;
     }
@@ -60,7 +51,6 @@ public class Player : Unit
         if (actualStrike.damage > 0)
             invincible += 1.0;
 
-        // 아직은 받는 주체는 없습니다.
         return actualStrike;
     }
 
