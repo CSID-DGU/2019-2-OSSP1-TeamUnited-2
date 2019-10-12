@@ -16,6 +16,14 @@ public class Strike
         this.attackPosition = attackPosition;
     }
 
+    public Strike(Strike strike)
+    {
+        this.damage = strike.damage;
+        this.force = strike.force;
+        this.attackPosition = strike.attackPosition;
+        this.attacker = strike.attacker;
+    }
+
 
     // TODO : 곱연산자의 오버라이딩 필요, 곱셈으로 AttackTypeBase의 force와 damage를 비율적으로 조작
 }
