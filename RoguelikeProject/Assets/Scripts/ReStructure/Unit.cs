@@ -6,6 +6,7 @@ public class Unit : MonoBehaviour
 {
     public int HP;
     protected int currentHP;
+    public int GetHP() {return currentHP;}
     public double maxSpeed;
     public double acceleration;
     public Vector2 faceDirection;
@@ -24,18 +25,28 @@ public class Unit : MonoBehaviour
         GetComponent<Rigidbody2D>().AddForce(direction * (float)acceleration, ForceMode2D.Impulse);
     }
 
-    public virtual void GetDamage(int damage)
+    public virtual int GetDamage(int damage)
     // 모든 유닛의 HP 조작 처리는 이 메서드를 사용해야만 합니다.
     // 유닛 종류별 재정의 하는것이 *강력히* 권장됩니다.
     {
-        currentHP -= damage;
+        // 실제로 받게 될 데미지를 추적연산합니다.
+        int actualDamage = damage;
+        
+        // 실제 연산
+        currentHP -= actualDamage;
+
+        // 추적된 값을 반환합니다.        
+        return actualDamage;
     }
 
-    public void GetStrike (Strike strike)
+    public Strike GetStrike (Strike strike)
     // 모든 유닛의 모든 피격은 이 메서드를 사용해야만 합니다. 
     // 직접적인 HP, transform 등의 조작은 나중에 큰 문제를 야기할 수 있습니다.
     {
-        // 호출하는 순간 강한 힘으로 객체를 밀어버립니다.
+        // 실제로 받게 되는 물리량을 추적연산합니다.
+        Strike actualStrike = new Strike(strike);
+
+        // 호출하는 순간 강한 힘으로 오브젝트를 밀어버립니다.
         Vector2 pushDirection = (Vector2)transform.position - strike.attackPosition;
         pushDirection.Normalize(); 
         if (gameObject.GetComponent<Rigidbody2D>())
@@ -43,9 +54,11 @@ public class Unit : MonoBehaviour
            gameObject.GetComponent<Rigidbody2D>().AddForce(pushDirection * (float)strike.force, ForceMode2D.Impulse);
         }
 
-        // 데미지가 있다면 데미지도 받습니다.
-        this.GetDamage(strike.damage);
-        // currentHP -= strike.damage;
+        // 데미지가 있다면 데미지도 받습니다
+        actualStrike.damage = GetDamage(strike.damage);
+
+        // 추적한 값을 반환합니다.
+        return actualStrike;
     }
 
     protected void Update()
