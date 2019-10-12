@@ -5,39 +5,63 @@ using UnityEngine;
 
 public class Player : Unit
 {
-    protected double invincible; // 단위는 60프레임 초 입니다.
+    protected double invincible; // 단위는 초 입니다. (Time.deltaTime 사용)
     public Wieldable mainHand;
 
-    public GameObject faceArrow; // --for debug-- 플레이어가 보는 방향을 표현
+    public GameObject faceArrow; // 플레이어가 보는 방향을 그래픽적으로 표현하기 위한 이미지
 
     void Start()
     {
-        // --for debug--
         invincible = 5.0;
         faceArrow = Instantiate(faceArrow, (Vector2)transform.position, transform.rotation) as GameObject;
     }
     
-    public override void GetDamage(int damage)
+    public override int GetDamage(int damage)
     // 플레이어의 HP조작은 반드시 이 메서드를 통해서만 이루어져야 합니다.
     {
-        // 회복인 경우
+        // 실제로 받게 되는 데미지를 추적합니다.
+        int actualDamage = damage;
+
+        // 회복인 경우 (데미지가 음수)
         if (damage < 0)
         {
-            currentHP -= damage;
-            if (currentHP > HP)
+            // 최대 HP를 넘길 수 없습니다.
+            if (currentHP - damage > HP)
+            {
+                actualDamage = currentHP - HP;
                 currentHP = HP;
+            }
+            else
+            {
+                currentHP -= damage;
+            }
+        }
+        // 피해이지만 무적인 경우
+        else if (invincible > 0)
+        {
+            actualDamage = 0;
         }
         // 피해인 경우
-        else if (invincible < 0)
-            currentHP -= damage;
+        else
+        {
+           currentHP -= damage; 
+        }
+
+        return actualDamage;
     }
 
-    public new void GetStrike(Strike strike)
-    // Unit의 GetStrike를 공유합니다, 다만 플레이어는 데미지를 입을 경우 추가적인 무적 타임이 존재합니다.
+    public new Strike GetStrike(Strike strike)
+    // Unit의 GetStrike를 활용합니다, 다만 플레이어는 데미지를 입을 경우 추가적인 무적 타임이 존재합니다.
     {
-        base.GetStrike(strike);
-        if (strike.damage > 0)
+        // 실제로 받게 되는 물리량을 추적중입니다.
+        Strike actualStrike = base.GetStrike(strike);
+
+        // 실제로 받은 데미지가 존재한다면 무적시간 추가
+        if (actualStrike.damage > 0)
             invincible += 1.0;
+
+        // 아직은 받는 주체는 없습니다.
+        return actualStrike;
     }
 
     public void Wield(Wieldable weapon)

@@ -29,15 +29,21 @@ public class Unit : MonoBehaviour
     // 모든 유닛의 HP 조작 처리는 이 메서드를 사용해야만 합니다.
     // 유닛 종류별 재정의 하는것이 *강력히* 권장됩니다.
     {
+        // 실제로 받게 되는 데미지를 추적합니다. 현재로써는 크게 차이가 없습니다.
         int actualDamage = damage;
+        
+        // 데미지 계산
         currentHP -= damage;
-        return damage;
+
+        // 추적된 값을 반환합니다.        
+        return actualDamage;
     }
 
     public Strike GetStrike (Strike strike)
     // 모든 유닛의 모든 피격은 이 메서드를 사용해야만 합니다. 
     // 직접적인 HP, transform 등의 조작은 나중에 큰 문제를 야기할 수 있습니다.
     {
+        // 실제로 받게 되는 물리량을 추적합니다.
         Strike actualStrike = new Strike(strike);
 
         // 호출하는 순간 강한 힘으로 객체를 밀어버립니다.
@@ -51,6 +57,7 @@ public class Unit : MonoBehaviour
         // 데미지가 있다면 데미지도 받습니다.
         actualStrike.damage = GetDamage(strike.damage);
 
+        // 추적한 값을 반환합니다.
         return actualStrike;
     }
 
