@@ -14,7 +14,6 @@ public class Unit : MonoBehaviour
     protected void Start()
     {
         currentHP = HP;
-
     }
 
     protected void Move(Vector2 direction)
@@ -62,13 +61,19 @@ public class Unit : MonoBehaviour
         return actualStrike;
     }
 
+    protected virtual void SelfDestruction()
+    // 기본적으로는 단순히 오브젝트를 파괴하는것으로 처리했습니다.
+    // 오버라이딩해서 개별 처리를 구현하시길 바랍니다.
+    {
+        Destroy(gameObject);
+    }
+
     protected void Update()
     {
         if (currentHP < 0)
         {
-            // 일단은 HP가 움수가 되면 오브젝트를 파괴하도록 했습니다.
-            // 플레이어 등의 경우 단순 오브젝트 파괴는 문제가 될 수 있으므로 각 유닛별 다른 처리가 필요할 것입니다.
-          //  Destroy(gameObject);
+            // 유닛별로 다른 메서드를 호출합니다.
+            SelfDestruction();
         }
     }
 }

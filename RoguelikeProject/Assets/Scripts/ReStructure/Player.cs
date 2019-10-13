@@ -13,7 +13,7 @@ public class Player : Unit
 
     void Start()
     {
-        //invincible = 5.0;
+        invincible = 5.0;
         faceArrow = Instantiate(faceArrow, (Vector2)transform.position, transform.rotation) as GameObject;
         currentHP = HP;
     }
@@ -40,18 +40,13 @@ public class Player : Unit
         // 실제 피해 연산 (회복일 수 있습니다)
         currentHP -= actualDamage;  
 
-        plyaerDeath();
-
         return actualDamage;
     }
 
-    void plyaerDeath()
+    protected override void SelfDestruction()
     {
-        if (currentHP <= 0)
-        {
-            gameObject.SetActive(false);
-            Invoke("nextScene", 1);
-        }
+        gameObject.SetActive(false);
+        Invoke("nextScene", 1);
     }
     void nextScene()
     {
@@ -79,6 +74,9 @@ public class Player : Unit
 
     new void Update()
     {
+        // 우선 모든 유닛에 대한 공통적인 처리
+        base.Update();
+
         // 무적의 처리와 스프라이트 깜빡임의 처리
         if (invincible > 0.0)
         {
