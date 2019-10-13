@@ -30,9 +30,9 @@ public class Wieldable : MonoBehaviour
         // pos.x += direction.x;
         // pos.y += direction.y;
 
-        GameObject bullet = Instantiate(bulletType[0], (Vector2)transform.position + aim, owner.transform.rotation) as GameObject;
-        bullet.GetComponent<ProjectileOnHit>().SetAttacker(owner);
-        bullet.GetComponent<Rigidbody2D>().AddForce(aim * 1000.0f);
+        GameObject projectile = Instantiate(bulletType[0], (Vector2)transform.position + aim, owner.transform.rotation) as GameObject;
+        projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
+        projectile.GetComponent<Rigidbody2D>().AddForce(aim * 1000.0f);
     }
 
     public void OnHold()

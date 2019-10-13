@@ -6,7 +6,8 @@ public class ProjectileOnHit : MonoBehaviour
 {
     public int damage;
     public double force;
-    public int areaDamage;         public double areaForce;
+    public int areaDamage;         
+    public double areaForce;
     public double areaRadius;
     public GameObject Animation;
     protected GameObject areaEffect;
@@ -21,11 +22,6 @@ public class ProjectileOnHit : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (triggered)
-            return;
-        else
-            triggered = true;
-
         // 공격자는 투사체에 면역입니다. (일단은)
         if (col.gameObject == attacker)
             return;
@@ -34,6 +30,13 @@ public class ProjectileOnHit : MonoBehaviour
         if (col.gameObject.GetComponent<Rigidbody2D>() == null)
             return;
 
+        // 이미 작동된 투사체는 중복작동하지 않습니다.
+        if (triggered)
+            return;
+        else
+            triggered = true;
+
+        // 여기까지 왔다면 어떤 형태로든 투사체가 작동한 것입니다.
         // 대상이 유닛인 경우 맞은 대상에게 strike 객체를 전달하여 데미지를 입힙니다.
         if (col.gameObject.GetComponent<Unit>())
         {
@@ -49,8 +52,6 @@ public class ProjectileOnHit : MonoBehaviour
         areaEffect.GetComponent<AreaStrike>().SetStatus(areaDamage, areaForce, areaRadius);
         areaEffect.GetComponent<AreaStrike>().SetAttacker(attacker);
         areaEffect.GetComponent<AreaStrike>().Activate();
-
-        Debug.Log("Area Triggered!");
 
         // 애니메이션을 재생합니다
         if (Animation)

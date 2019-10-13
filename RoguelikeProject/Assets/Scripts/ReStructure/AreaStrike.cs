@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AreaStrike : MonoBehaviour
 {
-    // public AttackTypeArea attackType;
     public int damage;
     public double force;
     public double radius;
@@ -20,6 +19,7 @@ public class AreaStrike : MonoBehaviour
     {
         this.attackerPosition = attacker.transform.position;
         this.attacker = attacker;
+        Debug.Log(attacker.transform.position);
     }
     public void SetStatus(int damage, double force, double radius)
     {
@@ -28,11 +28,11 @@ public class AreaStrike : MonoBehaviour
         this.radius = radius;
     }
 
-    protected IEnumerator SelfDestruct()
-    {
-        yield return new WaitForSeconds(5);
-        Destroy(gameObject);
-    }
+    // protected IEnumerator SelfDestruct()
+    // {
+    //     yield return new WaitForSeconds(5);
+    //     Destroy(gameObject);
+    // }
     public void Activate()
     {
         Strike strike = new Strike(damage, force, transform.position, gameObject);
