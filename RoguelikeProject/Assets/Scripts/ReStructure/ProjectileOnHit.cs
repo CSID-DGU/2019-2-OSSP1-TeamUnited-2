@@ -41,6 +41,7 @@ public class ProjectileOnHit : MonoBehaviour
         // areaEffect = Instantiate(sample, transform.position, Quaternion.identity) as GameObject;
         areaEffect.AddComponent<AreaStrike>();
         areaEffect.GetComponent<AreaStrike>().SetStatus(areaDamage, areaForce, areaRadius);
+        areaEffect.GetComponent<AreaStrike>().SetAttacker(attacker);
         areaEffect.GetComponent<AreaStrike>().Activate();
 
         // 애니메이션을 재생합니다
