@@ -70,7 +70,7 @@ public class Unit : MonoBehaviour
 
     protected void Update()
     {
-        if (currentHP < 0)
+        if (currentHP <= 0)
         {
             // 유닛별로 다른 메서드를 호출합니다.
             SelfDestruction();
