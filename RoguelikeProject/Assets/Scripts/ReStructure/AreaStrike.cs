@@ -16,6 +16,11 @@ public class AreaStrike : MonoBehaviour
         this.attackerPosition = attackerPosition;
         this.attacker = attacker;
     }
+    public void SetAttacker(GameObject attacker)
+    {
+        this.attackerPosition = attacker.transform.position;
+        this.attacker = attacker;
+    }
     public void SetStatus(int damage, double force, double radius)
     {
         this.damage = damage;
