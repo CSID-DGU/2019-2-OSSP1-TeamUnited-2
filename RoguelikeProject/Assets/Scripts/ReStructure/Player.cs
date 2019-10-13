@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : Unit
 {
@@ -12,8 +13,9 @@ public class Player : Unit
 
     void Start()
     {
-        invincible = 5.0;
+        //invincible = 5.0;
         faceArrow = Instantiate(faceArrow, (Vector2)transform.position, transform.rotation) as GameObject;
+        currentHP = HP;
     }
 
     public override int GetDamage(int damage)
@@ -38,7 +40,22 @@ public class Player : Unit
         // 실제 피해 연산 (회복일 수 있습니다)
         currentHP -= actualDamage;
 
+        plyaerDeath();
+
         return actualDamage;
+    }
+
+    void plyaerDeath()
+    {
+        if (currentHP <= 0)
+        {
+            gameObject.SetActive(false);
+            Invoke("nextScene", 1);
+        }
+    }
+    void nextScene()
+    {
+        SceneManager.LoadScene("Main", LoadSceneMode.Single);
     }
 
     public new Strike GetStrike(Strike strike)
