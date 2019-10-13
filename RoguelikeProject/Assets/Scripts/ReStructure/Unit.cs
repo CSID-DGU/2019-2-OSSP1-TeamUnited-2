@@ -14,6 +14,7 @@ public class Unit : MonoBehaviour
     protected void Start()
     {
         currentHP = HP;
+
     }
 
     protected void Move(Vector2 direction)
@@ -45,7 +46,6 @@ public class Unit : MonoBehaviour
     {
         // 실제로 받게 되는 물리량을 추적연산합니다.
         Strike actualStrike = new Strike(strike);
-
         // 호출하는 순간 강한 힘으로 오브젝트를 밀어버립니다.
         Vector2 pushDirection = (Vector2)transform.position - strike.attackPosition;
         pushDirection.Normalize(); 
@@ -57,6 +57,7 @@ public class Unit : MonoBehaviour
         // 데미지가 있다면 데미지도 받습니다
         actualStrike.damage = GetDamage(strike.damage);
 
+        //Debug.Log(strike.damage);
         // 추적한 값을 반환합니다.
         return actualStrike;
     }
@@ -67,7 +68,7 @@ public class Unit : MonoBehaviour
         {
             // 일단은 HP가 움수가 되면 오브젝트를 파괴하도록 했습니다.
             // 플레이어 등의 경우 단순 오브젝트 파괴는 문제가 될 수 있으므로 각 유닛별 다른 처리가 필요할 것입니다.
-            Destroy(gameObject);
+          //  Destroy(gameObject);
         }
     }
 }

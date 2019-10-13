@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-    private Text levelText;
     private GameObject levelImage;
 
     public int width;
@@ -37,32 +35,11 @@ public class GameManager : MonoBehaviour
 
         levelImage = GameObject.Find("LevelImage");
 
-        levelText = GameObject.Find("Text").GetComponent<Text>();
-
         levelImage.SetActive(false);
 
         SpawnedPlayer.SetActive(true);
 
         AstarPath.active.Scan(); // 이거를 해야 벽하고 부딪히네요
-    }
-
-    void Update()
-    {
-        if (PlayerControl.knowHP < 0)
-        {
-            SpawnedPlayer.SetActive(false);
-            Invoke("nextScene", 1);
-        }
-        else
-        {
-            levelText.text = null;
-            levelImage.SetActive(false);
-        }
-    }
-
-    void nextScene()
-    {
-        SceneManager.LoadScene("Main", LoadSceneMode.Single);
     }
 
     void BoardSetup()
