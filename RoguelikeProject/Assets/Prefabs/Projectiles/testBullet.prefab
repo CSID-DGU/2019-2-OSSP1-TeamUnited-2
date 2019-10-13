@@ -46,10 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2f65cb9ccf35e4e8d22260eb35e93b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 2
   force: 2
-  areaEffect: {fileID: 4864773603658844884, guid: 3dc59a52e3478d04d8a3408e3073d474,
-    type: 3}
+  areaDamage: 0
+  areaForce: 0
+  areaRadius: 0
+  Animation: {fileID: 0}
 --- !u!212 &3823234243384223716
 SpriteRenderer:
   m_ObjectHideFlags: 0
