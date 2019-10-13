@@ -11,7 +11,6 @@ public class ItemInstant : MonoBehaviour
         if (col.GetComponent<Player>())
         {
             int damage = -HPMod;
-            Debug.Log(HPMod);
             col.GetComponent<Player>().GetDamage(damage);
             Destroy(gameObject);
         }

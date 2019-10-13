@@ -38,10 +38,7 @@ public class Player : Unit
         }
         
         // 실제 피해 연산 (회복일 수 있습니다)
-        currentHP -= actualDamage;
-
-        Debug.Log(damage);
-        
+        currentHP -= actualDamage;  
 
         plyaerDeath();
 
