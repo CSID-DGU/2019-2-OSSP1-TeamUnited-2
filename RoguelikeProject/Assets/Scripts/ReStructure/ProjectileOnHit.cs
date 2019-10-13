@@ -17,6 +17,12 @@ public class ProjectileOnHit : MonoBehaviour
     {
         this.attacker = attacker;
     }
+
+    protected void SingletonAreaEffect()
+    {
+
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
         // 공격자는 투사체에 면역입니다. (일단은)
@@ -35,13 +41,22 @@ public class ProjectileOnHit : MonoBehaviour
         }
 
         // 범위 공격을 하는 객체를 생성하여, 작동합니다.
-        areaEffect = new GameObject();
+        if (areaEffect)
+        {
+            return;
+        }
+        else
+        {
+            areaEffect = new GameObject();
+        }
         areaEffect.transform.position = transform.position;
         // areaEffect = Instantiate(sample, transform.position, Quaternion.identity) as GameObject;
         areaEffect.AddComponent<AreaStrike>();
         areaEffect.GetComponent<AreaStrike>().SetStatus(areaDamage, areaForce, areaRadius);
-        // areaEffect.GetComponent<AreaStrike>().SetAttacker(attacker);
+        areaEffect.GetComponent<AreaStrike>().SetAttacker(attacker);
         areaEffect.GetComponent<AreaStrike>().Activate();
+
+        Debug.Log("Area Triggered!");
 
         // 애니메이션을 재생합니다
         if (Animation)
