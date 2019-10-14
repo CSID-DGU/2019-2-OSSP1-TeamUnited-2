@@ -8,7 +8,6 @@ public class Player : Unit
 {
     protected double invincible; // 단위는 초 입니다. (Time.deltaTime 사용)
     public Wieldable mainHand;
-    public GameObject heart;
 
     public GameObject faceArrow; // 플레이어가 보는 방향을 그래픽적으로 표현하기 위한 이미지
 
@@ -31,7 +30,6 @@ public class Player : Unit
             // 최대 HP를 넘길 수 없습니다.
             if (currentHP - damage > HP)
                 actualDamage = currentHP - HP;
-            PlusHP();
         }
         // 피해이지만 무적인 경우
         else if (invincible > 0)
@@ -43,12 +41,6 @@ public class Player : Unit
         currentHP -= actualDamage;  
 
         return actualDamage;
-    }
-
-    void PlusHP()
-    {
-        GameObject heartImg = Instantiate(heart);
-        heartImg.transform.SetParent(GameObject.Find("Heart").transform);
     }
 
     protected override void SelfDestruction()

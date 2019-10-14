@@ -25,8 +25,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2618062061517797899}
-  m_LocalRotation: {x: 0, y: 0, z: -0.94230753, w: -0.33474854}
-  m_LocalPosition: {x: 8.622447, y: 33.86958, z: -10}
+  m_LocalRotation: {x: 0, y: 0, z: 0.8554097, w: 0.51795197}
+  m_LocalPosition: {x: 6.960411, y: 35.521374, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -49,7 +49,7 @@ MonoBehaviour:
   autoFire: 0
   cooldown: []
   owner: {fileID: 0}
-  aim: {x: 0.9981633, y: 0.060581546}
+  aim: {x: -0.9992139, y: -0.039643817}
 --- !u!212 &475509031559990155
 SpriteRenderer:
   m_ObjectHideFlags: 0
