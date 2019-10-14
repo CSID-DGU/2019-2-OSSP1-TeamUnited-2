@@ -1829,7 +1829,7 @@ PrefabInstance:
         type: 3}
       propertyPath: SpawnedItem1
       value: 
-      objectReference: {fileID: 1712138245859150083, guid: 8ce2bc3b971b56d4dba7e346da997fa3,
+      objectReference: {fileID: 1712138245859150083, guid: e83e47e070e38054c901b95d3202ffe2,
         type: 3}
     - target: {fileID: 4357949787478446540, guid: 53a49fa310d7dc14ba3ecc62066c985b,
         type: 3}
