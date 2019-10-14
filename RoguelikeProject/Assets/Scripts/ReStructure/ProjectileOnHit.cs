@@ -31,10 +31,13 @@ public class ProjectileOnHit : MonoBehaviour
             return;
 
         // 이미 작동된 투사체는 중복작동하지 않습니다.
-        if (triggered)
-            return;
-        else
-            triggered = true;
+        lock(this)
+        {
+            if (triggered)
+                return;
+            else
+                triggered = true;
+        }
 
         // 여기까지 왔다면 어떤 형태로든 투사체가 작동한 것입니다.
         // 대상이 유닛인 경우 맞은 대상에게 strike 객체를 전달하여 데미지를 입힙니다.
