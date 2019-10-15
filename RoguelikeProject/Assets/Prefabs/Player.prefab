@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6638464269740965972}
   - component: {fileID: 2154451577142106397}
-  - component: {fileID: 6638464269740965970}
   - component: {fileID: 6638464269740965971}
   - component: {fileID: 6638464269740965968}
   - component: {fileID: 6638464269740965969}
@@ -52,26 +51,9 @@ MonoBehaviour:
   acceleration: 1
   faceDirection: {x: 0, y: 0}
   mainHand: {fileID: 350891713008431030, guid: fa8ab87752704a24c946612d51e9b787, type: 3}
+  heart: {fileID: 0}
   faceArrow: {fileID: 1431474610208893003, guid: f1766503911121d40a2cac0d7008f7f0,
     type: 3}
---- !u!114 &6638464269740965970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6638464269740965934}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa37012a028a1eb4583a567caab4fdd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  life: 4
-  invincible: 10
-  makeBullet:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!212 &6638464269740965971
 SpriteRenderer:
   m_ObjectHideFlags: 0

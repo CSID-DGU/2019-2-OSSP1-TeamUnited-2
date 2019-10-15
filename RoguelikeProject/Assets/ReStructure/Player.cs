@@ -8,6 +8,8 @@ public class Player : Unit
 {
     protected double invincible; // 단위는 초 입니다. (Time.deltaTime 사용)
     public Wieldable mainHand;
+    public GameObject heart;
+    ArrayList HeartList = new ArrayList(); // 하트 관리
 
     public GameObject faceArrow; // 플레이어가 보는 방향을 그래픽적으로 표현하기 위한 이미지
 
@@ -16,6 +18,7 @@ public class Player : Unit
         invincible = 5.0;
         faceArrow = Instantiate(faceArrow, (Vector2)transform.position, transform.rotation) as GameObject;
         currentHP = HP;
+        SetHeart();
     }
 
     public override int GetDamage(int damage)
@@ -30,17 +33,49 @@ public class Player : Unit
             // 최대 HP를 넘길 수 없습니다.
             if (currentHP - damage > HP)
                 actualDamage = currentHP - HP;
+            PlusHP();
         }
         // 피해이지만 무적인 경우
         else if (invincible > 0)
         {
             actualDamage = 0;
         }
-        
+        else // 데미지 입은경우
+            MinusHP(damage);
+
         // 실제 피해 연산 (회복일 수 있습니다)
-        currentHP -= actualDamage;  
+        currentHP -= actualDamage;
 
         return actualDamage;
+    }
+
+    void PlusHP() // 피채울때 생성
+    {
+        GameObject heartImg = Instantiate(heart);
+        heartImg.transform.SetParent(GameObject.Find("Heart").transform);
+        HeartList.Add(heartImg);
+    }
+
+    void MinusHP(int dmg) // 데미지 받으면 삭제.
+    {
+        for (int i = 0; i < dmg; i++)
+        {
+            if (HeartList.Count > 0) // HP가 0보다 클때.
+            {
+                Destroy((GameObject)HeartList[0]);
+                HeartList.RemoveAt(0);
+            }
+        }
+    }
+
+    void SetHeart()
+    {
+        for(int i=0;i< currentHP; i++) // 현재 체력만큼 생성.
+        {
+            GameObject heartImg = Instantiate(heart);
+            heartImg.transform.SetParent(GameObject.Find("Heart").transform);
+            HeartList.Add(heartImg);
+        }
     }
 
     protected override void SelfDestruction()
