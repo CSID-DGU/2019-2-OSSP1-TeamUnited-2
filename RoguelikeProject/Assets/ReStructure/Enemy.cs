@@ -12,4 +12,10 @@ public class Enemy : Unit
     {
         base.Update();
     }
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.gameObject.name == "Player") ;
+            //coll.gameObject.GetComponent<Player>().color
+
+    }
 }
