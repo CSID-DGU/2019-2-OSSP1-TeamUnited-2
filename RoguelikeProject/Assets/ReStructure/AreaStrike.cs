@@ -6,7 +6,7 @@ public class AreaStrike : MonoBehaviour
 {
     public int damage;
     public double force;
-    public double radius;
+    public float radius;
     protected Vector2 attackerPosition;
     protected GameObject attacker;
 
@@ -20,39 +20,32 @@ public class AreaStrike : MonoBehaviour
         this.attackerPosition = attacker.transform.position;
         this.attacker = attacker;
     }
-    public void SetStatus(int damage, double force, double radius)
+    public void SetStatus(int damage, double force, float radius)
     {
         this.damage = damage;
         this.force = force;
         this.radius = radius;
     }
 
-    // protected IEnumerator SelfDestruct()
-    // {
-    //     yield return new WaitForSeconds(5);
-    //     Destroy(gameObject);
-    // }
     public void Activate()
     {
         Strike strike = new Strike(damage, force, transform.position, gameObject);
-        Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, (float)radius);
+        Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, radius);
         foreach (Collider2D col in cols)
         {
             if (col.gameObject.GetComponent<Unit>())
             {
+                Strike actualStrike = new Strike(strike);
                 if (col.gameObject == attacker)
                 {
-                    Strike emptyStrike = new Strike(strike);
-                    emptyStrike.damage = 0;
-                    col.gameObject.GetComponent<Unit>().GetStrike(emptyStrike);
+                    actualStrike.damage = 0;
                 }
-                else
-                {
-                    col.gameObject.GetComponent<Unit>().GetStrike(strike);
-                }
+                float distance = (transform.position - col.transform.position).sqrMagnitude;
+                float distanceRate = distance / radius;
+
+                col.gameObject.GetComponent<Unit>().GetStrike(actualStrike);
             }
         }
-        // StartCoroutine(SelfDestruct());
         Destroy(gameObject);
     }
 }
