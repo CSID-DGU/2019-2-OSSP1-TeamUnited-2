@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wieldable : MonoBehaviour
+public class Wieldable : MonoBehaviour, IWieldable
 {
     public GameObject[] bulletType;
     public bool autoFire;
@@ -23,13 +23,6 @@ public class Wieldable : MonoBehaviour
 
     public void OnPush()
     {
-        // Vector2 direction = aim;
-        // direction.Normalize();
-
-        // Vector3 pos = owner.transform.position;
-        // pos.x += direction.x;
-        // pos.y += direction.y;
-
         GameObject projectile = Instantiate(bulletType[0], (Vector2)transform.position + aim, owner.transform.rotation) as GameObject;
         projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
         projectile.GetComponent<Rigidbody2D>().AddForce(aim * 1000.0f);
