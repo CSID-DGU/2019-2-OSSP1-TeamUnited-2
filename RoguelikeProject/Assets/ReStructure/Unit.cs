@@ -6,7 +6,7 @@ public class Unit : MonoBehaviour
 {
     public int HP;
     protected int currentHP;
-    public int GetHP() {return currentHP;}
+    public int CurrentHP() {return currentHP;}
     public double maxSpeed;
     public double acceleration;
     public Vector2 faceDirection;
