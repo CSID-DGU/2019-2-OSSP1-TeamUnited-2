@@ -293,6 +293,11 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 3040351738843040593, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: force
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a723301da2a15450183b3e720c8c2ca9, type: 3}
 --- !u!4 &110851717 stripped
@@ -988,6 +993,11 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 3040351738843040593, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: force
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a723301da2a15450183b3e720c8c2ca9, type: 3}
 --- !u!1 &1263818757 stripped
@@ -1014,6 +1024,7 @@ MonoBehaviour:
   faceDirection: {x: 0, y: 0}
   weapon: {fileID: 0}
   att: 1
+  force: 0
 --- !u!1 &1324358566
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,6 +1231,11 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 3040351738843040593, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: force
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a723301da2a15450183b3e720c8c2ca9, type: 3}
 --- !u!4 &1414528970 stripped
@@ -1419,6 +1435,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Radius
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3040351738843040593, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: force
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a723301da2a15450183b3e720c8c2ca9, type: 3}
