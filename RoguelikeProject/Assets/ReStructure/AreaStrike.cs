@@ -55,7 +55,6 @@ public class AreaStrike : MonoBehaviour
                     float forceMod = ((radius - distance) / radius);
                     forceMod = forceMod * (1.0f - (float)minForceRate/100.0f) + (float)minForceRate/100.0f;
                     actualStrike.force *= forceMod;
-                    Debug.Log(forceMod);
                 }
 
                 // 계산된 물리량을 전달합니다.
