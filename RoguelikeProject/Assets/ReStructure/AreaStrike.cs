@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class AreaStrike : MonoBehaviour
@@ -7,6 +8,7 @@ public class AreaStrike : MonoBehaviour
     public int damage;
     public double force;
     public float radius;
+    public float minForceRate = 50f;
     protected Vector2 attackerPosition;
     protected GameObject attacker;
 
@@ -40,8 +42,12 @@ public class AreaStrike : MonoBehaviour
                 {
                     actualStrike.damage = 0;
                 }
+                // 공격자와의 거리를 측정합니다                
                 float distance = (transform.position - col.transform.position).sqrMagnitude;
-                float distanceRate = distance / radius;
+                Debug.Log(distance);
+                // 거리가 멀 수록 위력은 약해집니다. 최대 거리에서는 minForceRate 퍼센트만의 위력이 전해집니다.
+                float forceMod = (distance / radius) * (1 - minForceRate) + minForceRate;
+                actualStrike.force *= forceMod;
 
                 col.gameObject.GetComponent<Unit>().GetStrike(actualStrike);
             }
