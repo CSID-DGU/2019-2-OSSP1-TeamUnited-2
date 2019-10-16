@@ -6,6 +6,7 @@ public class CameraScript : MonoBehaviour
 {
     public GameObject player;
     public GameObject heart;
+    public GameObject heartBoard;
     ArrayList HeartList = new ArrayList(); // 하트 관리
 
     void Start()
@@ -13,7 +14,7 @@ public class CameraScript : MonoBehaviour
         for (int i = 0; i < player.GetComponent<Player>().CurrentHP(); i++) // 현재 체력만큼 생성.
         {
             GameObject heartImg = Instantiate(heart);
-            heartImg.transform.SetParent(GameObject.Find("Heart").transform);
+            heartImg.transform.SetParent(heartBoard.transform);
             HeartList.Add(heartImg);
         }
     }
@@ -25,7 +26,7 @@ public class CameraScript : MonoBehaviour
         if (HeartList.Count < player.GetComponent<Player>().CurrentHP())
         {
             GameObject heartImg = Instantiate(heart);
-            heartImg.transform.SetParent(GameObject.Find("Heart").transform);
+            heartImg.transform.SetParent(heartBoard.transform);
             HeartList.Add(heartImg);
         }
         else if(HeartList.Count > player.GetComponent<Player>().CurrentHP())

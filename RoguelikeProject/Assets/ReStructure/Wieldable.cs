@@ -2,35 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wieldable : MonoBehaviour
+public class Wieldable : MonoBehaviour, IWieldable
 {
     public GameObject[] bulletType;
     public bool autoFire;
-    protected bool holding;
     public double[] cooldown;
     protected double cooldownWait;
     public GameObject owner;
     public Vector2 aim;
 
-    public void SetHold()
-    {
-        holding = true;
-    }
-    public void SetUnhold()
-    {
-        holding = false;
-    }
-
     public void OnPush()
     {
-        // Vector2 direction = aim;
-        // direction.Normalize();
-
-        // Vector3 pos = owner.transform.position;
-        // pos.x += direction.x;
-        // pos.y += direction.y;
-
-        GameObject projectile = Instantiate(bulletType[0], (Vector2)transform.position + aim, owner.transform.rotation) as GameObject;
+        GameObject projectile = Instantiate(bulletType[0], (Vector2)transform.position + aim * 0.5f, owner.transform.rotation) as GameObject;
         projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
         projectile.GetComponent<Rigidbody2D>().AddForce(aim * 1000.0f);
     }

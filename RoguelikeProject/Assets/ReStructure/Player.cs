@@ -22,22 +22,30 @@ public class Player : Unit
     // 플레이어의 HP조작은 반드시 이 메서드를 통해서만 이루어져야 합니다.
     {
         // 실제로 받게 되는 데미지를 추적합니다.
-        int actualDamage = damage;
+        int actualDamage;
 
+        // 이하 if문의 모든 경로에는 actualDamage변수의 처리가 포함되어야 합니다.
         // 회복인 경우 (데미지가 음수)
         if (damage < 0)
         {
             // 최대 HP를 넘길 수 없습니다.
             if (currentHP - damage > HP)
                 actualDamage = currentHP - HP;
+            else
+                actualDamage = damage;
         }
         // 피해이지만 무적인 경우
         else if (invincible > 0)
         {
             actualDamage = 0;
         }
+        // 그 외에는 데미지를 그대로 받습니다 (일단은)
+        else
+        {
+            actualDamage = damage;
+        }
 
-        // 실제 피해 연산 (회복일 수 있습니다)
+        // 실제 연산된 피해 결과를 HP에 적용합니다. (회복일 수 있습니다)
         currentHP -= actualDamage;
 
         return actualDamage;
@@ -107,15 +115,11 @@ public class Player : Unit
 
         // 마우스 입력를 Wieldable 객체로 연결
         if (Input.GetMouseButtonDown(0))
-        {
             mainHand.OnPush();
-            mainHand.SetHold();
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
+        else if (Input.GetMouseButtonUp(0))
             mainHand.OnRelease();
-            mainHand.SetUnhold();
-        }
+        else if (Input.GetMouseButton(0))
+            mainHand.OnHold();
 
         // 무기들의 소유자 링크 처리
         mainHand.owner = gameObject;

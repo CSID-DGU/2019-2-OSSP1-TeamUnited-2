@@ -8,12 +8,11 @@ public class ProjectileOnHit : MonoBehaviour
     public double force;
     public int areaDamage;         
     public double areaForce;
-    public double areaRadius;
+    public float areaRadius;
     public GameObject Animation;
     protected GameObject areaEffect;
     protected GameObject attacker;
     protected bool triggered = false;
-
     public void SetAttacker(GameObject attacker)
     // 공격자가 투사체에 영향받지 않기를 원한다면 설정합니다 (옵션)
     {
