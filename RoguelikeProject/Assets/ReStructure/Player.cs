@@ -24,12 +24,15 @@ public class Player : Unit
         // 실제로 받게 되는 데미지를 추적합니다.
         int actualDamage;
 
+        // 이하 if문의 모든 경로에는 actualDamage변수의 처리가 포함되어야 합니다.
         // 회복인 경우 (데미지가 음수)
         if (damage < 0)
         {
             // 최대 HP를 넘길 수 없습니다.
             if (currentHP - damage > HP)
                 actualDamage = currentHP - HP;
+            else
+                actualDamage = damage;
         }
         // 피해이지만 무적인 경우
         else if (invincible > 0)
