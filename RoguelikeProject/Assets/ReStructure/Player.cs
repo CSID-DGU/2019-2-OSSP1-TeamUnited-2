@@ -107,15 +107,11 @@ public class Player : Unit
 
         // 마우스 입력를 Wieldable 객체로 연결
         if (Input.GetMouseButtonDown(0))
-        {
             mainHand.OnPush();
-            mainHand.SetHold();
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
+        else if (Input.GetMouseButtonUp(0))
             mainHand.OnRelease();
-            mainHand.SetUnhold();
-        }
+        else if (Input.GetMouseButton(0))
+            mainHand.OnHold();
 
         // 무기들의 소유자 링크 처리
         mainHand.owner = gameObject;

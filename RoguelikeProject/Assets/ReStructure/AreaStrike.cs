@@ -44,7 +44,7 @@ public class AreaStrike : MonoBehaviour
                 }
                 // 공격자와의 거리를 측정합니다                
                 float distance = (transform.position - col.transform.position).sqrMagnitude;
-                Debug.Log(distance);
+                
                 // 거리가 멀 수록 위력은 약해집니다. 최대 거리에서는 minForceRate 퍼센트만의 위력이 전해집니다.
                 float forceMod = (distance / radius) * (1 - minForceRate) + minForceRate;
                 actualStrike.force *= forceMod;
