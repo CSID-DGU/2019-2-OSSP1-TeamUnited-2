@@ -13,7 +13,7 @@ public class Wieldable : MonoBehaviour, IWieldable
 
     public void OnPush()
     {
-        GameObject projectile = Instantiate(bulletType[0], (Vector2)transform.position + aim, owner.transform.rotation) as GameObject;
+        GameObject projectile = Instantiate(bulletType[0], (Vector2)transform.position + aim * 0.5f, owner.transform.rotation) as GameObject;
         projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
         projectile.GetComponent<Rigidbody2D>().AddForce(aim * 1000.0f);
     }

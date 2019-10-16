@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1417382109342578088}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.04, y: 23.354, z: 0}
+  m_LocalPosition: {x: 21.99, y: 23.354, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -49,7 +49,7 @@ MonoBehaviour:
   damage: 1
   force: 0
   areaDamage: 2
-  areaForce: 3
+  areaForce: 10
   areaRadius: 3
   Animation: {fileID: 7323742082746974975, guid: c80fb908485c2ad43b038e090aacf051,
     type: 3}
@@ -116,7 +116,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.2
 --- !u!50 &7988219957619724627
 Rigidbody2D:
   serializedVersion: 4
