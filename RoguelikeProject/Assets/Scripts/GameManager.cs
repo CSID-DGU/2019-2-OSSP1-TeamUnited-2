@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
                     GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
                     instance.transform.SetParent(boardHolder);
                 }
-                else
+                else if (GetSurroundingWallCount(x, y) == 0)
                 {
                     listX.Add(x);
                     listY.Add(y);

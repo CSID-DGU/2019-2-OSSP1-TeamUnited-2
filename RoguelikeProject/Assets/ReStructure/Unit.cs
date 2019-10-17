@@ -6,7 +6,13 @@ public class Unit : MonoBehaviour
 {
     public int HP;
     protected int currentHP;
-    public int CurrentHP() {return currentHP;}
+    public int CurrentHP() {return currentHP; }
+    private int coinScore;
+    public int CoinScore // 코인 점수 프로퍼티
+    {
+        get { return coinScore; }
+        set { coinScore = value; }
+    }
     public double maxSpeed;
     public double acceleration;
     public Vector2 faceDirection;
