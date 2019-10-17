@@ -11,7 +11,7 @@ public class CameraScript : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < player.GetComponent<Player>().CurrentHP(); i++) // 현재 체력만큼 생성.
+        for (int i = 0; i < player.GetComponent<Player>().CurrentHP; i++) // 현재 체력만큼 생성.
         {
             GameObject heartImg = Instantiate(heart);
             heartImg.transform.SetParent(heartBoard.transform);
@@ -23,15 +23,15 @@ public class CameraScript : MonoBehaviour
     {
         transform.position = Vector3.Lerp(transform.position, player.transform.position, 2f * Time.deltaTime);
         transform.Translate(Vector3.back);
-        if (HeartList.Count < player.GetComponent<Player>().CurrentHP())
+        if (HeartList.Count < player.GetComponent<Player>().CurrentHP)
         {
             GameObject heartImg = Instantiate(heart);
             heartImg.transform.SetParent(heartBoard.transform);
             HeartList.Add(heartImg);
         }
-        else if(HeartList.Count > player.GetComponent<Player>().CurrentHP())
+        else if(HeartList.Count > player.GetComponent<Player>().CurrentHP)
         {
-            for (int i = 0; i < HeartList.Count - player.GetComponent<Player>().CurrentHP(); i++)
+            for (int i = 0; i < HeartList.Count - player.GetComponent<Player>().CurrentHP; i++)
             {
                 if (HeartList.Count > 0) // HP가 0보다 클때.
                 {

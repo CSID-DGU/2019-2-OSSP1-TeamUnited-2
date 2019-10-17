@@ -6,9 +6,13 @@ public class Unit : MonoBehaviour
 {
     public int HP;
     protected int currentHP;
-    public int CurrentHP() {return currentHP; }
+    public int CurrentHP 
+    { 
+        get { return currentHP; } 
+        set { currentHP = value; } 
+    }
     private int coinScore;
-    public int CoinScore // 코인 점수 프로퍼티
+    public int CoinScore
     {
         get { return coinScore; }
         set { coinScore = value; }

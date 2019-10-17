@@ -43,14 +43,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc418b056e459854aa4bb54279f3398a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 100
+  height: 100
   boundary: {fileID: 0}
   floor: {fileID: 0}
   wall: {fileID: 0}
   SpawnedPlayer: {fileID: 0}
-  SpawnedEnemy: {fileID: 0}
-  SpawnedItem: {fileID: 0}
-  Camera: {fileID: 0}
-  density: 0
-  smoothness: 0
+  SpawnedEnemy:
+  - {fileID: 0}
+  SpawnedRandEnemy: []
+  SpawnedItem1: {fileID: 0}
+  SpawnedItem2: {fileID: 0}
+  SpawnedItem3: {fileID: 0}
+  density: 60
+  smoothness: 10
+  postsmooth: 1
