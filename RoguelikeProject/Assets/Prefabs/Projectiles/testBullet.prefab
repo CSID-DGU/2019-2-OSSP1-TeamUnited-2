@@ -48,9 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 2
   force: 2
-  areaDamage: 0
-  areaForce: 0
-  areaRadius: 0
+  areaDamage: 1
+  areaForce: 1
+  areaRadius: 1
   Animation: {fileID: 0}
 --- !u!212 &3823234243384223716
 SpriteRenderer:
