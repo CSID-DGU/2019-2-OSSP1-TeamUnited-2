@@ -13,6 +13,9 @@ public class ProjectileOnHit : MonoBehaviour
     protected GameObject areaEffect;
     protected GameObject attacker;
     protected bool triggered = false;
+
+    Animator EnemyAni; // 애니메이션 쓸거임
+
     public void SetAttacker(GameObject attacker)
     // 공격자가 투사체에 영향받지 않기를 원한다면 설정합니다 (옵션)
     {
@@ -44,6 +47,9 @@ public class ProjectileOnHit : MonoBehaviour
         {
             Strike strike = new Strike(damage, force, transform.position);
             col.gameObject.GetComponent<Unit>().GetStrike(strike);
+            EnemyAni = col.gameObject.GetComponent<Animator>();
+            EnemyAni.SetTrigger("New Trigger");
+
         }
 
         // 범위 공격을 하는 객체를 생성하여, 작동합니다.

@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ecf5cc6c3477d54d82a677c570b0cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  force: 0
-  radius: 0
+  damage: 1
+  force: 1
+  radius: 1
+  minForceRate: 25
