@@ -55,7 +55,7 @@ MonoBehaviour:
   faceDirection: {x: 0, y: 0}
   weapon: {fileID: 0}
   att: 1
-  force: 0
+  force: 1
 --- !u!212 &9005390976539452098
 SpriteRenderer:
   m_ObjectHideFlags: 0
