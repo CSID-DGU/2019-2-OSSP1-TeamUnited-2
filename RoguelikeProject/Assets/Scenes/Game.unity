@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 56837073}
   - component: {fileID: 56837074}
   m_Layer: 5
-  m_Name: Heart
+  m_Name: HeartBoard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,8 +145,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.024383545, y: -0.038711548}
-  m_SizeDelta: {x: 46.05, y: 18.95}
+  m_AnchoredPosition: {x: -2.149, y: 6.784}
+  m_SizeDelta: {x: 34.71, y: 9.323}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &56837074
 MonoBehaviour:
@@ -1472,6 +1472,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 899491818}
   heart: {fileID: 5761003882752725896, guid: b3113d07eacedbd4b8f4890ad2d84635, type: 3}
+  heartBoard: {fileID: 56837072}
 --- !u!81 &1006282845
 AudioListener:
   m_ObjectHideFlags: 0
