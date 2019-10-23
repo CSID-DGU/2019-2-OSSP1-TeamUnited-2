@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
-
+using System.Threading;
 public class GameManager : MonoBehaviour
 {
     private GameObject levelImage;
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
         {
             SmoothMapPsudo();
         }
-    
+
         for (int y = 0; y < height; ++y)
         {
             for (int x = 0; x < width; ++x)
@@ -85,10 +85,13 @@ public class GameManager : MonoBehaviour
                     GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
                     instance.transform.SetParent(boardHolder);
                 }
-                else if (GetSurroundingWallCount(x, y) == 0)
+                else if (map[x, y] == 0) // 맵이 0이고
                 {
-                    listX.Add(x);
-                    listY.Add(y);
+                    if (NoWallSurround(x, y)) // 주변에 겹칠만한게 없을때.
+                    {
+                        listX.Add(x);
+                        listY.Add(y);
+                    }
                 }
             }
         }
@@ -218,7 +221,28 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-
         return wallCount;
+    }
+
+
+
+    bool NoWallSurround(int x, int y) // 목적 : 위치 지정할때 범위에 겹치는것이 없도록 한다. 너무 범위 값이 크면 들어갈 자리가 없어진다.
+    {
+        for (int i = x - 5; i <= x + 5; i++)
+        {
+            for (int j = y - 5; j <= y + 5; j++)
+            {
+                if (i > 0 && i < width && j > 0 && j < height)
+                {
+                    if (map[i, j] == 1) // 벽있으면 ㅂ2
+                        return false;
+                    else
+                        map[i, j] = 2; // 조건들을 다 통과할시 이곳에또 안겹치게 설정.
+                }
+                else // 조건이 별로면 ㅂ2
+                    return false;
+            }
+        }
+        return true; // 다 지나왔다면 패스
     }
 }
