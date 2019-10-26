@@ -1044,7 +1044,7 @@ PrefabInstance:
         type: 3}
       propertyPath: mainHand
       value: 
-      objectReference: {fileID: 350891713008431030, guid: fa8ab87752704a24c946612d51e9b787,
+      objectReference: {fileID: 2618062061517797899, guid: fa8ab87752704a24c946612d51e9b787,
         type: 3}
     - target: {fileID: 2154451577142106397, guid: 58996ba4e6d151a4f8c8a4104dbea4d6,
         type: 3}
@@ -1062,6 +1062,12 @@ PrefabInstance:
       propertyPath: heart
       value: 
       objectReference: {fileID: 5761003882752725896, guid: b3113d07eacedbd4b8f4890ad2d84635,
+        type: 3}
+    - target: {fileID: 2154451577142106397, guid: 58996ba4e6d151a4f8c8a4104dbea4d6,
+        type: 3}
+      propertyPath: weapon1
+      value: 
+      objectReference: {fileID: 2618062061517797899, guid: fa8ab87752704a24c946612d51e9b787,
         type: 3}
     - target: {fileID: 6638464269740965971, guid: 58996ba4e6d151a4f8c8a4104dbea4d6,
         type: 3}

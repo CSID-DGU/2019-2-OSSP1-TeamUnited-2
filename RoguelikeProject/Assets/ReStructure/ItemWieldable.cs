@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemWieldable : MonoBehaviour
 {
-    public Wieldable weapon;
+    public GameObject weapon;
 
     protected void OnTriggerEnter2D(Collider2D col)
     {

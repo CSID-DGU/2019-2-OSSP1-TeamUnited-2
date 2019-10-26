@@ -7,16 +7,25 @@ using UnityEngine.SceneManagement;
 public class Player : Unit
 {
     protected double invincible; // 단위는 초 입니다. (Time.deltaTime 사용)
-    public Wieldable mainHand;
-
+    public GameObject weapon1;
+    protected GameObject mainWeapon;
+    protected Vector2 rotationVector; // 플레이어가 보는 방향의 벡터값
     public GameObject faceArrow; // 플레이어가 보는 방향을 그래픽적으로 표현하기 위한 이미지
 
     new void Start()
     {
+        // 모든 유닛의 공통 처리를 합니다.
         base.Start();
+
+        // 플레이어는 초기 무적과 초기 hp값을 다르게 갖습니다 (For Debug)
         invincible = 5.0;
-        faceArrow = Instantiate(faceArrow, (Vector2)transform.position, transform.rotation) as GameObject;
         currentHP = 5;
+
+        // 플레이어의 방향을 알려주기 위한 화살표를 생성합니다.
+        faceArrow = Instantiate(faceArrow, (Vector2)transform.position, transform.rotation) as GameObject;
+        
+        // 무기를 초기화해줍니다.
+        Wield(weapon1);
     }
 
     public override int GetDamage(int damage)
@@ -76,17 +85,25 @@ public class Player : Unit
         return actualStrike;
     }
 
-    public void Wield(Wieldable weapon)
+    public void Wield(GameObject newWeapon)
     {
-        mainHand = weapon;
-        // TODO :: 버려진 무기에 대한 처리도 해야 할 것입니다.
+        // 기존의 무기를 임시 포인터에 넣습니다.
+        GameObject oldWeapon = mainWeapon;
+        
+        // 새로운 무기를 장착하고 초기화합니다.
+        mainWeapon = Instantiate(newWeapon, new Vector3 (0,0,0), Quaternion.identity) as GameObject;
+        mainWeapon.GetComponent<Wieldable>().Init();
+        
+        // TODO :: 임시 포인터에 넣어진 기존 무기에 대한 처리도 해야 할 것입니다. 현재는 그대로 삭제됩니다.
     }
 
     new void Update()
     {
-
         // 우선 모든 유닛에 대한 공통적인 처리
         base.Update();
+
+        // 무기들의 소유자 링크 처리
+        mainWeapon.GetComponent<Wieldable>().Owner = gameObject;
 
         // 무적의 처리와 스프라이트 깜빡임의 처리
         if (invincible > 0.0)
@@ -105,40 +122,34 @@ public class Player : Unit
         keyboardDirection.Normalize();
         Move(keyboardDirection);
 
-        // 캐릭터의 방향을 마우스 방향으로 맞추어 줍니다.
+        // 마우스의 방향을 추출합니다
         // TODO :: 현재 마우스 방향으로 즉시 회전하게 되어있습니다, 시간지연을 넣는 편이 부드러울 것입니다.
         Vector3 mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
         Vector2 mouseDirection = (Vector2)(mousePosition - transform.position);
         mouseDirection.Normalize();
-        faceDirection = mouseDirection;
+
+        // 캐릭터의 실제 방향과(transform.rotation), 단위벡터값으로 변환된 사용자 정의 방향값(moustDirection)을 커서와 맞추어 줍니다
+        // TODO :: 현재 마우스 커서의 방향으로 즉시 바뀌게 되어있습니다. 지연을 넣는 편이 부드러울 것입니다.
+        rotationVector = mouseDirection;
+        transform.rotation = Quaternion.LookRotation(mouseDirection, Vector3.up);
+        // transform.rotation = Quaternion.Euler(10,10,10);
 
         // 플레이어가 보는 방향을 그래픽적으로 표현
-        faceArrow.transform.position = (Vector2)((Vector2)transform.position + faceDirection);
+        faceArrow.transform.position = (Vector2)((Vector2)transform.position + rotationVector);
 
         // 마우스 입력를 Wieldable 객체로 연결
         if (Input.GetMouseButtonDown(0))
         {
-            mainHand.OnPush();
-            Debug.Log(mainHand.GetInstanceID());
+            mainWeapon.GetComponent<Wieldable>().OnPush();
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            mainHand.OnRelease();
+            mainWeapon.GetComponent<Wieldable>().OnRelease();
         }
         else if (Input.GetMouseButton(0))
         {
-            mainHand.OnHold();
+            mainWeapon.GetComponent<Wieldable>().OnHold();
         }
-
-        // 무기들의 소유자 링크 처리
-        mainHand.Owner = gameObject;
-
-        // 무기들의 조준점 처리
-        mainHand.aim = faceDirection;
-
-        // 무기들의 인스턴스 위치/방향을 유닛과 맞춰준다.
-        mainHand.transform.position = transform.position;
-        mainHand.transform.rotation = transform.rotation;
     }
 }

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wieldable
+public class Wieldable : MonoBehaviour, IWieldable
 {
     public GameObject[] bulletType;
     public ProjectileAttribute[] bulletTypeManualSetting; // bulletType이 이미 존재한다면 오버라이딩합니다.
+    // public int test;
+
     protected GameObject owner;
     public GameObject Owner
     {
@@ -14,14 +16,15 @@ public class Wieldable
     }
     public Vector2 aim;
 
-    // Start() 혹은 Awake()로 동적배열 접근시 오류가 발생합니다. (배열의 생성 시점이 Start() 뒤로 추정됩니다)
-    // 일단 첫번째 Update때 Initialize()를 불러오는 방식을 채택합니다.
-    // 추후 구조개선이 필요할 수 있습니다.
-    private bool init;
-    private double currentForce;
-    void Init()
+    void Start()
     {
-        Debug.Log(this.GetInstanceID());
+        Debug.Log("Weapon Start<Default Setting>: "+ bulletTypeManualSetting.Length);
+        Debug.Log("Weapon Start<Manual Setting>: "+ bulletType.Length);
+        // Debug.Log("Weapon Start: "+ test);
+    }
+
+    public void Init()
+    {
         Debug.Log("init weapon: " + bulletTypeManualSetting.Length);
         Debug.Log("AreaForce before : " + bulletType[0].GetComponent<ProjectileOnHit>().attribute.areaForce);
         for(int i = 0; i < bulletTypeManualSetting.Length; ++i)
@@ -35,7 +38,7 @@ public class Wieldable
             if (bulletType[i] == null)
             {
                 bulletType[i] = Instantiate(GameObject.Find("DefaultBullet"), new Vector3(0,0,0), Quaternion.identity) as GameObject;
-                Debug.LogError("Default bullet Created");
+                Debug.LogError("Default Bullet Created");
             }
 
             Debug.Log("AreaForce Setting : " + bulletTypeManualSetting[i].areaForce);
@@ -43,18 +46,14 @@ public class Wieldable
             Debug.Log("AreaForce Set : " + bulletType[i].GetComponent<ProjectileOnHit>().attribute.areaForce);
             Debug.Log("Bullet AreaForce : " + bulletType[0].GetComponent<ProjectileOnHit>().attribute.areaForce);
         }
-        currentForce = bulletType[0].GetComponent<ProjectileOnHit>().attribute.areaForce;
-        init = true;
     }
 
     public void OnPush()
     {
-        Debug.Log("CurrentForce : " + this.currentForce);
-        Debug.Log("Bullet AreaForce : " + bulletType[0].GetComponent<ProjectileOnHit>().attribute.areaForce);
-        GameObject projectile = Instantiate(bulletType[0], (Vector2)transform.position + aim * 0.5f, owner.transform.rotation) as GameObject;
+        Debug.Log("Weapon Status: " + bulletTypeManualSetting.Length);
+        GameObject projectile = Instantiate(bulletType[0], (Vector2)owner.transform.position + aim * 0.5f, owner.transform.rotation) as GameObject;
         projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
         projectile.GetComponent<Rigidbody2D>().AddForce(aim * 1000.0f);
-        Debug.Log(this.GetInstanceID());
     }
 
     public void OnHold()
