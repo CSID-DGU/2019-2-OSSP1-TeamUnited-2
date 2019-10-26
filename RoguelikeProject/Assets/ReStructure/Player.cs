@@ -48,6 +48,11 @@ public class Player : Unit
         // 실제 연산된 피해 결과를 HP에 적용합니다. (회복일 수 있습니다)
         currentHP -= actualDamage;
 
+        // 실제로 받은 데미지가 존재한다면 무적시간 추가
+        if (actualdamage > 0)
+            invincible += 1.0;
+
+        // 추적이 필요할 경우를 위한 반환
         return actualDamage;
     }
 
@@ -66,10 +71,6 @@ public class Player : Unit
     {
         // 실제로 받게 되는 물리량을 추적중입니다.
         Strike actualStrike = base.GetStrike(strike);
-
-        // 실제로 받은 데미지가 존재한다면 무적시간 추가
-        if (actualStrike.damage > 0)
-            invincible += 1.0;
 
         return actualStrike;
     }

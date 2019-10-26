@@ -53,7 +53,6 @@ public class ProjectileOnHit : MonoBehaviour
             col.gameObject.GetComponent<Unit>().GetStrike(strike);
             EnemyAni = col.gameObject.GetComponent<Animator>();
             EnemyAni.SetTrigger("New Trigger");
-
         }
 
         // 범위 공격을 하는 객체를 생성합니다.
