@@ -4111,7 +4111,7 @@ PrefabInstance:
     - target: {fileID: 4357949787478446540, guid: 53a49fa310d7dc14ba3ecc62066c985b,
         type: 3}
       propertyPath: postsmooth
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4357949787478446540, guid: 53a49fa310d7dc14ba3ecc62066c985b,
         type: 3}
