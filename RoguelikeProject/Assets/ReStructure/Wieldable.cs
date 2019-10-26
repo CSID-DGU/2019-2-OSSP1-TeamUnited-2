@@ -5,7 +5,7 @@ using UnityEngine;
 public class Wieldable : MonoBehaviour, IWieldable
 {
     public GameObject[] bulletType;
-    public projectileAttribute[] projectiles; // bulletType를 이미 설정했다면 오버라이딩합니다
+    public projectileAttribute[] bulletTypeManualSetting; // bulletType이 이미 존재한다면 오버라이딩합니다.
     protected GameObject owner;
     public GameObject Owner
     {
@@ -22,13 +22,27 @@ public class Wieldable : MonoBehaviour, IWieldable
         public int          areaDamage;
         public double       areaForce;
         public float        radius;
-        public GameObject   animation; // 폭발할 때 효과
+        public GameObject   animationExplosion; // 폭발할 때 효과
     }
 
     public void start()
     {
-        foreach(var proj in projectiles)
+        for(int i = 0; i < bulletTypeManualSetting.Length; ++i)
         {
+            // bulletType의 크기보다 큰 배열은 무시됩니다.
+            if (i >= bulletType.Length)
+                break;
+
+
+            // 투사체들의 GameObject 자동 생성 시작
+            GameObject ToInstantiate = new GameObject();
+            
+            // 만약 bulletType 객체가 없다면 만들어줍니다.
+            if (bulletType[i] == null)
+            {
+                bulletType[i] = Instantiate(GameObject.Find("DefaultBullet"), new Vector3(0,0,0), Quaternion.identity) as GameObject;
+                
+            }
             
         }
     }

@@ -24,7 +24,7 @@ public class ProjectileOnHit : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        // 공격자는 투사체에 면역입니다. (일단은)
+        // 공격자는 투사체 충돌에 면역입니다. (일단은)
         if (col.gameObject == attacker)
             return;
 
