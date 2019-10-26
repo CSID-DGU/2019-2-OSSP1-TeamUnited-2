@@ -14,16 +14,7 @@ public class Wieldable : MonoBehaviour, IWieldable
     }
     public Vector2 aim;
     
-    [System.Serializable]
-    public struct projectileAttribute
-    {
-        public int          damage;
-        public double       force;
-        public int          areaDamage;
-        public double       areaForce;
-        public float        radius;
-        public GameObject   animationExplosion; // 폭발할 때 효과
-    }
+
 
     public void start()
     {
@@ -41,8 +32,9 @@ public class Wieldable : MonoBehaviour, IWieldable
             if (bulletType[i] == null)
             {
                 bulletType[i] = Instantiate(GameObject.Find("DefaultBullet"), new Vector3(0,0,0), Quaternion.identity) as GameObject;
-                
             }
+
+            // bulletType[i].GetComponent<ProjectileOnHit>().
             
         }
     }
