@@ -122,7 +122,7 @@ public class Player : Unit
             mainHand.OnHold();
 
         // 무기들의 소유자 링크 처리
-        mainHand.owner = gameObject;
+        mainHand.Owner = gameObject;
 
         // 무기들의 조준점 처리
         mainHand.aim = faceDirection;

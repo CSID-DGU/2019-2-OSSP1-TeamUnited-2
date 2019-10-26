@@ -5,11 +5,30 @@ using UnityEngine;
 public class Wieldable : MonoBehaviour, IWieldable
 {
     public GameObject[] bulletType;
-    public bool autoFire;
     public double[] cooldown;
     protected double cooldownWait;
-    public GameObject owner;
+    protected GameObject owner;
+    public GameObject Owner
+    {
+        get { return owner; }
+        set { owner = value; }
+    }
     public Vector2 aim;
+
+    public struct projectileAttribute
+    {
+        int damage;
+        double force;
+        int areaDamage;
+        double areaForce;
+        float radius;
+    }
+
+    public projectileAttribute[] projectiles;
+    public void start()
+    {
+        
+    }
 
     public void OnPush()
     {
