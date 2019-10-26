@@ -49,7 +49,7 @@ public class Player : Unit
         currentHP -= actualDamage;
 
         // 실제로 받은 데미지가 존재한다면 무적시간 추가
-        if (actualdamage > 0)
+        if (actualDamage > 0)
             invincible += 1.0;
 
         // 추적이 필요할 경우를 위한 반환
