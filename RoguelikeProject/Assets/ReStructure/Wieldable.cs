@@ -6,8 +6,6 @@ public class Wieldable : MonoBehaviour, IWieldable
 {
     public GameObject[] bulletType;
     public projectileAttribute[] projectiles; // bulletType를 이미 설정했다면 오버라이딩합니다
-    public double[] cooldown;
-    protected double cooldownWait;
     protected GameObject owner;
     public GameObject Owner
     {
