@@ -45,7 +45,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletType:
   - {fileID: 1417382109342578088, guid: d731a72221909944389f3aeb89e9f9de, type: 3}
-  autoFire: 0
+  projectiles:
+  - danage: 0
+    force: 0
+    areaDamage: 0
+    areaForce: 0
+    radius: 0
+    animation: {fileID: 0}
   cooldown: []
-  owner: {fileID: 0}
   aim: {x: 0.72861934, y: 0.6849189}

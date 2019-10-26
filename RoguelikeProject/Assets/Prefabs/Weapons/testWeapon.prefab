@@ -46,9 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletType:
   - {fileID: 1417382109342578088, guid: 301764c5d5b416549b5ce57a1556eef4, type: 3}
-  autoFire: 0
+  projectiles: []
   cooldown: []
-  owner: {fileID: 0}
   aim: {x: 0.6536082, y: 0.7568331}
 --- !u!212 &475509031559990155
 SpriteRenderer:
