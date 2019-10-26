@@ -11,8 +11,9 @@ public class Player : Unit
 
     public GameObject faceArrow; // 플레이어가 보는 방향을 그래픽적으로 표현하기 위한 이미지
 
-    void Start()
+    new void Start()
     {
+        base.Start();
         invincible = 5.0;
         faceArrow = Instantiate(faceArrow, (Vector2)transform.position, transform.rotation) as GameObject;
         currentHP = 5;
@@ -83,6 +84,7 @@ public class Player : Unit
 
     new void Update()
     {
+
         // 우선 모든 유닛에 대한 공통적인 처리
         base.Update();
 
@@ -116,11 +118,18 @@ public class Player : Unit
 
         // 마우스 입력를 Wieldable 객체로 연결
         if (Input.GetMouseButtonDown(0))
+        {
             mainHand.OnPush();
+            Debug.Log(mainHand.GetInstanceID());
+        }
         else if (Input.GetMouseButtonUp(0))
+        {
             mainHand.OnRelease();
+        }
         else if (Input.GetMouseButton(0))
+        {
             mainHand.OnHold();
+        }
 
         // 무기들의 소유자 링크 처리
         mainHand.Owner = gameObject;

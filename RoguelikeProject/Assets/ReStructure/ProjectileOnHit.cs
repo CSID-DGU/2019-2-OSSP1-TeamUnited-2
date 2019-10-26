@@ -50,6 +50,8 @@ public class ProjectileOnHit : MonoBehaviour
         if (col.gameObject.GetComponent<Unit>())
         {
             Strike strike = new Strike(attribute.damage, attribute.force, transform.position);
+            if ((attribute.force >= 0) != true)
+                Debug.LogError(attribute.force);
             col.gameObject.GetComponent<Unit>().GetStrike(strike);
             EnemyAni = col.gameObject.GetComponent<Animator>();
             EnemyAni.SetTrigger("New Trigger");

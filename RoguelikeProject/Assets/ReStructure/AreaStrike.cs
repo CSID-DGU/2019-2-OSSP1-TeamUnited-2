@@ -8,7 +8,7 @@ public class AreaStrike : MonoBehaviour
     public int damage;
     public double force;
     public float radius;
-    public int minForceRate = 25;
+    public int minimumForceRate = 25;
     protected Vector2 attackerPosition;
     protected GameObject attacker;
 
@@ -27,7 +27,7 @@ public class AreaStrike : MonoBehaviour
         this.damage = damage;
         this.force = force;
         this.radius = radius;
-        this.minForceRate = minForceRate;
+        this.minimumForceRate = minForceRate;
     }
 
     public void Activate()
@@ -48,12 +48,18 @@ public class AreaStrike : MonoBehaviour
                 // 공격자와의 거리를 측정합니다
                 Vector2 distanceVector = transform.position - col.transform.position;
                 float distance = distanceVector.magnitude;
+
+                // 거리 측정은 피격자의 중심에서 시작하기 때문에, 피격자의 충돌크기가 클 경우 범위보다 넓어질 수 있습니다
+                // 우선은 실제 범위보다 피격자와의 거리가 클 경우 최대 범위로 설정해줍니다
+                // TODO :: 추후 알고리즘의 수정이 필요할 것입니다.
+                if (distance > radius)
+                    distance = radius;
                 
                 // 거리가 멀 수록 넉백 위력은 약해집니다. 최대 거리에서는 minForceRate 퍼센트만의 위력이 전해집니다.
-                if (minForceRate >= 0 && minForceRate <= 100)
+                if (minimumForceRate >= 0 && minimumForceRate <= 100)
                 {
                     float forceMod = ((radius - distance) / radius);
-                    forceMod = forceMod * (1.0f - (float)minForceRate/100.0f) + (float)minForceRate/100.0f;
+                    forceMod = forceMod * (1.0f - (float)minimumForceRate/100.0f) + (float)minimumForceRate/100.0f;
                     actualStrike.force *= forceMod;
                 }
 
