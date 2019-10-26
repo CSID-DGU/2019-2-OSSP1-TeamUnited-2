@@ -58,10 +58,12 @@ public class Unit : MonoBehaviour
         // 호출하는 순간 강한 힘으로 오브젝트를 밀어버립니다.
         Vector2 pushDirection = (Vector2)transform.position - strike.attackPosition;
         pushDirection.Normalize(); 
-        if (gameObject.GetComponent<Rigidbody2D>())
-        {
+        if (gameObject.GetComponent<Rigidbody2D>() && strike.force > 0.0)
            gameObject.GetComponent<Rigidbody2D>().AddForce(pushDirection * (float)strike.force, ForceMode2D.Impulse);
-        }
+           
+        // (Debug) force 작동에 문제가 있을 경우 예외 메시지 출력
+        if ((strike.force >= 0) != true)
+            Debug.LogError(strike.force);
 
         // 데미지가 있다면 데미지도 받습니다
         actualStrike.damage = GetDamage(strike.damage);

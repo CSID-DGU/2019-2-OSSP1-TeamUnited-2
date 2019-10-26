@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
     [System.Serializable]
-    public struct projectileAttribute
+    public struct ProjectileAttribute
     {
         public int          damage;
         public double       force;

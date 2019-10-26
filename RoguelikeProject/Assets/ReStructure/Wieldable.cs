@@ -5,7 +5,7 @@ using UnityEngine;
 public class Wieldable : MonoBehaviour, IWieldable
 {
     public GameObject[] bulletType;
-    public projectileAttribute[] bulletTypeManualSetting; // bulletType이 이미 존재한다면 오버라이딩합니다.
+    public ProjectileAttribute[] bulletTypeManualSetting; // bulletType이 이미 존재한다면 오버라이딩합니다.
     protected GameObject owner;
     public GameObject Owner
     {
@@ -14,7 +14,7 @@ public class Wieldable : MonoBehaviour, IWieldable
     }
     public Vector2 aim;
     
-    
+
     public void start()
     {
         for(int i = 0; i < bulletTypeManualSetting.Length; ++i)
