@@ -9,7 +9,7 @@ public class ProjectileOnHit : MonoBehaviour
     public int areaDamage;         
     public double areaForce;
     public float areaRadius;
-    public GameObject Animation;
+    public GameObject animationExplosion;
     protected GameObject areaEffect;
     protected GameObject attacker;
     protected bool triggered = false;
@@ -20,6 +20,16 @@ public class ProjectileOnHit : MonoBehaviour
     // 공격자가 투사체에 영향받지 않기를 원한다면 설정합니다 (옵션)
     {
         this.attacker = attacker;
+    }
+
+    public void SetAttribute(projectileAttribute p)
+    {
+        this.damage                 = p.damage;
+        this.force                  = p.force;
+        this.areaDamage             = p.areaDamage;
+        this.areaForce              = p.areaForce;
+        this.areaRadius             = p.areaRadius;
+        this.animationExplosion     = p.animationExplosion;
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -62,9 +72,9 @@ public class ProjectileOnHit : MonoBehaviour
         areaEffect.GetComponent<AreaStrike>().Activate();
 
         // 애니메이션을 재생합니다
-        if (Animation)
+        if (animationExplosion)
         {
-            Instantiate(Animation, transform.position, Quaternion.identity);
+            Instantiate(animationExplosion, transform.position, Quaternion.identity);
         }
         // GameObject instance = Instantiate(areaEffect, transform.position, Quaternion.identity) as GameObject;
 

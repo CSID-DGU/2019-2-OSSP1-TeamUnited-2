@@ -9,6 +9,6 @@ using UnityEngine;
         public double       force;
         public int          areaDamage;
         public double       areaForce;
-        public float        radius;
+        public float        areaRadius;
         public GameObject   animationExplosion; // 폭발할 때 효과
     }

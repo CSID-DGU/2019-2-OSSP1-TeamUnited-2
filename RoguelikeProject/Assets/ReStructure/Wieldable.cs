@@ -14,8 +14,7 @@ public class Wieldable : MonoBehaviour, IWieldable
     }
     public Vector2 aim;
     
-
-
+    
     public void start()
     {
         for(int i = 0; i < bulletTypeManualSetting.Length; ++i)
@@ -30,12 +29,9 @@ public class Wieldable : MonoBehaviour, IWieldable
             
             // 만약 bulletType 객체가 없다면 만들어줍니다.
             if (bulletType[i] == null)
-            {
                 bulletType[i] = Instantiate(GameObject.Find("DefaultBullet"), new Vector3(0,0,0), Quaternion.identity) as GameObject;
-            }
 
-            // bulletType[i].GetComponent<ProjectileOnHit>().
-            
+            bulletType[i].GetComponent<ProjectileOnHit>().SetAttribute(bulletTypeManualSetting[i]);            
         }
     }
 
