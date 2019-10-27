@@ -20,7 +20,18 @@ public class Wieldable : MonoBehaviour, IWieldable
 
     public void OnHold()
     {
-
+        if (autoFire)
+        {
+            if (cooldownWait > 0)
+            {
+                cooldownWait -= 1.0f / 60.0f;
+            }
+            else
+            {
+                OnPush();
+                cooldownWait = cooldown[0];
+            }
+        }
     }
 
     public void OnRelease()
