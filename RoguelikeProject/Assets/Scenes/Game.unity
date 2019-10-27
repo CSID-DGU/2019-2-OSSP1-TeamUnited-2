@@ -1044,7 +1044,7 @@ PrefabInstance:
         type: 3}
       propertyPath: mainHand
       value: 
-      objectReference: {fileID: 350891713008431030, guid: fa8ab87752704a24c946612d51e9b787,
+      objectReference: {fileID: 114915733515046540, guid: 4c7734b08ad22394fbcd11217a2da9fb,
         type: 3}
     - target: {fileID: 2154451577142106397, guid: 58996ba4e6d151a4f8c8a4104dbea4d6,
         type: 3}
