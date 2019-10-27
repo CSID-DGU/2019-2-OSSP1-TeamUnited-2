@@ -288,6 +288,11 @@ PrefabInstance:
       propertyPath: whenCloseToDestination
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9005390976539452157, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: enableRotation
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9005390976539452097, guid: a723301da2a15450183b3e720c8c2ca9,
         type: 3}
       propertyPath: m_Radius
@@ -620,6 +625,11 @@ PrefabInstance:
     - target: {fileID: 6662752627325133359, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4,
         type: 3}
       propertyPath: constrainInsideGraph
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662752627325133359, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4,
+        type: 3}
+      propertyPath: enableRotation
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5648937156679503518, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4,
@@ -1150,6 +1160,11 @@ PrefabInstance:
     - target: {fileID: 6662752627325133359, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4,
         type: 3}
       propertyPath: constrainInsideGraph
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662752627325133359, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4,
+        type: 3}
+      propertyPath: enableRotation
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5648937156679503518, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4,
@@ -1967,6 +1982,11 @@ PrefabInstance:
       propertyPath: constrainInsideGraph
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6662752627325133359, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4,
+        type: 3}
+      propertyPath: enableRotation
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5648937156679503518, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4,
         type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
@@ -2454,6 +2474,11 @@ PrefabInstance:
       propertyPath: whenCloseToDestination
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9005390976539452157, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: enableRotation
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9005390976539452097, guid: a723301da2a15450183b3e720c8c2ca9,
         type: 3}
       propertyPath: m_Radius
@@ -2921,6 +2946,11 @@ PrefabInstance:
       propertyPath: whenCloseToDestination
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9005390976539452157, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: enableRotation
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9005390976539452097, guid: a723301da2a15450183b3e720c8c2ca9,
         type: 3}
       propertyPath: m_Radius
@@ -3357,6 +3387,11 @@ PrefabInstance:
     - target: {fileID: 9005390976539452157, guid: a723301da2a15450183b3e720c8c2ca9,
         type: 3}
       propertyPath: whenCloseToDestination
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005390976539452157, guid: a723301da2a15450183b3e720c8c2ca9,
+        type: 3}
+      propertyPath: enableRotation
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9005390976539452097, guid: a723301da2a15450183b3e720c8c2ca9,
@@ -4201,6 +4236,11 @@ PrefabInstance:
     - target: {fileID: 6662752627325133359, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4,
         type: 3}
       propertyPath: constrainInsideGraph
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662752627325133359, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4,
+        type: 3}
+      propertyPath: enableRotation
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5648937156679503518, guid: 57e0d13cfbe3f4fbb9a74b6fe5e763c4,

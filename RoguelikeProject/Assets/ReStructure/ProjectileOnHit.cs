@@ -47,6 +47,12 @@ public class ProjectileOnHit : MonoBehaviour
         {
             Strike strike = new Strike(damage, force, transform.position);
             col.gameObject.GetComponent<Unit>().GetStrike(strike);
+
+            // 총알을 맞은 방향으로 적이 물러나게 합니다.
+            Vector3 direction = transform.position - col.transform.position;
+            direction = direction.normalized;
+            col.gameObject.GetComponent<Unit>().transform.Translate(-direction.x*10, -direction.y*10, 0);
+
             EnemyAni = col.gameObject.GetComponent<Animator>();
             EnemyAni.SetTrigger("New Trigger");
 
