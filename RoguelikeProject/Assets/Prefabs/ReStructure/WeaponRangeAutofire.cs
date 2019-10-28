@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class WeaponRangeAutofire : Wieldable
 {
-    //public GameObject[] bulletType;
     public bool autoFire;
-    //public double[] chargeTime;
-    //protected double charge;
     public double[] cooldown;
     protected double cooldownWait;
-    //protected bool holding;
-    //public GameObject owner;
-    //public Vector2 aim;
     public override void OnHold()
     {
         if (autoFire)

@@ -28,7 +28,7 @@ public class WeaponChargeFire : Wieldable
             else
             {
                 chargeWait = 0;
-                if (chargeLevel != MaxLevel)
+                if (chargeLevel < MaxLevel)
                 {
                     chargeLevel++;
                 }

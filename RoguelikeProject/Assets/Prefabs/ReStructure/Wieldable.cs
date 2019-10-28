@@ -5,9 +5,6 @@ using UnityEngine;
 public class Wieldable : MonoBehaviour, IWieldable
 {
     public GameObject[] bulletType;
-    //public bool autoFire;
-    //public double[] cooldown;
-    //protected double cooldownWait;
     public GameObject owner;
     public Vector2 aim;
 
