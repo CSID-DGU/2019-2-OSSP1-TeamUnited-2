@@ -1,9 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
-using System.Threading;
 public class GameManager : MonoBehaviour
 {
     private GameObject levelImage;
@@ -32,10 +30,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         BoardSetup();
-
-        levelImage = GameObject.Find("LevelImage");
-
-        levelImage.SetActive(false);
 
         SpawnedPlayer.SetActive(true);
 
