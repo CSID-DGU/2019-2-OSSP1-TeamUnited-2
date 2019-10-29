@@ -11,7 +11,7 @@ public class Player : Unit
 
     public GameObject faceArrow; // 플레이어가 보는 방향을 그래픽적으로 표현하기 위한 이미지
 
-    void Start()
+    new void Start()
     {
         invincible = 5.0;
         faceArrow = Instantiate(faceArrow, (Vector2)transform.position, transform.rotation) as GameObject;
@@ -56,6 +56,7 @@ public class Player : Unit
         gameObject.SetActive(false);
         Invoke("nextScene", 1);
     }
+
     void nextScene()
     {
         SceneManager.LoadScene("Main", LoadSceneMode.Single);
