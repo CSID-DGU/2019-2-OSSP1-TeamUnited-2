@@ -28,7 +28,7 @@ public class BackGround : MonoBehaviour
     public void nextStage()
     {
         if (stageNum > 2)
-            stageNum = 0;
+            stageNum = -1;
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
         spriteRenderer.sprite = sprites[++stageNum];
     }
