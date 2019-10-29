@@ -645,6 +645,7 @@ GameObject:
   m_Component:
   - component: {fileID: 778965048}
   - component: {fileID: 778965047}
+  - component: {fileID: 778965049}
   m_Layer: 0
   m_Name: backGround
   m_TagString: Untagged
@@ -714,6 +715,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &778965049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778965046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f98d47bc0e264240a54bcd745342a19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: 10e31cf916a895b41bb12d004df354be, type: 3}
+  - {fileID: 21300000, guid: 3edfef2b2c90246469b75273702a3244, type: 3}
+  - {fileID: 21300000, guid: f9721f13dceb00548b350ba336c2b180, type: 3}
+  - {fileID: 21300000, guid: e2b11346bb0fe3548912f3652dc8d69c, type: 3}
 --- !u!1 &899491818 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6638464269740965934, guid: 58996ba4e6d151a4f8c8a4104dbea4d6,
