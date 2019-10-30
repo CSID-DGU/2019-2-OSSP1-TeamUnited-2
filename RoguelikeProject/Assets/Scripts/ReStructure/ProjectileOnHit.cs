@@ -10,10 +10,11 @@ public class ProjectileOnHit : MonoBehaviour
 
     Animator EnemyAni; // 애니메이션 쓸거임
 
-    public void SetAttacker(GameObject attacker)
+    public GameObject Attacker
     // 공격자가 투사체에 영향받지 않기를 원한다면 설정합니다 (옵션)
     {
-        this.attacker = attacker;
+        get { return attacker; }
+        set { attacker = value; }
     }
 
     public void SetAttribute(ProjectileAttribute p)
@@ -23,7 +24,6 @@ public class ProjectileOnHit : MonoBehaviour
         this.attribute.areaDamage             = p.areaDamage;
         this.attribute.areaForce              = p.areaForce;
         this.attribute.areaRadius             = p.areaRadius;
-        this.attribute.sprite                 = p.sprite;
         this.attribute.animationExplosion     = p.animationExplosion;
     }
 
@@ -36,6 +36,8 @@ public class ProjectileOnHit : MonoBehaviour
         // 형체가 없는 대상에는 반응하지 않습니다.
         if (col.gameObject.GetComponent<Rigidbody2D>() == null)
             return;
+
+        // 투사체이면서 발사
 
         // 이미 작동된 투사체는 중복작동하지 않습니다.
         lock(this)

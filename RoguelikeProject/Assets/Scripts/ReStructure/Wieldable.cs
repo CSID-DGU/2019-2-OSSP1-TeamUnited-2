@@ -42,10 +42,16 @@ public class Wieldable : MonoBehaviour, IWieldable
             Debug.LogError("Weapon fired without owner");
             return;
         }
+
+        // 소유자가 있는 무기라면 발사를 위해 투사체를 생성합니다.
         GameObject projectile = Instantiate(bulletType, (Vector2)owner.transform.position + rotationVector * 0.5f, Quaternion.identity) as GameObject;
-        projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
-        projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
+        
+        // 피아식별 등의 처리를 위해 투사체의 소유자(공격자)와 부모를 설정해줍니다.
+        projectile.GetComponent<ProjectileOnHit>().Attacker = owner;
         projectile.transform.SetParent(owner.transform);
+
+        // 무기의 방향으로 발사합니다. 탄속은 아직 유동옵션은 아닙니다.
+        projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
     }   
 
     public virtual void OnPush()
