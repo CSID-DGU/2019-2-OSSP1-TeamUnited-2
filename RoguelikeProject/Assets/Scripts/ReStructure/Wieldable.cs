@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Wieldable : MonoBehaviour, IWieldable
 {
-    public GameObject[] bulletType;
-    public ProjectileAttribute[] bulletTypeManualSetting; // bulletType이 이미 존재한다면 오버라이딩합니다.
+    // public ProjectileAttribute[] bulletTypeManualSetting; // bulletType이 이미 존재한다면 오버라이딩합니다.
 
     protected GameObject owner;
     public GameObject Owner
@@ -44,6 +43,12 @@ public class Wieldable : MonoBehaviour, IWieldable
 
     public void FireRangeDirect(GameObject bulletType)
     {
+        // owner가 없는 무기는 발사할 수 없습니다.
+        if (!owner)
+        {
+            Debug.LogError("Weapon fired without owner");
+            return;
+        }
         GameObject projectile = Instantiate(bulletType, (Vector2)owner.transform.position + rotationVector * 0.5f, Quaternion.identity) as GameObject;
         projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
         projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
