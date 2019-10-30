@@ -64,7 +64,7 @@ public class ProjectileOnHit : MonoBehaviour
 
         // 범위 공격기능을 하는 컴포넌트를 추가하고 설정해줍니다.
         areaEffect.AddComponent<AreaStrike>();
-        areaEffect.GetComponent<AreaStrike>().SetStatus(attribute.areaDamage, attribute.areaForce, attribute.areaRadius);
+        areaEffect.GetComponent<AreaStrike>().SetStatus(attribute);
 
         // 공격자가 존재한다면 공격자도 설정해 줍니다.
         if (attacker != null)

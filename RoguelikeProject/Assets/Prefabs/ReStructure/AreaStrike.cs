@@ -22,12 +22,12 @@ public class AreaStrike : MonoBehaviour
         this.attackerPosition = attacker.transform.position;
         this.attacker = attacker;
     }
-    public void SetStatus(int damage, double force, float radius, int minForceRate = 25)
+    public void SetStatus(attribute a)
     {
-        this.damage = damage;
-        this.force = force;
-        this.radius = radius;
-        this.minimumForceRate = minForceRate;
+        this.damage = a.damage;
+        this.force = a.force;
+        this.radius = a.radius;
+        this.minimumForceRate = 0.25;
     }
 
     public void Activate()
