@@ -8,7 +8,7 @@ public class AreaStrike : MonoBehaviour
     public int damage;
     public double force;
     public float radius;
-    public int minimumForceRate = 25;
+    public float minimumForceRate = 0.25f;
     protected Vector2 attackerPosition;
     protected GameObject attacker;
 
@@ -22,12 +22,12 @@ public class AreaStrike : MonoBehaviour
         this.attackerPosition = attacker.transform.position;
         this.attacker = attacker;
     }
-    public void SetStatus(attribute a)
+    public void SetStatus(ProjectileAttribute a)
     {
-        this.damage = a.damage;
-        this.force = a.force;
-        this.radius = a.radius;
-        this.minimumForceRate = 0.25;
+        this.damage = a.areaDamage;
+        this.force = a.areaForce;
+        this.radius = a.areaRadius;
+        this.minimumForceRate = 0.25f;
     }
 
     public void Activate()
@@ -59,7 +59,7 @@ public class AreaStrike : MonoBehaviour
                 if (minimumForceRate >= 0 && minimumForceRate <= 100)
                 {
                     float forceMod = ((radius - distance) / radius);
-                    forceMod = forceMod * (1.0f - (float)minimumForceRate/100.0f) + (float)minimumForceRate/100.0f;
+                    forceMod = forceMod * (1.0f - minimumForceRate) + minimumForceRate;
                     actualStrike.force *= forceMod;
                 }
 
