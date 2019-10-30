@@ -92,7 +92,7 @@ public class Player : Unit
         
         // 새로운 무기를 장착하고 초기화합니다.
         mainWeapon = Instantiate(newWeapon, new Vector3 (0,0,0), Quaternion.identity) as GameObject;
-        mainWeapon.GetComponent<Wieldable>().Init();
+        // mainWeapon.GetComponent<Wieldable>().Init();
         
         // TODO :: 임시 포인터에 넣어진 기존 무기에 대한 처리도 해야 할 것입니다. 현재는 그대로 삭제됩니다.
     }

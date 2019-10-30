@@ -23,6 +23,7 @@ public class ProjectileOnHit : MonoBehaviour
         this.attribute.areaDamage             = p.areaDamage;
         this.attribute.areaForce              = p.areaForce;
         this.attribute.areaRadius             = p.areaRadius;
+        this.attribute.sprite                 = p.sprite;
         this.attribute.animationExplosion     = p.animationExplosion;
     }
 

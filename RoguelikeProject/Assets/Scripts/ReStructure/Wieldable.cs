@@ -22,30 +22,25 @@ public class Wieldable : MonoBehaviour, IWieldable
         // Debug.Log("Weapon Start<Manual Setting>: "+ bulletType.Length);
     }
 
-    public void Init()
-    {
-        Debug.Log("init weapon: " + bulletTypeManualSetting.Length);
-        Debug.Log("AreaForce before : " + bulletType[0].GetComponent<ProjectileOnHit>().attribute.areaForce);
-        for(int i = 0; i < bulletTypeManualSetting.Length; ++i)
-        {
-            // bulletType의 크기보다 큰 배열은 무시됩니다.
-            if (i >= bulletType.Length)
-                break;
+    // public void Init()
+    // {
+    //     for(int i = 0; i < bulletTypeManualSetting.Length; ++i)
+    //     {
+    //         // bulletType의 크기보다 큰 배열은 무시됩니다.
+    //         if (i >= bulletType.Length)
+    //             break;
 
-            // Debug.Log("Bullet Setting Manual");
-            // 만약 bulletType 객체가 없다면 만들어줍니다.
-            if (bulletType[i] == null)
-            {
-                bulletType[i] = Instantiate(GameObject.Find("DefaultBullet"), new Vector3(0,0,0), Quaternion.identity) as GameObject;
-                Debug.LogError("Default Bullet Created");
-            }
+    //         // Debug.Log("Bullet Setting Manual");
+    //         // 만약 bulletType 객체가 없다면 만들어줍니다.
+    //         if (bulletType[i] == null)
+    //         {
+    //             bulletType[i] = Instantiate(GameObject.Find("DefaultBullet"), new Vector3(0,0,0), Quaternion.identity) as GameObject;
+    //             Debug.LogError("Default Bullet Created");
+    //         }
 
-            // Debug.Log("AreaForce Setting : " + bulletTypeManualSetting[i].areaForce);
-            bulletType[i].GetComponent<ProjectileOnHit>().SetAttribute(bulletTypeManualSetting[i]);
-            // Debug.Log("AreaForce Set : " + bulletType[i].GetComponent<ProjectileOnHit>().attribute.areaForce);
-            // Debug.Log("Bullet AreaForce : " + bulletType[0].GetComponent<ProjectileOnHit>().attribute.areaForce);
-        }
-    }
+    //         bulletType[i].GetComponent<ProjectileOnHit>().SetAttribute(bulletTypeManualSetting[i]);
+    //     }
+    // }
 
     public void FireRangeDirect(GameObject bulletType)
     {
