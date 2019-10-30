@@ -46,12 +46,13 @@ public class Wieldable : MonoBehaviour, IWieldable
         }
     }
 
-    public void FireRange(GameObject bulletType)
+    public void FireRangeDirect(GameObject bulletType)
     {
         GameObject projectile = Instantiate(bulletType, (Vector2)owner.transform.position + rotationVector * 0.5f, Quaternion.identity) as GameObject;
         projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
+        projectile.transform.SetParent(owner.transform);
         projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
-    }
+    }   
 
     public virtual void OnPush()
     {

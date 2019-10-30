@@ -55,7 +55,7 @@ MonoBehaviour:
     animationExplosion: {fileID: 0}
   rotationVector: {x: 0, y: 0}
   autoFire: 1
-  cooldown: 0
+  cooldown: 1
 --- !u!212 &475509031559990155
 SpriteRenderer:
   m_ObjectHideFlags: 0

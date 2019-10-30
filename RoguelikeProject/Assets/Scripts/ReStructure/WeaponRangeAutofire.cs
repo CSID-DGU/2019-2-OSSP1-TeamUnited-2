@@ -10,9 +10,7 @@ public class WeaponRangeAutofire : Wieldable
 
     public override void OnPush()
     {
-        GameObject projectile = Instantiate(bulletType[0], (Vector2)owner.transform.position + rotationVector * 0.5f, Quaternion.identity) as GameObject;
-        projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
-        projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
+        FireRangeDirect(bulletType[0]);
     }
     public override void OnHold()
     {
@@ -24,7 +22,7 @@ public class WeaponRangeAutofire : Wieldable
             }
             else
             {
-                FireRange(bulletType[0]);
+                FireRangeDirect(bulletType[0]);
                 cooldownWait = cooldown;
             }
         }
