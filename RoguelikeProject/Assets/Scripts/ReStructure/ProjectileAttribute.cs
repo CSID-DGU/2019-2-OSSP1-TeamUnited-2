@@ -10,6 +10,6 @@ using UnityEngine;
         public int          areaDamage;
         public double       areaForce;
         public float        areaRadius;
-        public GameObject   sprite;
+        public GameObject   shape; // Sprite, RigidBody2D, Collider로 구성된 형체 오브젝트
         public GameObject   animationExplosion; // 폭발할 때 효과
     }

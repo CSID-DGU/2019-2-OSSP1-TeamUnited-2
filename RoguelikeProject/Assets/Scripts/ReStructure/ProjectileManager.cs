@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class ProjectileManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public ProjectileAttribute attribute;
+    protected GameObject entity;
+    public GameObject Entity 
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        get { return entity; }
+        set { entity = value; }
     }
 }

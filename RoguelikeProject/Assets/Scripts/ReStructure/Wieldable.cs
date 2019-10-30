@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Wieldable : MonoBehaviour, IWieldable
 {
-    // public ProjectileAttribute[] bulletTypeManualSetting; // bulletType이 이미 존재한다면 오버라이딩합니다.
-
     protected GameObject owner;
     public GameObject Owner
     {
@@ -15,11 +13,6 @@ public class Wieldable : MonoBehaviour, IWieldable
     public Vector2 rotationVector;
     protected double cooldownWait;
 
-    void Start()
-    {
-        // Debug.Log("Weapon Start<Default Setting>: "+ bulletTypeManualSetting.Length);
-        // Debug.Log("Weapon Start<Manual Setting>: "+ bulletType.Length);
-    }
 
     // public void Init()
     // {

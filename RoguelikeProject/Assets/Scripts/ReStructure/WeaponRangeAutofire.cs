@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponRangeAutofire : Wieldable
 {
-    public GameObject bulletType;
+    public ProjectileManager projectile;
     public bool autoFire;
     public double cooldown;
 
@@ -12,8 +12,7 @@ public class WeaponRangeAutofire : Wieldable
     {
         if (cooldownWait <= 0)
         {
-            Debug.Log("Weapon Pushed");
-            FireRangeDirect(bulletType);
+            FireRangeDirect(projectile.Entity);
             cooldownWait = cooldown;
         }
     }
@@ -23,7 +22,7 @@ public class WeaponRangeAutofire : Wieldable
         {
             if (cooldownWait <= 0)
             {
-                FireRangeDirect(bulletType);
+                FireRangeDirect(projectile.Entity);
                 cooldownWait = cooldown;
             }
         }
