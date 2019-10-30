@@ -19,7 +19,12 @@ public class Unit : MonoBehaviour
     }
     public double maxSpeed;
     public double acceleration;
-    public Vector2 faceDirection;
+    protected Vector2 rotationVector; // 플레이어가 보는 방향의 벡터값
+    public Vector2 RotationVector
+    {
+        get { return rotationVector; }
+        set { rotationVector = value; }
+    }
 
     protected void Start()
     {

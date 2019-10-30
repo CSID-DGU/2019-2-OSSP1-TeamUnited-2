@@ -9,7 +9,6 @@ public class Player : Unit
     protected double invincible; // 단위는 초 입니다. (Time.deltaTime 사용)
     public GameObject weapon1;
     protected GameObject mainWeapon;
-    protected Vector2 rotationVector; // 플레이어가 보는 방향의 벡터값
     public GameObject faceArrow; // 플레이어가 보는 방향을 그래픽적으로 표현하기 위한 이미지
 
     new void Start()
@@ -22,7 +21,7 @@ public class Player : Unit
         currentHP = 5;
 
         // 플레이어의 방향을 알려주기 위한 화살표를 생성합니다.
-        faceArrow = Instantiate(faceArrow, (Vector2)transform.position, transform.rotation) as GameObject;
+        faceArrow = Instantiate(faceArrow, (Vector2)transform.position, Quaternion.identity) as GameObject;
         
         // 무기를 초기화해줍니다.
         Wield(weapon1);
@@ -132,7 +131,7 @@ public class Player : Unit
         // 캐릭터의 실제 방향과(transform.rotation), 단위벡터값으로 변환된 사용자 정의 방향값(moustDirection)을 커서와 맞추어 줍니다
         // TODO :: 현재 마우스 커서의 방향으로 즉시 바뀌게 되어있습니다. 지연을 넣는 편이 부드러울 것입니다.
         rotationVector = mouseDirection;
-        transform.rotation = Quaternion.LookRotation(mouseDirection, Vector3.up);
+        // transform.rotation = Quaternion.LookRotation(mouseDirection, Vector3.up);
         // transform.rotation = Quaternion.Euler(10,10,10);
 
         // 플레이어가 보는 방향을 그래픽적으로 표현

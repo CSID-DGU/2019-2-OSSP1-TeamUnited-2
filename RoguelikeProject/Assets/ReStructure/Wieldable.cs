@@ -6,7 +6,6 @@ public class Wieldable : MonoBehaviour, IWieldable
 {
     public GameObject[] bulletType;
     public ProjectileAttribute[] bulletTypeManualSetting; // bulletType이 이미 존재한다면 오버라이딩합니다.
-    // public int test;
 
     protected GameObject owner;
     public GameObject Owner
@@ -14,13 +13,12 @@ public class Wieldable : MonoBehaviour, IWieldable
         get { return owner; }
         set { owner = value; }
     }
-    public Vector2 aim;
+    public Vector2 rotationVector;
 
     void Start()
     {
         Debug.Log("Weapon Start<Default Setting>: "+ bulletTypeManualSetting.Length);
         Debug.Log("Weapon Start<Manual Setting>: "+ bulletType.Length);
-        // Debug.Log("Weapon Start: "+ test);
     }
 
     public void Init()
@@ -51,9 +49,9 @@ public class Wieldable : MonoBehaviour, IWieldable
     public void OnPush()
     {
         Debug.Log("Weapon Status: " + bulletTypeManualSetting.Length);
-        GameObject projectile = Instantiate(bulletType[0], (Vector2)owner.transform.position + aim * 0.5f, owner.transform.rotation) as GameObject;
+        GameObject projectile = Instantiate(bulletType[0], (Vector2)owner.transform.position + rotationVector * 0.5f, Quaternion.identity) as GameObject;
         projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
-        projectile.GetComponent<Rigidbody2D>().AddForce(aim * 1000.0f);
+        projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
     }
 
     public void OnHold()
@@ -64,5 +62,21 @@ public class Wieldable : MonoBehaviour, IWieldable
     public void OnRelease()
     {
 
+    }
+
+    protected void Update()
+    {
+        if (owner)
+        {
+            rotationVector = owner.GetComponent<Unit>().RotationVector;
+        }
+        else if (!owner)
+        {
+            
+        }
+        else
+        {
+            Debug.LogError("FATAL ERROR");
+        }
     }
 }
