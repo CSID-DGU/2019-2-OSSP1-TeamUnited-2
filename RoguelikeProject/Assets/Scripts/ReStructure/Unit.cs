@@ -89,7 +89,7 @@ public class Unit : MonoBehaviour
     {
         if (currentHP <= 0)
         {
-            // 유닛별로 다른 메서드를 호출합니다.
+            // SelfDestruction 메서드는 유닛 종류별로 오버라이딩하여 실행됩니다.
             SelfDestruction();
         }
     }

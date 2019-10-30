@@ -97,7 +97,7 @@ public class Player : Unit
         // TODO :: 임시 포인터에 넣어진 기존 무기에 대한 처리도 해야 할 것입니다. 현재는 그대로 삭제됩니다.
     }
 
-    new void Update()
+    protected new void Update()
     {
         // 우선 모든 유닛에 대한 공통적인 처리
         base.Update();

@@ -14,6 +14,7 @@ public class Wieldable : MonoBehaviour, IWieldable
         set { owner = value; }
     }
     public Vector2 rotationVector;
+    protected double cooldownWait;
 
     void Start()
     {
@@ -50,8 +51,8 @@ public class Wieldable : MonoBehaviour, IWieldable
     {
         GameObject projectile = Instantiate(bulletType, (Vector2)owner.transform.position + rotationVector * 0.5f, Quaternion.identity) as GameObject;
         projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
-        projectile.transform.SetParent(owner.transform);
         projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
+        projectile.transform.SetParent(owner.transform);
     }   
 
     public virtual void OnPush()
@@ -71,17 +72,14 @@ public class Wieldable : MonoBehaviour, IWieldable
 
     protected void Update()
     {
+        if (cooldownWait > 0)
+        {
+            cooldownWait -= Time.deltaTime;
+        }
+
         if (owner)
         {
             rotationVector = owner.GetComponent<Unit>().RotationVector;
-        }
-        else if (!owner)
-        {
-
-        }
-        else
-        {
-            Debug.LogError("FATAL ERROR");
         }
     }
 }

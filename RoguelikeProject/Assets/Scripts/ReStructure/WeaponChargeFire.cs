@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class WeaponChargeFire : Wieldable
 {
+    public GameObject[] bulletType;
     public bool chargeFire;
-    public int MaxLevel;
     public double[] chargeTime;
     protected double chargeWait = 0;
     protected int chargeLevel = 0;
-    public double[] cooldown;
-    protected double cooldownWait;
 
     public override void OnPush()
     {
-        GameObject projectile = Instantiate(bulletType[0], (Vector2)owner.transform.position + rotationVector * 0.5f, Quaternion.identity) as GameObject;
-        projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
-        projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
+        if (!chargeFire)
+        {
+            if (cooldownWait < 0)
+            {
+                FireRangeDirect(bulletType[0]);
+            }
+        }
     }
 
     public override void OnHold()
@@ -25,12 +27,12 @@ public class WeaponChargeFire : Wieldable
         {
             if (chargeWait < chargeTime[chargeLevel])
             {
-                chargeWait += 1.0f / 60.0f;
+                chargeWait += Time.deltaTime;
             }
             else
             {
                 chargeWait = 0;
-                if (chargeLevel < MaxLevel)
+                if (chargeLevel < chargeTime.Length)
                 {
                     chargeLevel++;
                 }
@@ -40,9 +42,7 @@ public class WeaponChargeFire : Wieldable
 
     public override void OnRelease()
     {
-        GameObject projectile = Instantiate(bulletType[chargeLevel], (Vector2)transform.position + rotationVector * 0.5f, owner.transform.rotation) as GameObject;
-        projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
-        projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
+        FireRangeDirect(bulletType[chargeLevel]);
         chargeLevel = 0;
         chargeWait = 0;
     }
