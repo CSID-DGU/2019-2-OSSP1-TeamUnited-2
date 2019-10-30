@@ -17,8 +17,8 @@ public class Wieldable : MonoBehaviour, IWieldable
 
     void Start()
     {
-        Debug.Log("Weapon Start<Default Setting>: "+ bulletTypeManualSetting.Length);
-        Debug.Log("Weapon Start<Manual Setting>: "+ bulletType.Length);
+        // Debug.Log("Weapon Start<Default Setting>: "+ bulletTypeManualSetting.Length);
+        // Debug.Log("Weapon Start<Manual Setting>: "+ bulletType.Length);
     }
 
     public void Init()
@@ -31,7 +31,7 @@ public class Wieldable : MonoBehaviour, IWieldable
             if (i >= bulletType.Length)
                 break;
 
-            Debug.Log("Bullet Setting Manual");
+            // Debug.Log("Bullet Setting Manual");
             // 만약 bulletType 객체가 없다면 만들어줍니다.
             if (bulletType[i] == null)
             {
@@ -39,19 +39,23 @@ public class Wieldable : MonoBehaviour, IWieldable
                 Debug.LogError("Default Bullet Created");
             }
 
-            Debug.Log("AreaForce Setting : " + bulletTypeManualSetting[i].areaForce);
+            // Debug.Log("AreaForce Setting : " + bulletTypeManualSetting[i].areaForce);
             bulletType[i].GetComponent<ProjectileOnHit>().SetAttribute(bulletTypeManualSetting[i]);
-            Debug.Log("AreaForce Set : " + bulletType[i].GetComponent<ProjectileOnHit>().attribute.areaForce);
-            Debug.Log("Bullet AreaForce : " + bulletType[0].GetComponent<ProjectileOnHit>().attribute.areaForce);
+            // Debug.Log("AreaForce Set : " + bulletType[i].GetComponent<ProjectileOnHit>().attribute.areaForce);
+            // Debug.Log("Bullet AreaForce : " + bulletType[0].GetComponent<ProjectileOnHit>().attribute.areaForce);
         }
+    }
+
+    public void FireRange(GameObject bulletType)
+    {
+        GameObject projectile = Instantiate(bulletType, (Vector2)owner.transform.position + rotationVector * 0.5f, Quaternion.identity) as GameObject;
+        projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
+        projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
     }
 
     public virtual void OnPush()
     {
-        Debug.Log("Weapon Status: " + bulletTypeManualSetting.Length);
-        GameObject projectile = Instantiate(bulletType[0], (Vector2)owner.transform.position + rotationVector * 0.5f, Quaternion.identity) as GameObject;
-        projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
-        projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
+        
     }
 
     public virtual void OnHold()

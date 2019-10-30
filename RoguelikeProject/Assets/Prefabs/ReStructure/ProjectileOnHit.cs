@@ -51,7 +51,7 @@ public class ProjectileOnHit : MonoBehaviour
         {
             Strike strike = new Strike(attribute.damage, attribute.force, transform.position);
             if ((attribute.force >= 0) != true)
-                Debug.LogError(attribute.force);
+                Debug.LogError("ERROR :: Negative Force" + attribute.force);
             col.gameObject.GetComponent<Unit>().GetStrike(strike);
             EnemyAni = col.gameObject.GetComponent<Animator>();
             EnemyAni.SetTrigger("New Trigger");

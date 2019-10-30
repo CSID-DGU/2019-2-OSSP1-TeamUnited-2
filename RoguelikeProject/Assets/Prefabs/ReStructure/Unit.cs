@@ -68,7 +68,7 @@ public class Unit : MonoBehaviour
            
         // (Debug) force 작동에 문제가 있을 경우 예외 메시지 출력
         if ((strike.force >= 0) != true)
-            Debug.LogError(strike.damage + "|" + strike.force + "|" + strike.attackPosition + "|" + transform.position);
+            Debug.LogError("Force setting error" + strike.damage + "|" + strike.force + "|" + strike.attackPosition + "|" + transform.position);
 
         // 데미지가 있다면 데미지도 받습니다
         actualStrike.damage = GetDamage(strike.damage);

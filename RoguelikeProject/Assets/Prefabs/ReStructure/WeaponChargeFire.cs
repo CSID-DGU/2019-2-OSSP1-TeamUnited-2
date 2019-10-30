@@ -14,7 +14,9 @@ public class WeaponChargeFire : Wieldable
 
     public override void OnPush()
     {
-
+        GameObject projectile = Instantiate(bulletType[0], (Vector2)owner.transform.position + rotationVector * 0.5f, Quaternion.identity) as GameObject;
+        projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
+        projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
     }
 
     public override void OnHold()
@@ -38,9 +40,9 @@ public class WeaponChargeFire : Wieldable
 
     public override void OnRelease()
     {
-        GameObject projectile = Instantiate(bulletType[chargeLevel], (Vector2)transform.position + aim * 0.5f, owner.transform.rotation) as GameObject;
+        GameObject projectile = Instantiate(bulletType[chargeLevel], (Vector2)transform.position + rotationVector * 0.5f, owner.transform.rotation) as GameObject;
         projectile.GetComponent<ProjectileOnHit>().SetAttacker(owner);
-        projectile.GetComponent<Rigidbody2D>().AddForce(aim * 1000.0f);
+        projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
         chargeLevel = 0;
         chargeWait = 0;
     }
