@@ -31,7 +31,7 @@ public class Wieldable : MonoBehaviour, IWieldable
             if (i >= bulletType.Length)
                 break;
 
-            Debug.Log("Bullet Setting Manual");            
+            Debug.Log("Bullet Setting Manual");
             // 만약 bulletType 객체가 없다면 만들어줍니다.
             if (bulletType[i] == null)
             {
@@ -40,13 +40,13 @@ public class Wieldable : MonoBehaviour, IWieldable
             }
 
             Debug.Log("AreaForce Setting : " + bulletTypeManualSetting[i].areaForce);
-            bulletType[i].GetComponent<ProjectileOnHit>().SetAttribute(bulletTypeManualSetting[i]); 
+            bulletType[i].GetComponent<ProjectileOnHit>().SetAttribute(bulletTypeManualSetting[i]);
             Debug.Log("AreaForce Set : " + bulletType[i].GetComponent<ProjectileOnHit>().attribute.areaForce);
             Debug.Log("Bullet AreaForce : " + bulletType[0].GetComponent<ProjectileOnHit>().attribute.areaForce);
         }
     }
 
-    public void OnPush()
+    public virtual void OnPush()
     {
         Debug.Log("Weapon Status: " + bulletTypeManualSetting.Length);
         GameObject projectile = Instantiate(bulletType[0], (Vector2)owner.transform.position + rotationVector * 0.5f, Quaternion.identity) as GameObject;
@@ -54,12 +54,12 @@ public class Wieldable : MonoBehaviour, IWieldable
         projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
     }
 
-    public void OnHold()
+    public virtual void OnHold()
     {
 
     }
 
-    public void OnRelease()
+    public virtual void OnRelease()
     {
 
     }
@@ -72,7 +72,7 @@ public class Wieldable : MonoBehaviour, IWieldable
         }
         else if (!owner)
         {
-            
+
         }
         else
         {

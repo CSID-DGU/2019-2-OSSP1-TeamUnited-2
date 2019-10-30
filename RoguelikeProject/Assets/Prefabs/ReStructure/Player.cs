@@ -70,6 +70,7 @@ public class Player : Unit
         gameObject.SetActive(false);
         Invoke("nextScene", 1);
     }
+
     void nextScene()
     {
         SceneManager.LoadScene("Main", LoadSceneMode.Single);
