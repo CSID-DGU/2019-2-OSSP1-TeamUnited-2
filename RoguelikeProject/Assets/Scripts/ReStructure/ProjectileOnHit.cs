@@ -17,14 +17,18 @@ public class ProjectileOnHit : MonoBehaviour
         set { attacker = value; }
     }
 
-    public void SetAttribute(ProjectileAttribute p)
+    public ProjectileAttribute Attribute
     {
-        this.attribute.damage                 = p.damage;
-        this.attribute.force                  = p.force;
-        this.attribute.areaDamage             = p.areaDamage;
-        this.attribute.areaForce              = p.areaForce;
-        this.attribute.areaRadius             = p.areaRadius;
-        this.attribute.animationExplosion     = p.animationExplosion;
+        get { return attribute; }
+        set 
+        {   
+            attribute.damage                 = value.damage;
+            attribute.force                  = value.force;
+            attribute.areaDamage             = value.areaDamage;
+            attribute.areaForce              = value.areaForce;
+            attribute.areaRadius             = value.areaRadius;
+            attribute.animationExplosion     = value.animationExplosion;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)

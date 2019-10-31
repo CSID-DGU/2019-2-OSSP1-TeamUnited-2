@@ -22,7 +22,7 @@ public class ProjectileManager
             else
             {
                 entity = shape;
-                entity.AddComponent<ProjectileOnHit>().SetAttribute(attribute);
+                entity.AddComponent<ProjectileOnHit>().Attribute = attribute;
                 return entity;
             }
         }
