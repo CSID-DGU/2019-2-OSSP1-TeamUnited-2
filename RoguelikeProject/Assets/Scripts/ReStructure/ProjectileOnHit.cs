@@ -11,9 +11,11 @@ public class ProjectileOnHit : MonoBehaviour
         get { return attribute; }
         set 
         {   
+            Debug.Log("setting attribute(1)");
             attribute.damage                 = value.damage;
             attribute.force                  = value.force;
             attribute.areaDamage             = value.areaDamage;
+            Debug.Log("setting attribute(2)");
             attribute.areaForce              = value.areaForce;
             attribute.areaRadius             = value.areaRadius;
             attribute.animationExplosion     = value.animationExplosion;
@@ -33,11 +35,20 @@ public class ProjectileOnHit : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        // 이미 작동된 투사체는 중복작동하지 않습니다.
+        lock(this)
+        {
+            if (triggered)
+                return;
+            else
+                triggered = true;
+        }
+
         // 공격자 없는 투사체가 발사되었을 경우
         if (attacker == null)
         {
-            Debug.LogError("Projectile Fired Without Owner");
-            transform.position = new Vector3(-100,-100,100);
+            Debug.LogError("Projectile Fired Without Owner, Set Inactive");
+            triggered = true;
             return;
         }
 
@@ -49,14 +60,6 @@ public class ProjectileOnHit : MonoBehaviour
         if (col.gameObject.GetComponent<Rigidbody2D>() == null)
             return;
 
-        // 이미 작동된 투사체는 중복작동하지 않습니다.
-        lock(this)
-        {
-            if (triggered)
-                return;
-            else
-                triggered = true;
-        }
 
         // 여기까지 왔다면 어떤 형태로든 투사체가 작동한 것입니다.
         // 대상이 유닛인 경우 맞은 대상에게 strike 객체를 전달하여 데미지를 입힙니다.

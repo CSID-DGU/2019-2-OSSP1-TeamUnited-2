@@ -24,6 +24,8 @@ public class Player : Unit
         faceArrow = Instantiate(faceArrow, (Vector2)transform.position, Quaternion.identity) as GameObject;
         
         // 무기의 소유자를 설정해줍니다.
+        if (mainWeapon.GetComponent<Wieldable>() == false)
+            Debug.LogError("Weapon has no Wieldable component");
         mainWeapon.GetComponent<Wieldable>().Owner = gameObject;
     }
 

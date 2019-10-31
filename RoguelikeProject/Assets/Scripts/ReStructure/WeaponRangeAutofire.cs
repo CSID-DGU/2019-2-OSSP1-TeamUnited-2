@@ -7,24 +7,35 @@ public class WeaponRangeAutofire : Wieldable
     public ProjectileManager projectile;
     public bool autoFire;
     public double cooldown;
-
-    public override void OnPush()
+    void Start()
     {
-        if (cooldownWait <= 0)
-        {
-            FireRangeDirect(projectile.Entity);
-            cooldownWait = cooldown;
-        }
+        Debug.Log("Range Autofire Initialize");
+        ProjectileInstantiation(projectile);
     }
-    public override void OnHold()
+    protected void Fire()
     {
-        if (autoFire)
+        lock(this)
         {
             if (cooldownWait <= 0)
             {
                 FireRangeDirect(projectile.Entity);
                 cooldownWait = cooldown;
             }
+        }
+    }
+
+    public override void OnPush()
+    {
+        if (!autoFire)
+        {
+            Fire();
+        }
+    }
+    public override void OnHold()
+    {
+        if (autoFire)
+        {
+            Fire();
         }
     }
 }

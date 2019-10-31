@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wieldable : MonoBehaviour, IWieldable
+public class Wieldable : MonoBehaviour
 {
     protected GameObject owner;
     public GameObject Owner
@@ -13,31 +13,10 @@ public class Wieldable : MonoBehaviour, IWieldable
     public Vector2 rotationVector;
     protected double cooldownWait;
 
-
-    // public void Init()
-    // {
-    //     for(int i = 0; i < bulletTypeManualSetting.Length; ++i)
-    //     {
-    //         // bulletType의 크기보다 큰 배열은 무시됩니다.
-    //         if (i >= bulletType.Length)
-    //             break;
-
-    //         // Debug.Log("Bullet Setting Manual");
-    //         // 만약 bulletType 객체가 없다면 만들어줍니다.
-    //         if (bulletType[i] == null)
-    //         {
-    //             bulletType[i] = Instantiate(GameObject.Find("DefaultBullet"), new Vector3(0,0,0), Quaternion.identity) as GameObject;
-    //             Debug.LogError("Default Bullet Created");
-    //         }
-
-    //         bulletType[i].GetComponent<ProjectileOnHit>().SetAttribute(bulletTypeManualSetting[i]);
-    //     }
-    // }
-
     // 파라미터에는 발사 가능한 투사체를 넣습니다 
     // 발사 가능한 투사체는 SpriteRenderer, Collider, Rigidbody, ProjectileOnHit 컴포넌트를 모두 가지고 있는 게임 오브젝트여야 합니다.
     // ProjectileManager 인스턴스의 Entity 필드를 넣는 것으로 의도되어 있습니다만, 어떤 형태로든 발사 가능한 투사체를 넣으면 작동은 됩니다.
-    public void FireRangeDirect(GameObject bulletType)
+    protected void FireRangeDirect(GameObject bulletType)
     {
         // owner가 없는 무기는 발사할 수 없습니다.
         if (owner == null)
@@ -58,7 +37,19 @@ public class Wieldable : MonoBehaviour, IWieldable
         
         // 무기의 방향으로 발사합니다. 탄속은 아직 유동옵션은 아닙니다.
         projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
-    }   
+    }
+
+    protected void ProjectileInstantiation(ProjectileManager pManager)
+    {
+        // 기존의 정보는 삭제합니다.
+        pManager.Entity = null;
+
+        // 새로운 샘플을 생성합니다. 투사체 발사시 해당 샘플을 복제해서 발사하게 됩니다.
+        Debug.Log("Projectile sample entity initialize");        
+        pManager.Entity = Instantiate(pManager.shape);
+        pManager.Entity.AddComponent<ProjectileOnHit>().Attribute = pManager.attribute;
+    }
+
 
     // 무기의 작동방식은 상속받은 클래스에서 커스텀하여 사용합니다.
     public virtual void OnPush() {}
