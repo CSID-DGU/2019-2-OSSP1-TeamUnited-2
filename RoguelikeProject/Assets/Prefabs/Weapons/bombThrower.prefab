@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8888749923460764423}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 80.71309, y: 18.870104, z: -10}
+  m_LocalPosition: {x: 89.749535, y: 58.48439, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -46,4 +46,4 @@ MonoBehaviour:
   bulletType:
   - {fileID: 1417382109342578088, guid: d731a72221909944389f3aeb89e9f9de, type: 3}
   owner: {fileID: 0}
-  aim: {x: 0.75132275, y: 0.659935}
+  aim: {x: 0.72499794, y: 0.68875104}
