@@ -11,6 +11,7 @@ public class AreaStrike : MonoBehaviour
     public int minForceRate = 25;
     protected Vector2 attackerPosition;
     protected GameObject attacker;
+    Animator EnemyAni; // 애니메이션 쓸거임
 
     public void SetAttacker(Vector2 attackerPosition, GameObject attacker = null)
     {
@@ -59,6 +60,8 @@ public class AreaStrike : MonoBehaviour
 
                 // 계산된 물리량을 전달합니다.
                 col.gameObject.GetComponent<Unit>().GetStrike(actualStrike);
+                EnemyAni = col.gameObject.GetComponent<Animator>();
+                EnemyAni.SetTrigger("New Trigger");
             }
         }
         Destroy(gameObject);
