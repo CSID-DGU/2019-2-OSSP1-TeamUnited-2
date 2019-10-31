@@ -4,19 +4,8 @@ using UnityEngine;
 
 public class ProjectileOnHit : MonoBehaviour
 {
+    // 현재 attribute 설정은 ProjcectileManager에서 이루어집니다
     public ProjectileAttribute attribute;
-    protected GameObject attacker;
-    protected bool triggered = false;
-
-    Animator EnemyAni; // 애니메이션 쓸거임
-
-    public GameObject Attacker
-    // 공격자가 투사체에 영향받지 않기를 원한다면 설정합니다 (옵션)
-    {
-        get { return attacker; }
-        set { attacker = value; }
-    }
-
     public ProjectileAttribute Attribute
     {
         get { return attribute; }
@@ -30,18 +19,27 @@ public class ProjectileOnHit : MonoBehaviour
             attribute.animationExplosion     = value.animationExplosion;
         }
     }
+    // 현재 attacker의 설정은 ProjectileOnHit 객체에서 발사 직후 이루어집니다
+    protected GameObject attacker;
+    public GameObject Attacker
+    {
+        get { return attacker; }
+        set { attacker = value; }
+    }
+    protected bool triggered = false;
+
+    Animator EnemyAni; // 애니메이션 쓸거임
+
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        // 공격자는 투사체 충돌에 면역입니다. (일단은)
+        // 공격자는 투사체 충돌에 면역입니다.
         if (col.gameObject == attacker)
             return;
 
         // 형체가 없는 대상에는 반응하지 않습니다.
         if (col.gameObject.GetComponent<Rigidbody2D>() == null)
             return;
-
-        // 투사체이면서 발사
 
         // 이미 작동된 투사체는 중복작동하지 않습니다.
         lock(this)
