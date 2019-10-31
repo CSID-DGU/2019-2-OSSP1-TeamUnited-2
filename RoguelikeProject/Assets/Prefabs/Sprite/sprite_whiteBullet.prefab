@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 966432099099731857}
   - component: {fileID: 3823234243384223716}
   - component: {fileID: 2942733803079454840}
-  - component: {fileID: 7988219957619724627}
+  - component: {fileID: 7113343636314185304}
   m_Layer: 0
-  m_Name: testBullet
+  m_Name: sprite_whiteBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,7 +97,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.2
---- !u!50 &7988219957619724627
+--- !u!50 &7113343636314185304
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0

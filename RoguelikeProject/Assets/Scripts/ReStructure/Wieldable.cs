@@ -40,7 +40,7 @@ public class Wieldable : MonoBehaviour, IWieldable
     public void FireRangeDirect(GameObject bulletType)
     {
         // owner가 없는 무기는 발사할 수 없습니다.
-        if (!owner)
+        if (owner == null)
         {
             Debug.LogError("Weapon fired without owner");
             return;
@@ -53,6 +53,9 @@ public class Wieldable : MonoBehaviour, IWieldable
         projectile.GetComponent<ProjectileOnHit>().Attacker = owner;
         projectile.transform.SetParent(owner.transform);
 
+        // 투사체는 반드시 공격자의 정보를 담고 있어야 합니다.
+        Debug.Log("Projectile fired, Attacker: " + projectile.GetComponent<ProjectileOnHit>().Attacker.GetInstanceID());
+        
         // 무기의 방향으로 발사합니다. 탄속은 아직 유동옵션은 아닙니다.
         projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
     }   

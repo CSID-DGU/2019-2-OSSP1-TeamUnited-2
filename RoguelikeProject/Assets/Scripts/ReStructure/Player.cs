@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class Player : Unit
 {
     protected double invincible; // 단위는 초 입니다. (Time.deltaTime 사용)
-    public GameObject weapon1;
-    protected GameObject mainWeapon;
+    // public GameObject weapon1;
+    public GameObject mainWeapon;
     public GameObject faceArrow; // 플레이어가 보는 방향을 그래픽적으로 표현하기 위한 이미지
 
     new void Start()
@@ -23,8 +23,8 @@ public class Player : Unit
         // 플레이어의 방향을 알려주기 위한 화살표를 생성합니다.
         faceArrow = Instantiate(faceArrow, (Vector2)transform.position, Quaternion.identity) as GameObject;
         
-        // 무기를 초기화해줍니다.
-        Wield(weapon1);
+        // 무기의 소유자를 설정해줍니다.
+        mainWeapon.GetComponent<Wieldable>().Owner = gameObject;
     }
 
     public override int GetDamage(int damage)
@@ -91,7 +91,7 @@ public class Player : Unit
         GameObject oldWeapon = mainWeapon;
         
         // 새로운 무기를 장착하고 초기화합니다.
-        mainWeapon = Instantiate(newWeapon, new Vector3 (0,0,0), Quaternion.identity) as GameObject;
+        mainWeapon = newWeapon;
         // mainWeapon.GetComponent<Wieldable>().Init();
         
         // TODO :: 임시 포인터에 넣어진 기존 무기에 대한 처리도 해야 할 것입니다. 현재는 그대로 삭제됩니다.
@@ -101,9 +101,6 @@ public class Player : Unit
     {
         // 우선 모든 유닛에 대한 공통적인 처리
         base.Update();
-
-        // 무기들의 소유자 링크 처리
-        mainWeapon.GetComponent<Wieldable>().Owner = gameObject;
 
         // 무적의 처리와 스프라이트 깜빡임의 처리
         if (invincible > 0.0)

@@ -33,6 +33,14 @@ public class ProjectileOnHit : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        // 공격자 없는 투사체가 발사되었을 경우
+        if (attacker == null)
+        {
+            Debug.LogError("Projectile Fired Without Owner");
+            transform.position = new Vector3(-100,-100,100);
+            return;
+        }
+
         // 공격자는 투사체 충돌에 면역입니다.
         if (col.gameObject == attacker)
             return;
@@ -58,6 +66,7 @@ public class ProjectileOnHit : MonoBehaviour
             if ((attribute.force >= 0) != true)
                 Debug.LogError("ERROR :: Negative Force" + attribute.force);
             col.gameObject.GetComponent<Unit>().GetStrike(strike);
+            
             EnemyAni = col.gameObject.GetComponent<Animator>();
             EnemyAni.SetTrigger("New Trigger");
         }

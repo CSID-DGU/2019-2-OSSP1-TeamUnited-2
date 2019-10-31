@@ -628,6 +628,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2618062061517797899, guid: fa8ab87752704a24c946612d51e9b787,
         type: 3}
+    - target: {fileID: 2154451577142106397, guid: 58996ba4e6d151a4f8c8a4104dbea4d6,
+        type: 3}
+      propertyPath: mainWeapon
+      value: 
+      objectReference: {fileID: 2618062061517797899, guid: fa8ab87752704a24c946612d51e9b787,
+        type: 3}
     - target: {fileID: 6638464269740965971, guid: 58996ba4e6d151a4f8c8a4104dbea4d6,
         type: 3}
       propertyPath: m_SortingOrder
