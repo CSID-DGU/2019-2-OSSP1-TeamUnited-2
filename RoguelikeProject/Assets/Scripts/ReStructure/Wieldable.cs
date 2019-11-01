@@ -12,6 +12,7 @@ public abstract class Wieldable : MonoBehaviour
     }
     public Vector2 rotationVector;
     protected double cooldownWait;
+    protected GameObject projectileHolder = null;
 
     // 파라미터에는 발사 가능한 투사체를 넣습니다 
     // 발사 가능한 투사체는 SpriteRenderer, Collider, Rigidbody, ProjectileOnHit 컴포넌트를 모두 가지고 있는 게임 오브젝트여야 합니다.
@@ -48,8 +49,11 @@ public abstract class Wieldable : MonoBehaviour
         pManager.Entity = Instantiate(pManager.shape);
         pManager.Entity.AddComponent<ProjectileOnHit>();
         pManager.Entity.GetComponent<ProjectileOnHit>().Attribute = pManager.attribute;
+
+        // 생성된 샘플의 부모를 설정하고 격리된 공간에 보관합니다.
+        // TODO :: 공간이 완벽하게 격리되어있지 않습니다.
         pManager.Entity.transform.SetParent(transform);
-        pManager.Entity.transform.position = new Vector3(0,0,-1000);
+        pManager.Entity.transform.position = new Vector3(-1000,-1000,-1000);
         Debug.Log("Projectile sample entity initialized");        
     }
 

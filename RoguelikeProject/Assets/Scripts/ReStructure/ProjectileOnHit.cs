@@ -25,13 +25,10 @@ public class ProjectileOnHit : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        // 공격자 없는 투사체가 발사되었을 경우
-        if (attacker == null)
-        {
-            Debug.LogError("Projectile Fired Without Owner, Set Inactive");
-            triggered = true;
+        // --여기서부터 조건처리를 합니다.--
+        // 투사체 끼리는 충돌하지 않습니다. (일단은)
+        if (col.gameObject.GetComponent<ProjectileOnHit>())
             return;
-        }
 
         // 공격자는 투사체 충돌에 면역입니다.
         if (col.gameObject == attacker)
@@ -41,7 +38,16 @@ public class ProjectileOnHit : MonoBehaviour
         if (col.gameObject.GetComponent<Rigidbody2D>() == null)
             return;
 
-        // 여기까지 왔다면 어떤 형태로든 투사체가 작동한 것입니다.
+        // --조건처리에는 걸리지 않았으나 공격자 없는 투사체일 경우 에러메시지를 송출합니다--
+        // 에러메시지가 발생하였으면 어떤 형태로든 잠재적인 문제가 있는것입니다. 이부분을 지우지 마세요.
+        if (attacker == null)
+        {
+            Debug.LogError("Projectile Fired Without Owner, Set Inactive : " + GetInstanceID());
+            transform.position = new Vector3(-1000,-1000,-1000);
+            return;
+        }
+
+        // --여기까지 왔다면 투사체가 무사히 작동한 것입니다.--
         // 이미 작동된 투사체는 중복작동하지 않습니다.
         lock(this)
         {
