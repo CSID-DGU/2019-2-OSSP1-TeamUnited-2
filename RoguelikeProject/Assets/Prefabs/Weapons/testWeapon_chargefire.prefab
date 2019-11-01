@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1133697531099107832}
-  - component: {fileID: 391767152206853064}
   - component: {fileID: 114915733515046540}
+  - component: {fileID: 391767152206853064}
   m_Layer: 0
   m_Name: testWeapon_chargefire
   m_TagString: Untagged
@@ -32,6 +32,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114915733515046540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2856328096684622408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fad875a8f6abb947aa949a8d8db1695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationVector: {x: 0, y: 0}
+  bulletType:
+  - {fileID: 1417382109342578088, guid: 301764c5d5b416549b5ce57a1556eef4, type: 3}
+  - {fileID: 3221848136359546007, guid: 8bebbfdeae8cd37488be611ed2c18249, type: 3}
+  - {fileID: 9222690769316629019, guid: 3d09b649202916345a174bc8e4ed1dc8, type: 3}
+  chargeFire: 1
+  chargeTime:
+  - 0.5
+  - 0.5
+  - 0.5
 --- !u!212 &391767152206853064
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -80,28 +102,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &114915733515046540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2856328096684622408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fad875a8f6abb947aa949a8d8db1695, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletType:
-  - {fileID: 1417382109342578088, guid: 301764c5d5b416549b5ce57a1556eef4, type: 3}
-  - {fileID: 3221848136359546007, guid: 8bebbfdeae8cd37488be611ed2c18249, type: 3}
-  - {fileID: 9222690769316629019, guid: 3d09b649202916345a174bc8e4ed1dc8, type: 3}
-  owner: {fileID: 0}
-  aim: {x: 0.7697073, y: 0.6383969}
-  chargeFire: 1
-  MaxLevel: 2
-  chargeTime:
-  - 0.5
-  - 0.5
-  - 0.5
-  cooldown: []
