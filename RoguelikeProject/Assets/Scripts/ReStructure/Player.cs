@@ -15,14 +15,18 @@ public class Player : Unit
     {
         // 모든 유닛의 공통 처리를 합니다.
         base.Start();
-
         // 플레이어는 초기 무적과 초기 hp값을 다르게 갖습니다 (For Debug)
         invincible = 5.0;
         currentHP = 5;
 
-        // 플레이어의 방향을 알려주기 위한 화살표를 생성합니다.
+        // 플레이어의 방향을 알려주기 위한 화살표 인스턴스를 생성하고, 부모를 플레이어로 설정해줍니다.
         faceArrow = Instantiate(faceArrow, (Vector2)transform.position, Quaternion.identity) as GameObject;
-        
+        faceArrow.transform.SetParent(gameObject.transform);
+
+        // 주 무기의 인스턴스를 생성하고 부모를 플레이어로 설정.
+        mainWeapon = Instantiate(mainWeapon);
+        mainWeapon.transform.SetParent(gameObject.transform);
+
         // 무기의 소유자를 설정해줍니다.
         if (mainWeapon.GetComponent<Wieldable>() == false)
             Debug.LogError("Weapon has no Wieldable component");
