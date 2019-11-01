@@ -79,7 +79,7 @@ public class Unit : MonoBehaviour
 
         // 애니메이터가 있다면 피격 애니메이션도 재생합니다.
         if (animator)
-            animator.SetTrigger("New Trigger");  
+            animator.SetTrigger("Hit");  
     }
 
     protected virtual void SelfDestruction()
