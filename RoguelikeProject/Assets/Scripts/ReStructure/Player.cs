@@ -23,14 +23,8 @@ public class Player : Unit
         faceArrow = Instantiate(faceArrow, (Vector2)transform.position, Quaternion.identity) as GameObject;
         faceArrow.transform.SetParent(gameObject.transform);
 
-        // 주 무기의 인스턴스를 생성하고 부모를 플레이어로 설정.
-        mainWeapon = Instantiate(mainWeapon);
-        mainWeapon.transform.SetParent(gameObject.transform);
-
-        // 무기의 소유자를 설정해줍니다.
-        if (mainWeapon.GetComponent<Wieldable>() == false)
-            Debug.LogError("Weapon has no Wieldable component");
-        mainWeapon.GetComponent<Wieldable>().Owner = gameObject;
+        // 무기 인스턴스 생성
+        Wield(mainWeapon);
     }
 
     public override int GetDamage(int damage)
@@ -90,19 +84,23 @@ public class Player : Unit
 
         return actualStrike;
     }
-
     public void Wield(GameObject newWeapon)
     {
-        // 기존의 무기를 임시 포인터에 넣습니다.
-        GameObject oldWeapon = mainWeapon;
-        
-        // 새로운 무기를 장착하고 초기화합니다.
-        mainWeapon = newWeapon;
-        // mainWeapon.GetComponent<Wieldable>().Init();
-        
-        // TODO :: 임시 포인터에 넣어진 기존 무기에 대한 처리도 해야 할 것입니다. 현재는 그대로 삭제됩니다.
-    }
+        // 주 무기의 인스턴스를 생성하고 부모를 플레이어로 설정.
+        mainWeapon = Instantiate(newWeapon);
+        mainWeapon.transform.SetParent(gameObject.transform);
 
+        // 무기의 소유자를 설정해줍니다.
+        if (mainWeapon.GetComponent<Wieldable>() == false)
+            Debug.LogError("Weapon has no Wieldable component");
+        mainWeapon.GetComponent<Wieldable>().Owner = gameObject;
+    }
+    public void ChangeWeapon(GameObject newWeapon)
+    {
+        // 현재로써는 기존의 무기는 그냥 삭제하도록 되어있습니다.
+        Destroy(mainWeapon);
+        Wield(newWeapon);
+    }
     protected new void Update()
     {
         // 우선 모든 유닛에 대한 공통적인 처리

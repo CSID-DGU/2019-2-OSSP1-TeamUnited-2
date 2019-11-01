@@ -9,17 +9,7 @@ public class ProjectileOnHit : MonoBehaviour
     public ProjectileAttribute Attribute
     {
         get { return attribute; }
-        set 
-        {   
-            Debug.Log("setting attribute(1)");
-            attribute.damage                 = value.damage;
-            attribute.force                  = value.force;
-            attribute.areaDamage             = value.areaDamage;
-            Debug.Log("setting attribute(2)");
-            attribute.areaForce              = value.areaForce;
-            attribute.areaRadius             = value.areaRadius;
-            attribute.animationExplosion     = value.animationExplosion;
-        }
+        set { attribute = value; }
     }
     // 현재 attacker의 설정은 ProjectileOnHit 객체에서 발사 직후 이루어집니다
     protected GameObject attacker;
@@ -35,15 +25,6 @@ public class ProjectileOnHit : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        // 이미 작동된 투사체는 중복작동하지 않습니다.
-        lock(this)
-        {
-            if (triggered)
-                return;
-            else
-                triggered = true;
-        }
-
         // 공격자 없는 투사체가 발사되었을 경우
         if (attacker == null)
         {
@@ -60,8 +41,16 @@ public class ProjectileOnHit : MonoBehaviour
         if (col.gameObject.GetComponent<Rigidbody2D>() == null)
             return;
 
-
         // 여기까지 왔다면 어떤 형태로든 투사체가 작동한 것입니다.
+        // 이미 작동된 투사체는 중복작동하지 않습니다.
+        lock(this)
+        {
+            if (triggered)
+                return;
+            else
+                triggered = true;
+        }
+
         // 대상이 유닛인 경우 맞은 대상에게 strike 객체를 전달하여 데미지를 입힙니다.
         if (col.gameObject.GetComponent<Unit>())
         {
@@ -74,29 +63,25 @@ public class ProjectileOnHit : MonoBehaviour
             EnemyAni.SetTrigger("New Trigger");
         }
 
-        // 범위 공격을 하는 객체를 생성합니다.
-        // areaEffect = Instantiate(sample, transform.position, Quaternion.identity) as GameObject;
+        // 범위 공격을 하는 객체를 생성하고 부모를 투사체로 설정합니다.
         GameObject areaEffect = new GameObject();
         areaEffect.transform.position = transform.position;
+        areaEffect.transform.SetParent(transform);
 
-        // 범위 공격기능을 하는 컴포넌트를 추가하고 설정해줍니다.
+        // 범위 공격기능을 하는 컴포넌트를 추가하고 공격자와 속성을 설정해줍니다.
         areaEffect.AddComponent<AreaStrike>();
         areaEffect.GetComponent<AreaStrike>().SetStatus(attribute);
-
-        // 공격자가 존재한다면 공격자도 설정해 줍니다.
-        if (attacker != null)
-            areaEffect.GetComponent<AreaStrike>().SetAttacker(attacker);
+        areaEffect.GetComponent<AreaStrike>().SetAttacker(attacker);
 
         // 범위 공격 객체를 작동시킵니다. 해당 객체는 작동 후 자동 소멸할 것입니다.
         // TODO :: 객체의 소멸 관리가 직접적으로 이루어지지 않는 점이 구조적 불안정을 유발할 가능성이 있습니다. 추후 구조개선이 필요할 수 있습니다.
         areaEffect.GetComponent<AreaStrike>().Activate();
 
-        // 애니메이션을 재생합니다
+        // 애니메이션이 있다면 재생합니다
         if (attribute.animationExplosion)
         {
-            Instantiate(attribute.animationExplosion, transform.position, Quaternion.identity);
+            GameObject instance = Instantiate(attribute.animationExplosion, transform.position, Quaternion.identity);
         }
-        // GameObject instance = Instantiate(areaEffect, transform.position, Quaternion.identity) as GameObject;
 
         Destroy(gameObject);
     }

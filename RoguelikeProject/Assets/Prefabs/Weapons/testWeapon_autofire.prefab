@@ -51,8 +51,7 @@ MonoBehaviour:
       areaDamage: 1
       areaForce: 1
       areaRadius: 1
-      animationExplosion: {fileID: 7323742082746974975, guid: 70140e9a5e0b5a7478e89ef8f7b4289b,
-        type: 3}
+      animationExplosion: {fileID: 0}
     shape: {fileID: 1417382109342578088, guid: 301764c5d5b416549b5ce57a1556eef4, type: 3}
   autoFire: 1
   cooldown: 0.1

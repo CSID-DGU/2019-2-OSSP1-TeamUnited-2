@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8888749923460764417}
-  - component: {fileID: 8888749923460764422}
+  - component: {fileID: 6227702297095948972}
   m_Layer: 0
   m_Name: bombThrower
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8888749923460764422
+--- !u!114 &6227702297095948972
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,17 +40,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 8888749923460764423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f10b554b25798e04cbb2d80ac0ad0535, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  bulletType:
-  - {fileID: 1417382109342578088, guid: d731a72221909944389f3aeb89e9f9de, type: 3}
-  bulletTypeManualSetting:
-  - damage: 0
-    force: 0
-    areaDamage: 1
-    areaForce: 15
-    areaRadius: 5
-    animationExplosion: {fileID: 7323742082746974975, guid: c80fb908485c2ad43b038e090aacf051,
-      type: 3}
-  aim: {x: 0.739534, y: 0.6731192}
+  m_Script: {fileID: 11500000, guid: dea9206e506cc494faf7b349a3ad455c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationVector: {x: 0, y: 0}
+  projectile:
+    attribute:
+      damage: 0
+      force: 0
+      areaDamage: 2
+      areaForce: 15
+      areaRadius: 5
+      animationExplosion: {fileID: 7323742082746974975, guid: 70140e9a5e0b5a7478e89ef8f7b4289b,
+        type: 3}
+    shape: {fileID: 1417382109342578088, guid: 27774b184ecbe51499579bb1c733c431, type: 3}
+  autoFire: 0
+  cooldown: 1

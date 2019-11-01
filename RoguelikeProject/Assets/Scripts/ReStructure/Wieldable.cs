@@ -45,11 +45,13 @@ public class Wieldable : MonoBehaviour
         pManager.Entity = null;
 
         // 새로운 샘플을 생성합니다. 투사체 발사시 해당 샘플을 복제해서 발사하게 됩니다.
-        Debug.Log("Projectile sample entity initialize");        
         pManager.Entity = Instantiate(pManager.shape);
-        pManager.Entity.AddComponent<ProjectileOnHit>().Attribute = pManager.attribute;
+        pManager.Entity.AddComponent<ProjectileOnHit>();
+        pManager.Entity.GetComponent<ProjectileOnHit>().Attribute = pManager.attribute;
+        pManager.Entity.transform.SetParent(transform);
+        pManager.Entity.transform.position = new Vector3(0,0,-1000);
+        Debug.Log("Projectile sample entity initialized");        
     }
-
 
     // 무기의 작동방식은 상속받은 클래스에서 커스텀하여 사용합니다.
     public virtual void OnPush() {}
