@@ -34,7 +34,7 @@ public abstract class Wieldable : MonoBehaviour
         projectile.transform.SetParent(owner.transform);
 
         // 투사체는 반드시 공격자의 정보를 담고 있어야 합니다.
-        Debug.Log("Projectile fired, Attacker: " + projectile.GetComponent<ProjectileOnHit>().Attacker.GetInstanceID());
+        // Debug.Log("Projectile fired, Attacker: " + projectile.GetComponent<ProjectileOnHit>().Attacker.GetInstanceID());
         
         // 무기의 방향으로 발사합니다. 탄속은 아직 유동옵션은 아닙니다.
         projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);

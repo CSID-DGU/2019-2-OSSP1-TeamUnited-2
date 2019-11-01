@@ -21,9 +21,9 @@ public class Enemy : Unit
         base.Update();
     }
 
-    protected new void GetStrike()
+    public new void GetStrike(Strike strike)
     {
-        base.GetStrike();
+        base.GetStrike(strike);
         enemyAnimator.SetTrigger("New Trigger");
     }
     void OnCollisionStay2D(Collision2D coll)
