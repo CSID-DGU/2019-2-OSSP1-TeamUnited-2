@@ -6,7 +6,7 @@ public class Enemy : Unit
 {
     public Wieldable weapon;
     protected GameObject target;
-    public int att;
+    public int meleeDamage;
     public double force;
     
     protected override void Start()
@@ -24,6 +24,6 @@ public class Enemy : Unit
     void OnCollisionStay2D(Collision2D coll)
     {
         if (coll.gameObject.name == "Player")
-            coll.gameObject.GetComponent<Player>().GetStrike(new Strike(att, force, transform.position));
+            coll.gameObject.GetComponent<Player>().GetStrike(new Strike(meleeDamage, force, transform.position));
     }
 }
