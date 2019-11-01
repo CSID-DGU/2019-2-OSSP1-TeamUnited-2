@@ -53,9 +53,8 @@ MonoBehaviour:
   HP: 20
   maxSpeed: 4
   acceleration: 4
-  faceDirection: {x: 0, y: 0}
   weapon: {fileID: 0}
-  att: 1
+  meleeDamage: 1
   force: 2
 --- !u!114 &556268633250779927
 MonoBehaviour:

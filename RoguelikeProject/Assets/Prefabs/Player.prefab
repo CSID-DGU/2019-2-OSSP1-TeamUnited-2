@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 5
-  maxSpeed: 5
+  maxSpeed: 20
   acceleration: 1
   mainWeapon: {fileID: 2618062061517797899, guid: fa8ab87752704a24c946612d51e9b787,
     type: 3}

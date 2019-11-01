@@ -18,7 +18,9 @@ public class Unit : MonoBehaviour
         set { coinScore = value; }
     }
     public double maxSpeed;
-    public double acceleration;
+    protected Vector2 currentSpeed;
+    public float acceleration;
+    protected Vector2 targetAcceleration;
     protected Vector2 rotationVector; // 플레이어가 보는 방향의 벡터값
     public Vector2 RotationVector
     {
@@ -34,13 +36,23 @@ public class Unit : MonoBehaviour
     }
 
     protected void Move(Vector2 direction)
+    // 호출시 단위속도만큼 이동합니다. Update등의 지속호출과 연계하여야 제대로 된 움직임이 나옵니다.
     {
-        // TODO :: 최대속도 구현 해야함, 현재 무한가속
-        // TODO :: acceleration을 deltaTime을 고려하여 값을 조절해야 합니다
-        // 호출시 단위속도만큼 이동합니다. Update등의 지속호출과 연계하여야 제대로 된 움직임이 나옵니다.
+
+        // 방향벡터를 추출하고 목표 가속치와 현재속도를 기록합니다.
         direction.Normalize();
-        GetComponent<Rigidbody2D>().AddForce(direction * (float)acceleration, ForceMode2D.Impulse);
+        targetAcceleration = direction * acceleration;
+        currentSpeed = GetComponent<Rigidbody2D>().velocity;
+
+        // 임시로 임계속도를 구현했습니다. 임계속도 이상에서는 가속력이 줄어들고 지속적으로 감속당합니다.
+        if (currentSpeed.magnitude > maxSpeed)
+        {
+            GetComponent<Rigidbody2D>().velocity *= 0.9f;
+            targetAcceleration *= 0.75f;
+        }
         
+        // 실제 가속이 이루어집니다.
+        GetComponent<Rigidbody2D>().AddForce(targetAcceleration, ForceMode2D.Impulse);
     }
 
     public virtual int GetDamage(int damage)
