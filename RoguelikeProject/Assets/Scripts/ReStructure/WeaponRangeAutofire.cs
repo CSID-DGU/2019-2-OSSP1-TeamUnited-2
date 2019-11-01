@@ -38,4 +38,5 @@ public class WeaponRangeAutofire : Wieldable
             Fire();
         }
     }
+    public override void OnRelease() {}
 }

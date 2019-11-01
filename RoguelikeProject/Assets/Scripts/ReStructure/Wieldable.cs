@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wieldable : MonoBehaviour
+public abstract class Wieldable : MonoBehaviour
 {
     protected GameObject owner;
     public GameObject Owner
@@ -54,9 +54,9 @@ public class Wieldable : MonoBehaviour
     }
 
     // 무기의 작동방식은 상속받은 클래스에서 커스텀하여 사용합니다.
-    public virtual void OnPush() {}
-    public virtual void OnHold() {}
-    public virtual void OnRelease() {}
+    public abstract void OnPush();
+    public abstract void OnHold();
+    public abstract void OnRelease();
 
     // 모든 무기 공용인 쿨다운 처리 및 조준점 처리를 합니다.
     // 상속받은 객체에서 Update를 재정의 할 경우 반드시 base.Update()를 호출해주어야 합니다.
