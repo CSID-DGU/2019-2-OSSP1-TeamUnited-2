@@ -40,6 +40,7 @@ public class Unit : MonoBehaviour
         // 호출시 단위속도만큼 이동합니다. Update등의 지속호출과 연계하여야 제대로 된 움직임이 나옵니다.
         direction.Normalize();
         GetComponent<Rigidbody2D>().AddForce(direction * (float)acceleration, ForceMode2D.Impulse);
+        
     }
 
     public virtual int GetDamage(int damage)
@@ -60,8 +61,6 @@ public class Unit : MonoBehaviour
     // 모든 유닛의 모든 피격은 이 메서드를 사용해야만 합니다. 
     // 직접적인 HP, transform 등의 조작은 나중에 큰 문제를 야기할 수 있습니다.
     {
-        Debug.Log("unit get strike");
-
         // 실제로 받게 되는 물리량을 추적연산합니다.
         Strike actualStrike = new Strike(strike);
         // 호출하는 순간 강한 힘으로 오브젝트를 밀어버립니다.

@@ -48,7 +48,7 @@ MonoBehaviour:
     attribute:
       damage: 0
       force: 0
-      areaDamage: 2
+      areaDamage: 5
       areaForce: 25
       areaRadius: 5
       animationExplosion: {fileID: 7323742082746974975, guid: 70140e9a5e0b5a7478e89ef8f7b4289b,
