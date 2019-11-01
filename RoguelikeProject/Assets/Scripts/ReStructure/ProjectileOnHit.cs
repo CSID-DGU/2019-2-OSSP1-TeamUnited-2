@@ -20,7 +20,7 @@ public class ProjectileOnHit : MonoBehaviour
     }
     protected bool triggered = false;
 
-    Animator EnemyAni; // 애니메이션 쓸거임
+    // Animator EnemyAni; // 애니메이션 쓸거임
 
 
     void OnTriggerEnter2D(Collider2D col)
@@ -62,11 +62,12 @@ public class ProjectileOnHit : MonoBehaviour
         {
             Strike strike = new Strike(attribute.damage, attribute.force, transform.position);
             if ((attribute.force >= 0) != true)
-                Debug.LogError("ERROR :: Negative Force" + attribute.force);
+                Debug.LogError("Force should be non-negative value" + attribute.force);
             col.gameObject.GetComponent<Unit>().GetStrike(strike);
             
-            EnemyAni = col.gameObject.GetComponent<Animator>();
-            EnemyAni.SetTrigger("New Trigger");
+            // // 애니메이션을 재생합니다.
+            // EnemyAni = col.gameObject.GetComponent<Animator>();
+            // EnemyAni.SetTrigger("New Trigger");
         }
 
         // 범위 공격을 하는 객체를 생성하고 부모를 투사체로 설정합니다.

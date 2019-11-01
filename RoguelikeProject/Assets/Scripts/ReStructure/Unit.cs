@@ -25,8 +25,10 @@ public class Unit : MonoBehaviour
         get { return rotationVector; }
         set { rotationVector = value; }
     }
+    protected Animator animator = null;
 
-    protected void Start()
+
+    protected virtual void Start()
     {
         currentHP = HP;
     }
@@ -54,10 +56,12 @@ public class Unit : MonoBehaviour
         return actualDamage;
     }
 
-    public Strike GetStrike (Strike strike)
+    public virtual void GetStrike (Strike strike)
     // 모든 유닛의 모든 피격은 이 메서드를 사용해야만 합니다. 
     // 직접적인 HP, transform 등의 조작은 나중에 큰 문제를 야기할 수 있습니다.
     {
+        Debug.Log("unit get strike");
+
         // 실제로 받게 되는 물리량을 추적연산합니다.
         Strike actualStrike = new Strike(strike);
         // 호출하는 순간 강한 힘으로 오브젝트를 밀어버립니다.
@@ -66,16 +70,16 @@ public class Unit : MonoBehaviour
         if (gameObject.GetComponent<Rigidbody2D>() && strike.force > 0.0)
            gameObject.GetComponent<Rigidbody2D>().AddForce(pushDirection * (float)strike.force, ForceMode2D.Impulse);
            
-        // (Debug) force 작동에 문제가 있을 경우 예외 메시지 출력
+        // force 값은 양의 실수여야 합니다.
         if ((strike.force >= 0) != true)
             Debug.LogError("Force setting error" + strike.damage + "|" + strike.force + "|" + strike.attackPosition + "|" + transform.position);
 
         // 데미지가 있다면 데미지도 받습니다
         actualStrike.damage = GetDamage(strike.damage);
 
-        //Debug.Log(strike.damage);
-        // 추적한 값을 반환합니다.
-        return actualStrike;
+        // 애니메이터가 있다면 피격 애니메이션도 재생합니다.
+        if (animator)
+            animator.SetTrigger("New Trigger");  
     }
 
     protected virtual void SelfDestruction()

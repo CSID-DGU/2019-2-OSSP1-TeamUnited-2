@@ -41,16 +41,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dea9206e506cc494faf7b349a3ad455c, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   rotationVector: {x: 0, y: 0}
   projectile:
     attribute:
       damage: 1
       force: 1
-      areaDamage: 1
-      areaForce: 1
-      areaRadius: 1
+      areaDamage: 0
+      areaForce: 0
+      areaRadius: 0
       animationExplosion: {fileID: 0}
     shape: {fileID: 1417382109342578088, guid: 301764c5d5b416549b5ce57a1556eef4, type: 3}
   autoFire: 1

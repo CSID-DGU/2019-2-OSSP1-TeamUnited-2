@@ -41,15 +41,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dea9206e506cc494faf7b349a3ad455c, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   rotationVector: {x: 0, y: 0}
   projectile:
     attribute:
       damage: 0
       force: 0
       areaDamage: 2
-      areaForce: 15
+      areaForce: 25
       areaRadius: 5
       animationExplosion: {fileID: 7323742082746974975, guid: 70140e9a5e0b5a7478e89ef8f7b4289b,
         type: 3}

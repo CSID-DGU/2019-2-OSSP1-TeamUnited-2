@@ -8,23 +8,18 @@ public class Enemy : Unit
     protected GameObject target;
     public int att;
     public double force;
-    protected Animator enemyAnimator;
     
-
-    new void Start()
+    protected override void Start()
     {
         currentHP = HP;
-        enemyAnimator = GetComponent<Animator>();
+        
+        // 애니메이터가 있다면 설정해줍니다.
+        if (GetComponent<Animator>())
+            animator = GetComponent<Animator>();
     }
     protected new void Update()
     {
         base.Update();
-    }
-
-    public new void GetStrike(Strike strike)
-    {
-        base.GetStrike(strike);
-        enemyAnimator.SetTrigger("New Trigger");
     }
     void OnCollisionStay2D(Collision2D coll)
     {

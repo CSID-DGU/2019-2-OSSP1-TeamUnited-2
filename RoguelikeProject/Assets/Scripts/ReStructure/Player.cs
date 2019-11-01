@@ -75,15 +75,6 @@ public class Player : Unit
     {
         SceneManager.LoadScene("Main", LoadSceneMode.Single);
     }
-
-    public new Strike GetStrike(Strike strike)
-    // Unit의 GetStrike를 활용합니다, 다만 플레이어는 데미지를 입을 경우 추가적인 무적 타임이 존재합니다.
-    {
-        // 실제로 받게 되는 물리량을 추적중입니다.
-        Strike actualStrike = base.GetStrike(strike);
-
-        return actualStrike;
-    }
     public void Wield(GameObject newWeapon)
     {
         // 주 무기의 인스턴스를 생성하고 부모를 플레이어로 설정.
