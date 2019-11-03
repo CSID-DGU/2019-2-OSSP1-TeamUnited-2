@@ -51,8 +51,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 10
-  maxSpeed: 2
-  acceleration: 2
+  maxSpeed: 10
+  acceleration: 1
   weapon: {fileID: 0}
   meleeDamage: 1
   force: 3
