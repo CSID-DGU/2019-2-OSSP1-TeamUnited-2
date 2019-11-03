@@ -48,7 +48,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 5
   maxSpeed: 20
-  acceleration: 1
   mainWeapon: {fileID: 2618062061517797899, guid: fa8ab87752704a24c946612d51e9b787,
     type: 3}
   faceArrow: {fileID: 1431474610208893003, guid: f1766503911121d40a2cac0d7008f7f0,
@@ -65,7 +64,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 2
   m_LinearDrag: 3
   m_AngularDrag: 3
   m_GravityScale: 0
