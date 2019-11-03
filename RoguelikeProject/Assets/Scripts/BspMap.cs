@@ -325,7 +325,7 @@ public class BspMap : MonoBehaviour
         }
     }
 
-    void Start()
+    public void DrawMap()
     {
         SubDungeon rootSubDungeon = new SubDungeon(new Rect(0, 0, boardRows, boardColumns));
         CreateBSP(rootSubDungeon);
@@ -335,6 +335,11 @@ public class BspMap : MonoBehaviour
         DrawRooms(rootSubDungeon);
         DrawCorridors(rootSubDungeon);
         DrawWalls(rootSubDungeon);
+    }
+
+    private void Start()
+    {
+        DrawMap();
     }
 }
 

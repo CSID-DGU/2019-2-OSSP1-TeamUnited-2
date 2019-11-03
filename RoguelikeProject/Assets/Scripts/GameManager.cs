@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public GameObject SpawnedItem1;
     public GameObject SpawnedItem2;
     public GameObject SpawnedItem3;
+    //public GameObject BspMap;
 
     public double density;
     public int smoothness;
@@ -27,14 +28,14 @@ public class GameManager : MonoBehaviour
 
     private string seed;
 
-    void Start()
+    /*void Start()
     {
         BoardSetup();
 
         SpawnedPlayer.SetActive(true);
 
         AstarPath.active.Scan(); // 이거를 해야 벽하고 부딪히네요
-    }
+    }*/
 
     void BoardSetup()
     {
