@@ -32,7 +32,7 @@ public class Enemy : Unit
     }
     void OnCollisionStay2D(Collision2D coll)
     {
-        if (coll.gameObject.name == "Player")
+        if (coll.gameObject.GetComponent<Player>())
             coll.gameObject.GetComponent<Player>().GetStrike(new Strike(meleeDamage, force, transform.position));
     }
     void FindPlayer()
