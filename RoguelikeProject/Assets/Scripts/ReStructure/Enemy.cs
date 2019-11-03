@@ -26,7 +26,7 @@ public class Enemy : Unit
 
         if (target)
         {
-            Vector2 direction = col.gameObject.GetComponent<Player>().transform.position - transform.position;
+            Vector2 direction = target.transform.position - transform.position;
             Move(direction);
         }
     }
@@ -37,24 +37,16 @@ public class Enemy : Unit
     }
     void FindPlayer()
     {
-        // 타겟이 이미 플레이어라면 생략
-        if (target.GetComponent<Player>())
+        if (target == null)
         {
-            return;
-        }        
-        // 그 외에는 플레이어를 찾습니다.
-        else 
-        {
-            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 10.0f);
+            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 40.0f);
             foreach (Collider2D col in cols)
             {
-                Debug.Log(col);
                 if (col.gameObject.GetComponent<Player>())
                 {
                     target = col.gameObject;
                 }
             }
         }
-
     }
 }
