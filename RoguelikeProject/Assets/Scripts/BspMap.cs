@@ -6,10 +6,9 @@ public class BspMap : MonoBehaviour
 {
     public int boardRows, boardColumns;
     public int minRoomSize, maxRoomSize;
-    public float startX, startY;
     public GameObject floorTile;
     public GameObject corridorTile;
-
+    public GameObject wallTile;
     private GameObject[,] boardPositionsFloor;
 
     public class SubDungeon
@@ -118,6 +117,8 @@ public class BspMap : MonoBehaviour
         {
             Rect lroom = left.GetRoom();
             Rect rroom = right.GetRoom();
+            //todo: make corridorWidth changeable at unity inspector
+            int corridorWidth = 2;
 
             Debug.Log("Creating corridor(s) between " + left.debugId + "(" + lroom + ") and " + right.debugId + " (" + rroom + ")");
 
@@ -145,17 +146,17 @@ public class BspMap : MonoBehaviour
                 if (Random.Range(0, 1) > 2)
                 {
                     // add a corridor to the right
-                    corridors.Add(new Rect(lpoint.x, lpoint.y, Mathf.Abs(w) + 1, 1));
+                    corridors.Add(new Rect(lpoint.x, lpoint.y, Mathf.Abs(w) + 1, corridorWidth));
 
                     // if left point is below right point go up
                     // otherwise go down
                     if (h < 0)
                     {
-                        corridors.Add(new Rect(rpoint.x, lpoint.y, 1, Mathf.Abs(h)));
+                        corridors.Add(new Rect(rpoint.x, lpoint.y, corridorWidth, Mathf.Abs(h)));
                     }
                     else
                     {
-                        corridors.Add(new Rect(rpoint.x, lpoint.y, 1, -Mathf.Abs(h)));
+                        corridors.Add(new Rect(rpoint.x, lpoint.y, corridorWidth, -Mathf.Abs(h)));
                     }
                 }
                 else
@@ -163,15 +164,15 @@ public class BspMap : MonoBehaviour
                     // go up or down
                     if (h < 0)
                     {
-                        corridors.Add(new Rect(lpoint.x, lpoint.y, 1, Mathf.Abs(h)));
+                        corridors.Add(new Rect(lpoint.x, lpoint.y, corridorWidth, Mathf.Abs(h)));
                     }
                     else
                     {
-                        corridors.Add(new Rect(lpoint.x, rpoint.y, 1, Mathf.Abs(h)));
+                        corridors.Add(new Rect(lpoint.x, rpoint.y, corridorWidth, Mathf.Abs(h)));
                     }
 
                     // then go right
-                    corridors.Add(new Rect(lpoint.x, rpoint.y, Mathf.Abs(w) + 1, 1));
+                    corridors.Add(new Rect(lpoint.x, rpoint.y, Mathf.Abs(w) + 1, corridorWidth));
                 }
             }
             else
@@ -180,11 +181,11 @@ public class BspMap : MonoBehaviour
                 // go up or down depending on the positions
                 if (h < 0)
                 {
-                    corridors.Add(new Rect((int)lpoint.x, (int)lpoint.y, 1, Mathf.Abs(h)));
+                    corridors.Add(new Rect((int)lpoint.x, (int)lpoint.y, corridorWidth, Mathf.Abs(h)));
                 }
                 else
                 {
-                    corridors.Add(new Rect((int)rpoint.x, (int)rpoint.y, 1, Mathf.Abs(h)));
+                    corridors.Add(new Rect((int)rpoint.x, (int)rpoint.y, corridorWidth, Mathf.Abs(h)));
                 }
             }
 
@@ -292,10 +293,33 @@ public class BspMap : MonoBehaviour
                 {
                     if (boardPositionsFloor[i, j] == null)
                     {
+
                         GameObject instance = Instantiate(corridorTile, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
                         instance.transform.SetParent(transform);
                         boardPositionsFloor[i, j] = instance;
+
                     }
+                }
+            }
+        }
+    }
+
+    void DrawWalls(SubDungeon subDungeon)
+    {
+        if (subDungeon == null)
+        {
+            return;
+        }
+
+        for (int i = (int)subDungeon.rect.x; i < subDungeon.rect.xMax; i++)
+        {
+            for (int j = (int)subDungeon.rect.y; j < subDungeon.rect.yMax; j++)
+            {
+                if (boardPositionsFloor[i, j] == null)
+                {
+                    GameObject instance = Instantiate(wallTile, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
+                    instance.transform.SetParent(transform);
+                    boardPositionsFloor[i, j] = instance;
                 }
             }
         }
@@ -303,13 +327,14 @@ public class BspMap : MonoBehaviour
 
     void Start()
     {
-        SubDungeon rootSubDungeon = new SubDungeon(new Rect(startX, startY, boardRows, boardColumns));
+        SubDungeon rootSubDungeon = new SubDungeon(new Rect(0, 0, boardRows, boardColumns));
         CreateBSP(rootSubDungeon);
         rootSubDungeon.CreateRoom();
 
         boardPositionsFloor = new GameObject[boardRows, boardColumns];
         DrawRooms(rootSubDungeon);
         DrawCorridors(rootSubDungeon);
+        DrawWalls(rootSubDungeon);
     }
 }
 
