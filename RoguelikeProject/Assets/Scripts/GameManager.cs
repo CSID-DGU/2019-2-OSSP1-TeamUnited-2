@@ -18,6 +18,11 @@ public class GameManager : MonoBehaviour
     public GameObject SpawnedItem1;
     public GameObject SpawnedItem2;
     public GameObject SpawnedItem3;
+    private int enemyNum; // 적들의 수.
+    public int EnemyNum {
+        get { return enemyNum; }
+        set { enemyNum = value; }
+    }
 
     public double density;
     public int smoothness;
@@ -34,6 +39,7 @@ public class GameManager : MonoBehaviour
         SpawnedPlayer.SetActive(true);
 
         AstarPath.active.Scan(); // 이거를 해야 벽하고 부딪히네요
+        enemyNum = SpawnedEnemy.Length + SpawnedRandEnemy.Length; // 길이 설정
     }
 
     void BoardSetup()
@@ -121,13 +127,13 @@ public class GameManager : MonoBehaviour
             listY.RemoveAt(index);
         }
 
-        GameObject[] tutem = new GameObject[5];
+        GameObject[] coin = new GameObject[5];
         GameObject[] bomtem = new GameObject[5];
         for (int i = 0; i < 5; i++)
         {
             index = Random.Range(0, listX.Count);
-            tutem[i] = Instantiate(SpawnedItem2, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
-            tutem[i].transform.SetParent(ItemsParent);
+            coin[i] = Instantiate(SpawnedItem2, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
+            coin[i].transform.SetParent(ItemsParent);
             listX.RemoveAt(index);
             listY.RemoveAt(index);
 
