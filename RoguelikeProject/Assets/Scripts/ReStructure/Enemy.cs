@@ -9,7 +9,6 @@ public class Enemy : Unit
     public int meleeDamage;
     public double force;
 
-
     protected override void Start()
     {
         currentHP = HP;
@@ -29,6 +28,13 @@ public class Enemy : Unit
             Vector2 direction = target.transform.position - transform.position;
             Move(direction);
         }
+    }
+    protected override void SelfDestruction()
+    {
+        Destroy(gameObject);
+        Debug.Log(GameObject.Find("GameManager").GetComponent<GameManager>().EnemyNum);
+        if (--GameObject.Find("GameManager").GetComponent<GameManager>().EnemyNum == 0)
+            GameObject.Find("backGround").GetComponent<BackGround>().nextStage();
     }
     void OnCollisionStay2D(Collision2D coll)
     {
