@@ -2,14 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BspMap : MonoBehaviour
+public class MapManager : MonoBehaviour
 {
+    //public int width;
+    //public int height;
+    public double density;
+    public int smoothness;
+    public int postsmooth;
+    private int[,] map;
+    private Transform boardHolder;
+    public GameObject boundary;
+    public GameObject floor;
+    public GameObject wall;
     public int boardRows, boardColumns;
     public int minRoomSize, maxRoomSize;
-    public GameObject floor;
     public GameObject corridorTile;
-    public GameObject wall;
     private GameObject[,] boardPositionsFloor;
+    private Transform pos;
+
+    private string seed;
 
     public class SubDungeon
     {
@@ -267,6 +278,9 @@ public class BspMap : MonoBehaviour
                     boardPositionsFloor[i, j] = instance;
                 }
             }
+            BoardSetup(subDungeon.rect);
+            //Debug.Log("Draw subDungeon" + count);
+            //count++;
         }
         else
         {
@@ -293,11 +307,9 @@ public class BspMap : MonoBehaviour
                 {
                     if (boardPositionsFloor[i, j] == null)
                     {
-
                         GameObject instance = Instantiate(corridorTile, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
                         instance.transform.SetParent(transform);
                         boardPositionsFloor[i, j] = instance;
-
                     }
                 }
             }
@@ -332,14 +344,184 @@ public class BspMap : MonoBehaviour
         rootSubDungeon.CreateRoom();
 
         boardPositionsFloor = new GameObject[boardRows, boardColumns];
-        DrawRooms(rootSubDungeon);
         DrawCorridors(rootSubDungeon);
-        DrawWalls(rootSubDungeon);
+        DrawRooms(rootSubDungeon);
+        //DrawCorridors(rootSubDungeon);
+        //DrawWalls(rootSubDungeon);
     }
 
     private void Start()
     {
         DrawMap();
     }
-}
 
+
+    //------------------------------------------------------------------------------------------------------------------------------
+
+    void BoardSetup(Rect rect)
+    {
+        //boardHolder = new GameObject("Board").transform;
+
+        for (int x = (int)rect.x; x < rect.xMax; ++x)
+        {
+            for (int y = (int)rect.y; y < rect.yMax; ++y)
+            {
+                if (boardPositionsFloor[x, y] == null)
+                {
+                    GameObject toInstantiate = floor;
+                    /*if (x == rect.x || x == rect.xMax || y == rect.y || y == rect.yMax)
+                    {
+                        //toInstantiate = boundary;
+                        toInstantiate = wall;
+                    }*/
+                    GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+                    //instance.transform.SetParent(boardHolder);
+                    instance.transform.SetParent(transform);
+                }
+            }
+        }
+
+        map = new int[boardRows, boardColumns];
+        ArrayList listX = new ArrayList();
+        ArrayList listY = new ArrayList();
+
+        RandomFillMap(rect);
+        for (int i = 0; i < smoothness; ++i)
+        {
+            SmoothMap(rect);
+        }
+        for (int i = 0; i < postsmooth; ++i)
+        {
+            SmoothMapPsudo(rect);
+        }
+
+        for (int y = (int)rect.y; y < rect.yMax; ++y)
+        {
+            for (int x = (int)rect.x; x < rect.xMax; ++x)
+            {
+                if (map[x, y] == 1)
+                {
+                    if (boardPositionsFloor[x, y] == null)
+                    {
+                        GameObject toInstantiate = wall;
+                        toInstantiate.layer = LayerMask.NameToLayer("Wall");
+                        GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+                        //instance.transform.SetParent(boardHolder);
+                        instance.transform.SetParent(transform);
+                    }
+                }
+                else if (map[x, y] == 0) // 맵이 0이고
+                {
+                    if (NoWallSurround(x, y, rect)) // 주변에 겹칠만한게 없을때.
+                    {
+                        listX.Add(x);
+                        listY.Add(y);
+                    }
+                }
+            }
+        }
+    }
+
+    void RandomFillMap(Rect rect)
+    {
+        seed = System.DateTime.Now.ToString();
+        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+        // Debug.Log(seed);
+        double randomFillPercent = density;
+
+        for (int x = (int)rect.x; x < rect.xMax; ++x)
+        {
+            for (int y = (int)rect.y; y < rect.yMax; ++y)
+            {
+                if (x == rect.x || x == rect.xMax - 1 || y == rect.y || y == rect.yMax - 1)
+                {
+                    map[x, y] = 1;
+                }
+                else
+                {
+                    map[x, y] = (pseudoRandom.Next(0, 100) < randomFillPercent) ? 1 : 0;
+                }
+            }
+        }
+    }
+    void SmoothMapPsudo(Rect rect)
+    {
+        for (int x = (int)rect.x; x < rect.xMax; ++x)
+        {
+            for (int y = (int)rect.y; y < rect.yMax; ++y)
+            {
+                int neighbourWallTiles = GetSurroundingWallCount(x, y, rect);
+
+                if (neighbourWallTiles > 4)
+                    map[x, y] = 1;
+                else if (neighbourWallTiles < 4)
+                    map[x, y] = 0;
+            }
+        }
+    }
+
+
+
+    void SmoothMap(Rect rect)
+    {
+        int[,] nextMap = new int[(int)rect.xMax, (int)rect.yMax];
+        for (int x = (int)rect.x; x < rect.xMax; ++x)
+        {
+            for (int y = (int)rect.y; y < rect.yMax; ++y)
+            {
+                int neighbourWallTiles = GetSurroundingWallCount(x, y, rect);
+
+                if (neighbourWallTiles > 4)
+                    nextMap[x, y] = 1;
+                else if (neighbourWallTiles < 4)
+                    nextMap[x, y] = 0;
+            }
+        }
+        map = nextMap;
+    }
+
+    int GetSurroundingWallCount(int gridX, int gridY, Rect rect)
+    {
+        int wallCount = 0;
+        for (int neighbourX = gridX - 1; neighbourX <= gridX + 1; neighbourX++)
+        {
+            for (int neighbourY = gridY - 1; neighbourY <= gridY + 1; neighbourY++)
+            {
+                if (neighbourX >= rect.x && neighbourX < rect.xMax && neighbourY >= rect.y && neighbourY < rect.yMax)
+                {
+                    if (neighbourX != gridX || neighbourY != gridY)
+                    {
+                        wallCount += map[neighbourX, neighbourY];
+                    }
+                }
+                else
+                {
+                    wallCount++;
+                }
+            }
+        }
+        return wallCount;
+    }
+
+
+
+    bool NoWallSurround(int x, int y, Rect rect) // 목적 : 위치 지정할때 범위에 겹치는것이 없도록 한다. 너무 범위 값이 크면 들어갈 자리가 없어진다.
+    {
+        for (int i = x - 5; i <= x + 5; i++)
+        {
+            for (int j = y - 5; j <= y + 5; j++)
+            {
+                if (i > rect.x && i < rect.xMax && j > rect.y && j < rect.yMax)
+                {
+                    if (map[i, j] == 1) // 벽있으면 ㅂ2
+                        return false;
+                    else
+                        map[i, j] = 2; // 조건들을 다 통과할시 이곳에또 안겹치게 설정.
+                }
+                else // 조건이 별로면 ㅂ2
+                    return false;
+            }
+        }
+        return true; // 다 지나왔다면 패스
+    }
+}
