@@ -28,14 +28,14 @@ public class GameManager : MonoBehaviour
 
     private string seed;
 
-    /*void Start()
+    void Start()
     {
         BoardSetup();
 
         SpawnedPlayer.SetActive(true);
 
         AstarPath.active.Scan(); // 이거를 해야 벽하고 부딪히네요
-    }*/
+    }
 
     void BoardSetup()
     {

@@ -340,6 +340,10 @@ public class BspMap : MonoBehaviour
     private void Start()
     {
         DrawMap();
+
+        SpawnedPlayer.SetActive(true);
+
+        AstarPath.active.Scan(); // 이거를 해야 벽하고 부딪히네요
     }
 }
 
