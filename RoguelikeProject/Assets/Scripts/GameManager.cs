@@ -288,7 +288,7 @@ public class GameManager : MonoBehaviour
             (x1, y1) => map[x1, y1] == 1,
             (x2, y2) => { lit[x2, y2] = true; });
 
-        Color colorFloor = new Color(0.627f, 0.322f, 0.176f, 1.0f);
+        Color colorFloor = new Color(0f, 0f, 0f, 0f);
 
         for (int y = height - 1; y >= 0; --y)
         {
@@ -298,20 +298,20 @@ public class GameManager : MonoBehaviour
                 {
                     if (map[x, y] == 1)
                     {
-                        //tex.SetPixel(x, y, Color.red);
+                        tex.SetPixel(x, y, colorFloor);
                     }
                     else
                     {
-                       //tex.SetPixel(x, y, Color.yellow);
+                       tex.SetPixel(x, y, colorFloor);
                     }
                 }
                 else
                 {
-                    //tex.SetPixel(x, y, Color.blue);
+                    tex.SetPixel(x, y, Color.black);
                 }
             }
         }
-        //tex.Apply(false);
+        tex.Apply(false);
     }
 
     void Update()
