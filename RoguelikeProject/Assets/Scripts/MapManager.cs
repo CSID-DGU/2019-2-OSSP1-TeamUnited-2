@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
-    //public int width;
-    //public int height;
     public double density;
     public int smoothness;
     public int postsmooth;
@@ -53,7 +51,7 @@ public class MapManager : MonoBehaviour
             }
 
             // choose a vertical or horizontal split depending on the proportions
-            // i.e. if too wide split vertically, or too long horizontally, 
+            // i.e. if too wide split vertically, or too long horizontally,
             // or if nearly square choose vertical or horizontal at random
             bool splitH = false;
             bool splitV = false;
@@ -87,7 +85,7 @@ public class MapManager : MonoBehaviour
                 if (rect.height >= minRoomSize * 2)
                     return false;
 
-                // 양쪽 구획이 최소크기 이상이 되도록 보정합니다. 
+                // 양쪽 구획이 최소크기 이상이 되도록 보정합니다.
                 int split = Random.Range(minRoomSize, (int)(rect.height - minRoomSize));
 
                 // 가로로 잘려진 두개의 구획 생성
@@ -100,10 +98,10 @@ public class MapManager : MonoBehaviour
                 // 잘랐을때 최소크기 이하면 자르지 않습니다.
                 if (rect.width >= minRoomSize * 2)
                     return false;
-                
+
                 // 양쪽 구획이 최소크기 이상이 되도록 보정합니다.
                 int split = Random.Range(minRoomSize, (int)(rect.width - minRoomSize));
-                
+
                 // 세로로 잘려진 두개의 구획 생성
                 left = new SubDungeon(new Rect(rect.x, rect.y, split, rect.height));
                 right = new SubDungeon(new Rect(rect.x + split, rect.y, rect.width - split, rect.height));
@@ -133,8 +131,8 @@ public class MapManager : MonoBehaviour
             }
             if (IAmLeaf())
             {
-                int roomWidth = (int)Random.Range(rect.width / 2, rect.width - 2);
-                int roomHeight = (int)Random.Range(rect.height / 2, rect.height - 2);
+                int roomWidth = (int)Random.Range(rect.width * 0.75f, rect.width - 2);
+                int roomHeight = (int)Random.Range(rect.height * 0.75f, rect.height - 2);
                 int roomX = (int)Random.Range(1, rect.width - roomWidth - 1);
                 int roomY = (int)Random.Range(1, rect.height - roomHeight - 1);
 
@@ -255,8 +253,6 @@ public class MapManager : MonoBehaviour
             return new Rect(-1, -1, 0, 0);
         }
     }
-
-
 
     public void CreateBSP(SubDungeon subDungeon)
     {
