@@ -55,18 +55,23 @@ public class MapManager : MonoBehaviour
             // choose a vertical or horizontal split depending on the proportions
             // i.e. if too wide split vertically, or too long horizontally, 
             // or if nearly square choose vertical or horizontal at random
-            bool splitH;
-            if (rect.width / rect.height >= 1.15)
+            bool splitH = false;
+            bool splitV = false;
+            // 가로로 길쭉한 맵은 세로로 자릅니다.
+            if (rect.width / rect.height >= 1.05)
             {
-                splitH = false;
+                splitV = true;
             }
-            else if (rect.height / rect.width >= 1.15)
+            // 세로로 길쭉한 맵은 가로로 자릅니다.
+            else if (rect.height / rect.width >= 1.05)
             {
                 splitH = true;
             }
+            // 비슷비슷하면 랜덤으로 자릅니다
             else
             {
                 splitH = Random.Range(0.0f, 1.0f) > 0.5;
+                splitV = true;
             }
 
             if (Mathf.Min(rect.height, rect.width) / 2 < minRoomSize)
@@ -75,23 +80,38 @@ public class MapManager : MonoBehaviour
                 return false;
             }
 
+            // 가로로 자르려는 경우
             if (splitH)
             {
-                // split so that the resulting sub-dungeons widths are not too small
-                // (since we are splitting horizontally) 
-                int split = Random.Range(minRoomSize, (int)(rect.width - minRoomSize));
+                // 잘랐을때 최소크기 이하면 자르지 않습니다.
+                if (rect.height >= minRoomSize * 2)
+                    return false;
 
-                left = new SubDungeon(new Rect(rect.x, rect.y, rect.width, split));
-                right = new SubDungeon(
-                    new Rect(rect.x, rect.y + split, rect.width, rect.height - split));
-            }
-            else
-            {
+                // 양쪽 구획이 최소크기 이상이 되도록 보정합니다. 
                 int split = Random.Range(minRoomSize, (int)(rect.height - minRoomSize));
 
+                // 가로로 잘려진 두개의 구획 생성
+                left = new SubDungeon(new Rect(rect.x, rect.y, rect.width, split));
+                right = new SubDungeon(new Rect(rect.x, rect.y + split, rect.width, rect.height - split));
+            }
+            // 세로로 자르려는 경우
+            else if (splitV)
+            {
+                // 잘랐을때 최소크기 이하면 자르지 않습니다.
+                if (rect.width >= minRoomSize * 2)
+                    return false;
+                
+                // 양쪽 구획이 최소크기 이상이 되도록 보정합니다.
+                int split = Random.Range(minRoomSize, (int)(rect.width - minRoomSize));
+                
+                // 세로로 잘려진 두개의 구획 생성
                 left = new SubDungeon(new Rect(rect.x, rect.y, split, rect.height));
-                right = new SubDungeon(
-                    new Rect(rect.x + split, rect.y, rect.width - split, rect.height));
+                right = new SubDungeon(new Rect(rect.x + split, rect.y, rect.width - split, rect.height));
+            }
+            // 그 외의 경우가 있을 수 있을까요?
+            else
+            {
+                Debug.LogError("Room spliting error");
             }
 
             return true;
@@ -289,14 +309,17 @@ public class MapManager : MonoBehaviour
 
     public void FillRooms(SubDungeon subDungeon)
     {
+        // TODO :: 서브던전이 없는 상황은 언제 일어나게 되는거죠? 아무튼 예외처리
         if (subDungeon == null)
         {
             return;
         }
+        // 자신이 실제 서브던전 일 경우
         if (subDungeon.IAmLeaf())
         {
-            BoardSetup(subDungeon.rect);
+            BoardSetup(subDungeon.room);
         }
+        // 자신이 중간단계(복도)일 경우 재귀 호출
         else
         {
             FillRooms(subDungeon.left);
