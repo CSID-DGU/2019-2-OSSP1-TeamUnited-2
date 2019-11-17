@@ -45,6 +45,7 @@ public class MapManager : MonoBehaviour
 
         public bool Split(int minRoomSize, int maxRoomSize)
         {
+            // 방이 아니면 자르지 않습니다.
             if (!IAmLeaf())
             {
                 return false;
@@ -55,6 +56,8 @@ public class MapManager : MonoBehaviour
             // or if nearly square choose vertical or horizontal at random
             bool splitH = false;
             bool splitV = false;
+            float minSplitRate = 0.25f;
+
             // 가로로 길쭉한 맵은 세로로 자릅니다.
             if (rect.width / rect.height >= 1.05)
             {
@@ -82,8 +85,11 @@ public class MapManager : MonoBehaviour
             if (splitH)
             {
                 // 잘랐을때 최소크기 이하면 자르지 않습니다.
-                if (rect.height >= minRoomSize * 2)
+                if (rect.height <= minRoomSize * 2)
                     return false;
+                    
+                // 방은 최소크기 혹은 최소비율 이상으로 잘려야 합니다.
+                minRoomSize = (int)Mathf.Max(minRoomSize, rect.height * minSplitRate);
 
                 // 양쪽 구획이 최소크기 이상이 되도록 보정합니다.
                 int split = Random.Range(minRoomSize, (int)(rect.height - minRoomSize));
@@ -96,8 +102,11 @@ public class MapManager : MonoBehaviour
             else if (splitV)
             {
                 // 잘랐을때 최소크기 이하면 자르지 않습니다.
-                if (rect.width >= minRoomSize * 2)
+                if (rect.width <= minRoomSize * 2)
                     return false;
+
+                // 방은 최소크기 혹은 최소비율 이상으로 잘려야 합니다.
+                minRoomSize = (int)Mathf.Max(minRoomSize, rect.width * minSplitRate);
 
                 // 양쪽 구획이 최소크기 이상이 되도록 보정합니다.
                 int split = Random.Range(minRoomSize, (int)(rect.width - minRoomSize));
