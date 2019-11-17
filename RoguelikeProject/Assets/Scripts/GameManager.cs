@@ -30,11 +30,11 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        BoardSetup();
+        //BoardSetup();
 
         SpawnedPlayer.SetActive(true);
 
-        AstarPath.active.Scan(); // 이거를 해야 벽하고 부딪히네요
+        //AstarPath.active.Scan(); // 이거를 해야 벽하고 부딪히네요
     }
 
     void BoardSetup()

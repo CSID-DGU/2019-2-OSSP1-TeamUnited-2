@@ -18,6 +18,7 @@ public class MapManager : MonoBehaviour
     public int minRoomSize, maxRoomSize;
     public GameObject corridorTile;
     private GameObject[,] boardPositionsFloor;
+    private GameObject[,] boardPositionsCorridor;
     private Transform pos;
 
     private string seed;
@@ -278,14 +279,28 @@ public class MapManager : MonoBehaviour
                     boardPositionsFloor[i, j] = instance;
                 }
             }
-            BoardSetup(subDungeon.rect);
-            //Debug.Log("Draw subDungeon" + count);
-            //count++;
         }
         else
         {
             DrawRooms(subDungeon.left);
             DrawRooms(subDungeon.right);
+        }
+    }
+
+    public void FillRooms(SubDungeon subDungeon)
+    {
+        if (subDungeon == null)
+        {
+            return;
+        }
+        if (subDungeon.IAmLeaf())
+        {
+            BoardSetup(subDungeon.rect);
+        }
+        else
+        {
+            FillRooms(subDungeon.left);
+            FillRooms(subDungeon.right);
         }
     }
 
@@ -305,18 +320,15 @@ public class MapManager : MonoBehaviour
             {
                 for (int j = (int)corridor.y; j < corridor.yMax; j++)
                 {
-                    if (boardPositionsFloor[i, j] == null)
-                    {
-                        GameObject instance = Instantiate(corridorTile, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
-                        instance.transform.SetParent(transform);
-                        boardPositionsFloor[i, j] = instance;
-                    }
+                    GameObject instance = Instantiate(corridorTile, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
+                    instance.transform.SetParent(transform);
+                    boardPositionsCorridor[i, j] = instance;
                 }
             }
         }
     }
 
-    void DrawWalls(SubDungeon subDungeon)
+    void DrawBoundarys(SubDungeon subDungeon)
     {
         if (subDungeon == null)
         {
@@ -327,9 +339,9 @@ public class MapManager : MonoBehaviour
         {
             for (int j = (int)subDungeon.rect.y; j < subDungeon.rect.yMax; j++)
             {
-                if (boardPositionsFloor[i, j] == null)
+                if (boardPositionsFloor[i, j] == null && boardPositionsCorridor[i, j] == null)
                 {
-                    GameObject instance = Instantiate(wall, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
+                    GameObject instance = Instantiate(boundary, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
                     instance.transform.SetParent(transform);
                     boardPositionsFloor[i, j] = instance;
                 }
@@ -344,10 +356,11 @@ public class MapManager : MonoBehaviour
         rootSubDungeon.CreateRoom();
 
         boardPositionsFloor = new GameObject[boardRows, boardColumns];
+        boardPositionsCorridor = new GameObject[boardRows, boardColumns];
         DrawCorridors(rootSubDungeon);
         DrawRooms(rootSubDungeon);
-        //DrawCorridors(rootSubDungeon);
-        //DrawWalls(rootSubDungeon);
+        DrawBoundarys(rootSubDungeon);
+        FillRooms(rootSubDungeon);
     }
 
     private void Start()
@@ -360,26 +373,6 @@ public class MapManager : MonoBehaviour
 
     void BoardSetup(Rect rect)
     {
-        //boardHolder = new GameObject("Board").transform;
-
-        for (int x = (int)rect.x; x < rect.xMax; ++x)
-        {
-            for (int y = (int)rect.y; y < rect.yMax; ++y)
-            {
-                if (boardPositionsFloor[x, y] == null)
-                {
-                    GameObject toInstantiate = floor;
-                    /*if (x == rect.x || x == rect.xMax || y == rect.y || y == rect.yMax)
-                    {
-                        //toInstantiate = boundary;
-                        toInstantiate = wall;
-                    }*/
-                    GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
-                    //instance.transform.SetParent(boardHolder);
-                    instance.transform.SetParent(transform);
-                }
-            }
-        }
 
         map = new int[boardRows, boardColumns];
         ArrayList listX = new ArrayList();
@@ -401,13 +394,14 @@ public class MapManager : MonoBehaviour
             {
                 if (map[x, y] == 1)
                 {
-                    if (boardPositionsFloor[x, y] == null)
+                    if (boardPositionsCorridor[x, y] == null)
                     {
                         GameObject toInstantiate = wall;
                         toInstantiate.layer = LayerMask.NameToLayer("Wall");
                         GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
                         //instance.transform.SetParent(boardHolder);
                         instance.transform.SetParent(transform);
+                        boardPositionsFloor[x, y] = instance;
                     }
                 }
                 else if (map[x, y] == 0) // 맵이 0이고
