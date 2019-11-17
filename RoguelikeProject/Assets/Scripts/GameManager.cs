@@ -282,7 +282,7 @@ public class GameManager : MonoBehaviour
     private void RenderToString()
     {
         bool[,] lit = new bool[width, height];
-        int radius = 6;
+        int radius = 15;
         ShadowCaster.ComputeFieldOfViewWithShadowCasting(
             playerX, playerY, radius,
             (x1, y1) => map[x1, y1] == 1,
@@ -307,7 +307,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    tex.SetPixel(x, y, Color.black);
+                    tex.SetPixel(x, y, new Color(0f, 0f, 0f, 0.5f));
                 }
             }
         }
