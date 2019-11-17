@@ -55,4 +55,4 @@ MonoBehaviour:
         type: 3}
     shape: {fileID: 1417382109342578088, guid: 27774b184ecbe51499579bb1c733c431, type: 3}
   autoFire: 0
-  cooldown: 1
+  cooldown: 0.5

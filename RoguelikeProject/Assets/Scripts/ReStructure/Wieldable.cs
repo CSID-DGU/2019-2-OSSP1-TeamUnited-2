@@ -59,7 +59,7 @@ public abstract class Wieldable : MonoBehaviour
 
         // 무기와 마우스의 위치의 각도 
         float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
-        Debug.Log("Player Position : " + positionOnScreen +  ", Mouse Position : " + mouseOnScreen + ", Angle : " +  angle);
+        // Debug.Log("Player Position : " + positionOnScreen +  ", Mouse Position : " + mouseOnScreen + ", Angle : " +  angle);
 
         // 각도만큼 로테이션값 주기 
         projectile.GetComponent<ProjectileOnHit>().transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
