@@ -18,7 +18,7 @@ public class MapManager : MonoBehaviour
     public int minRoomSize, maxRoomSize;
     public GameObject corridorTile;
     private GameObject[,] boardPositionsFloor;
-    private GameObject[,] boardPositionsCorridor;
+    private GameObject[,] boardPositionsNonchange;
     private Transform pos;
 
     private string seed;
@@ -322,7 +322,7 @@ public class MapManager : MonoBehaviour
                 {
                     GameObject instance = Instantiate(corridorTile, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
                     instance.transform.SetParent(transform);
-                    boardPositionsCorridor[i, j] = instance;
+                    boardPositionsNonchange[i, j] = instance;
                 }
             }
         }
@@ -339,11 +339,11 @@ public class MapManager : MonoBehaviour
         {
             for (int j = (int)subDungeon.rect.y; j < subDungeon.rect.yMax; j++)
             {
-                if (boardPositionsFloor[i, j] == null && boardPositionsCorridor[i, j] == null)
+                if (boardPositionsFloor[i, j] == null && boardPositionsNonchange[i, j] == null)
                 {
                     GameObject instance = Instantiate(boundary, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
                     instance.transform.SetParent(transform);
-                    boardPositionsFloor[i, j] = instance;
+                    boardPositionsNonchange[i, j] = instance;
                 }
             }
         }
@@ -356,7 +356,7 @@ public class MapManager : MonoBehaviour
         rootSubDungeon.CreateRoom();
 
         boardPositionsFloor = new GameObject[boardRows, boardColumns];
-        boardPositionsCorridor = new GameObject[boardRows, boardColumns];
+        boardPositionsNonchange = new GameObject[boardRows, boardColumns];
         DrawCorridors(rootSubDungeon);
         DrawRooms(rootSubDungeon);
         DrawBoundarys(rootSubDungeon);
@@ -394,7 +394,7 @@ public class MapManager : MonoBehaviour
             {
                 if (map[x, y] == 1)
                 {
-                    if (boardPositionsCorridor[x, y] == null)
+                    if (boardPositionsNonchange[x, y] == null)
                     {
                         GameObject toInstantiate = wall;
                         toInstantiate.layer = LayerMask.NameToLayer("Wall");
