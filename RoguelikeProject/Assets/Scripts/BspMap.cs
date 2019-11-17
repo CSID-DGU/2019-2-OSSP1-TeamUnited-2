@@ -304,7 +304,7 @@ public class BspMap : MonoBehaviour
         }
     }
 
-    void DrawWalls(SubDungeon subDungeon)
+    void DrawBoundarys(SubDungeon subDungeon)
     {
         if (subDungeon == null)
         {
@@ -334,7 +334,7 @@ public class BspMap : MonoBehaviour
         boardPositionsFloor = new GameObject[boardRows, boardColumns];
         DrawRooms(rootSubDungeon);
         DrawCorridors(rootSubDungeon);
-        DrawWalls(rootSubDungeon);
+        DrawBoundarys(rootSubDungeon);
     }
 
     private void Start()
