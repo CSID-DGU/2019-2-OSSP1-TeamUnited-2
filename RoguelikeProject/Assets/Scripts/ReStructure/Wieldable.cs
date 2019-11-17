@@ -50,6 +50,19 @@ public abstract class Wieldable : MonoBehaviour
         
         // 무기의 방향으로 발사합니다. 탄속은 아직 유동옵션은 아닙니다.
         projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
+
+
+        //현재 무기의 위치 
+        Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+
+        //현재 마우스의 위치 
+        Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        Debug.Log(mouseOnScreen);
+        // 무기와 마우스의 위치의 각도 
+        float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+
+        // 각도만큼 로테이션값 주기 
+        projectile.GetComponent<ProjectileOnHit>().transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
     }
 
     protected void ProjectileInstantiation(ProjectileManager pManager)
@@ -88,5 +101,10 @@ public abstract class Wieldable : MonoBehaviour
         {
             rotationVector = owner.GetComponent<Unit>().RotationVector;
         }
+    }
+
+    float AngleBetweenTwoPoints(Vector3 a, Vector3 b)
+    {
+        return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
     }
 }
