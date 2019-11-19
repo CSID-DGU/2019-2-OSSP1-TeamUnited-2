@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class Coin : MonoBehaviour
 {
     private Text score;
-    private GameObject backGround;
+    private BackGround backGround;
  
     void Start()
     {
         score = GameObject.Find("Score").GetComponent<Text>();
-        backGround = GameObject.Find("backGround");
+        backGround = GameObject.Find("backGround").GetComponent<BackGround>();
     }
 
     protected void OnTriggerStay2D(Collider2D col)
@@ -21,7 +21,9 @@ public class Coin : MonoBehaviour
             col.GetComponent<Player>().CoinScore++;// 코인점수 증가
             score.text = "Score : " + col.GetComponent<Player>().CoinScore.ToString();
             Destroy(gameObject);
-            backGround.GetComponent<BackGround>().nextStage();
+
+            if (col.GetComponent<Player>().CoinScore >= 5)
+                backGround.nextStage();
         }
     }
 }

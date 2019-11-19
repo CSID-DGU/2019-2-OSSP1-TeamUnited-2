@@ -4,6 +4,18 @@ using UnityEngine;
 
 public abstract class Wieldable : MonoBehaviour
 {
+    [System.Serializable]
+    public class ProjectileManager
+    {
+        public ProjectileAttribute attribute;
+        public GameObject shape; // Sprite, Collider, RigidBody로 구성된 형체 오브젝트
+        protected GameObject entity = null; // 실제 투사체를 생성하기 위한 샘플. 발사가능한 투사체와 동일한 속성이어야 합니다.
+        public GameObject Entity 
+        {
+            get { return entity; }
+            set { entity = value; }
+        }
+    }
     protected GameObject owner;
     public GameObject Owner
     {
@@ -35,6 +47,22 @@ public abstract class Wieldable : MonoBehaviour
 
         // 투사체는 반드시 공격자의 정보를 담고 있어야 합니다.
         // Debug.Log("Projectile fired, Attacker: " + projectile.GetComponent<ProjectileOnHit>().Attacker.GetInstanceID());
+
+
+        //현재 무기의 위치 
+        Vector2 positionOnScreen = (Vector2)Camera.main.WorldToViewportPoint(owner.transform.position);
+        // Vector2 positionOnScreen = owner.transform.position;
+
+        //현재 마우스의 위치 
+        Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(owner.transform.position) + rotationVector;
+        // Vector2 mouseOnScreen = (Vector2)owner.transform.position + rotationVector;
+
+        // 무기와 마우스의 위치의 각도 
+        float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+        // Debug.Log("Player Position : " + positionOnScreen +  ", Mouse Position : " + mouseOnScreen + ", Angle : " +  angle);
+
+        // 각도만큼 로테이션값 주기 
+        projectile.GetComponent<ProjectileOnHit>().transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
         
         // 무기의 방향으로 발사합니다. 탄속은 아직 유동옵션은 아닙니다.
         projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
@@ -76,5 +104,10 @@ public abstract class Wieldable : MonoBehaviour
         {
             rotationVector = owner.GetComponent<Unit>().RotationVector;
         }
+    }
+
+    float AngleBetweenTwoPoints(Vector3 a, Vector3 b)
+    {
+        return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
     }
 }

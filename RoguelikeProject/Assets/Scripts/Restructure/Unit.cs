@@ -19,7 +19,7 @@ public class Unit : MonoBehaviour
     }
     public double maxSpeed;
     protected Vector2 currentSpeed;
-    public float acceleration;
+    protected float acceleration;
     protected Vector2 targetAcceleration;
     protected Vector2 rotationVector; // 플레이어가 보는 방향의 벡터값
     public Vector2 RotationVector
@@ -38,6 +38,8 @@ public class Unit : MonoBehaviour
     protected void Move(Vector2 direction)
     // 호출시 단위속도만큼 이동합니다. Update등의 지속호출과 연계하여야 제대로 된 움직임이 나옵니다.
     {
+        // 임시로 가속도는 최대속도의 0.05배로 했습니다.
+        acceleration = GetComponent<Rigidbody2D>().mass * (float)maxSpeed / 20.0f;
 
         // 방향벡터를 추출하고 목표 가속치와 현재속도를 기록합니다.
         direction.Normalize();
