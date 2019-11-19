@@ -18,11 +18,6 @@ public class WeaponRangeAutofire : Wieldable
         {
             if (cooldownWait <= 0)
             {
-                if (projectile.Entity == null)
-                {
-                    Debug.LogError("Projectile should be instantiated before use");
-                    return;
-                }
                 FireRangeDirect(projectile.Entity);
                 cooldownWait = cooldown;
             }

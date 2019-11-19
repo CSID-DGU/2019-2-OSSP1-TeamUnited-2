@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4855616639108612216}
   - component: {fileID: 4234284765029196347}
   - component: {fileID: 8676512726581133090}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Boundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c310e58cfecafe248925bea596e37640, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.38518542, b: 0.4811321, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1

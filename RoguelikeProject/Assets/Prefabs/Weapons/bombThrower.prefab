@@ -49,10 +49,10 @@ MonoBehaviour:
       damage: 0
       force: 0
       areaDamage: 5
-      areaForce: 50
+      areaForce: 25
       areaRadius: 5
       animationExplosion: {fileID: 7323742082746974975, guid: 70140e9a5e0b5a7478e89ef8f7b4289b,
         type: 3}
     shape: {fileID: 1417382109342578088, guid: 27774b184ecbe51499579bb1c733c431, type: 3}
   autoFire: 0
-  cooldown: 0.5
+  cooldown: 1

@@ -26,6 +26,7 @@ public class Player : Unit
         // 무기 인스턴스 생성
         Wield(mainWeapon);
     }
+
     public override int GetDamage(int damage)
     // 플레이어의 HP조작은 반드시 이 메서드를 통해서만 이루어져야 합니다.
     {
@@ -63,11 +64,13 @@ public class Player : Unit
         // 추적이 필요할 경우를 위한 반환
         return actualDamage;
     }
+
     protected override void SelfDestruction()
     {
         gameObject.SetActive(false);
         Invoke("nextScene", 1);
     }
+
     void nextScene()
     {
         SceneManager.LoadScene("Main", LoadSceneMode.Single);
