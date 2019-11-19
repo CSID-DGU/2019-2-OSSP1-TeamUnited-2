@@ -39,7 +39,8 @@ public class GameManager : MonoBehaviour
     public double density;
     public int smoothness;
     public int postsmooth;
-    private int[,] map;
+    [HideInInspector]//map 숨기기
+    public int[,] map;
     private Transform boardHolder;
 
     private string seed;
@@ -49,12 +50,10 @@ public class GameManager : MonoBehaviour
         BoardSetup();
 
         SpawnedPlayer.SetActive(true);
-
-        AstarPath.active.Scan(); // 이거를 해야 벽하고 부딪히네요
+        
         enemyNum = SpawnedEnemy.Length + SpawnedRandEnemy.Length; // 길이 설정
         InitializeGame();
     }
-
     void BoardSetup()
     {
         boardHolder = new GameObject("Board").transform;
@@ -91,7 +90,12 @@ public class GameManager : MonoBehaviour
         {
             for (int x = 0; x < width; ++x)
             {
-                if (map[x, y] == 1)
+                if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
+                {
+                    GameObject instance = Instantiate(boundary, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+                    instance.transform.SetParent(boardHolder);
+                }
+                else if (map[x, y] == 1)
                 {
                     GameObject toInstantiate = wall;
                     toInstantiate.layer = LayerMask.NameToLayer("Wall");
@@ -283,10 +287,7 @@ public class GameManager : MonoBehaviour
     {
         bool[,] lit = new bool[width, height];
         int radius = 15;
-        ShadowCaster.ComputeFieldOfViewWithShadowCasting(
-            playerX, playerY, radius,
-            (x1, y1) => map[x1, y1] == 1,
-            (x2, y2) => { lit[x2, y2] = true; });
+        ShadowCaster.ComputeFieldOfViewWithShadowCasting(playerX, playerY, radius, (x1, y1) => map[x1, y1] == 1, (x2, y2) => { lit[x2, y2] = true; });
 
         Color colorFloor = new Color(0f, 0f, 0f, 0f);
 
@@ -302,7 +303,7 @@ public class GameManager : MonoBehaviour
                     }
                     else
                     {
-                       tex.SetPixel(x, y, colorFloor);
+                        tex.SetPixel(x, y, colorFloor);
                     }
                 }
                 else
