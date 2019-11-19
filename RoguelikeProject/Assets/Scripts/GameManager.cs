@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using System;
+using System.Linq;
+using System.Text;
+
 public class GameManager : MonoBehaviour
 {
     private GameObject levelImage;
@@ -11,6 +15,11 @@ public class GameManager : MonoBehaviour
     public GameObject boundary;
     public GameObject floor;
     public GameObject wall;
+    public GameObject plane;
+
+    private Texture2D tex;
+    private int playerX;
+    private int playerY;
 
     public GameObject SpawnedPlayer;
     public GameObject[] SpawnedEnemy;
@@ -18,7 +27,14 @@ public class GameManager : MonoBehaviour
     public GameObject SpawnedItem1;
     public GameObject SpawnedItem2;
     public GameObject SpawnedItem3;
-    //public GameObject BspMap;
+    public GameObject miniGold; // 미니맵에 보여줄 코인
+    private int enemyNum; // 적들의 수.
+
+    public int EnemyNum
+    {
+        get { return enemyNum; }
+        set { enemyNum = value; }
+    }
 
     public double density;
     public int smoothness;
@@ -30,11 +46,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //BoardSetup();
+        BoardSetup();
 
         SpawnedPlayer.SetActive(true);
 
-        //AstarPath.active.Scan(); // 이거를 해야 벽하고 부딪히네요
+        AstarPath.active.Scan(); // 이거를 해야 벽하고 부딪히네요
+        enemyNum = SpawnedEnemy.Length + SpawnedRandEnemy.Length; // 길이 설정
+        InitializeGame();
     }
 
     void BoardSetup()
@@ -110,34 +128,43 @@ public class GameManager : MonoBehaviour
             listY.RemoveAt(index);
         }
 
-        Transform ItemsParent = new GameObject("Items").transform; // 아이템들의 부모 설정.
-
+        GameObject ItemsParent = new GameObject("Items"); // 아이템들의 부모 설정.
+        ItemsParent.layer = LayerMask.NameToLayer("Wall"); // 일단 Wall 로 합니다. 추후 변경가능성.
         GameObject[] healtem = new GameObject[10];
-        for (int i = 0; i < 10; i++)
+        if (listX.Count > 10)
         {
-            index = Random.Range(0, listX.Count);
-            healtem[i] = Instantiate(SpawnedItem1, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
-            healtem[i].transform.SetParent(ItemsParent);
-            listX.RemoveAt(index);
-            listY.RemoveAt(index);
+            for (int i = 0; i < 10; i++)
+            {
+                index = Random.Range(0, listX.Count);
+                healtem[i] = Instantiate(SpawnedItem1, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
+                healtem[i].transform.SetParent(ItemsParent.transform);
+                listX.RemoveAt(index);
+                listY.RemoveAt(index);
+            }
         }
-
-        GameObject[] tutem = new GameObject[5];
-        GameObject[] bomtem = new GameObject[5];
-        for (int i = 0; i < 5; i++)
+        else Debug.Log("하트 만들 공간 없음..");
+        if (listX.Count > 10)
         {
-            index = Random.Range(0, listX.Count);
-            tutem[i] = Instantiate(SpawnedItem2, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
-            tutem[i].transform.SetParent(ItemsParent);
-            listX.RemoveAt(index);
-            listY.RemoveAt(index);
+            GameObject[] coin = new GameObject[5];
+            GameObject[] miniCoin = new GameObject[5];
+            GameObject[] bomtem = new GameObject[5];
+            for (int i = 0; i < 5; i++)
+            {
+                index = Random.Range(0, listX.Count);
+                coin[i] = Instantiate(SpawnedItem2, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
+                miniCoin[i] = Instantiate(miniGold, coin[i].transform) as GameObject;
+                coin[i].transform.SetParent(ItemsParent.transform);
+                listX.RemoveAt(index);
+                listY.RemoveAt(index);
 
-            index = Random.Range(0, listX.Count);
-            bomtem[i] = Instantiate(SpawnedItem3, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
-            bomtem[i].transform.SetParent(ItemsParent);
-            listX.RemoveAt(index);
-            listY.RemoveAt(index);
+                index = Random.Range(0, listX.Count);
+                bomtem[i] = Instantiate(SpawnedItem3, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
+                bomtem[i].transform.SetParent(ItemsParent.transform);
+                listX.RemoveAt(index);
+                listY.RemoveAt(index);
+            }
         }
+        else Debug.Log("아이템 만들 공간 없음..");
     }
 
     void RandomFillMap()
@@ -239,5 +266,61 @@ public class GameManager : MonoBehaviour
             }
         }
         return true; // 다 지나왔다면 패스
+    }
+
+    private void InitializeGame()
+    {
+        tex = new Texture2D(width, height);
+        plane.GetComponent<Renderer>().material.mainTexture = tex;
+        plane.GetComponent<Renderer>().material.mainTexture.filterMode = FilterMode.Point;
+
+        playerX = (int)SpawnedPlayer.transform.position.x;
+        playerY = (int)SpawnedPlayer.transform.position.y;
+        RenderToString();
+    }
+
+    private void RenderToString()
+    {
+        bool[,] lit = new bool[width, height];
+        int radius = 15;
+        ShadowCaster.ComputeFieldOfViewWithShadowCasting(
+            playerX, playerY, radius,
+            (x1, y1) => map[x1, y1] == 1,
+            (x2, y2) => { lit[x2, y2] = true; });
+
+        Color colorFloor = new Color(0f, 0f, 0f, 0f);
+
+        for (int y = height - 1; y >= 0; --y)
+        {
+            for (int x = 0; x < width; ++x)
+            {
+                if (lit[x, y])
+                {
+                    if (map[x, y] == 1)
+                    {
+                        tex.SetPixel(x, y, colorFloor);
+                    }
+                    else
+                    {
+                       tex.SetPixel(x, y, colorFloor);
+                    }
+                }
+                else
+                {
+                    tex.SetPixel(x, y, new Color(0f, 0f, 0f, 0.5f));
+                }
+            }
+        }
+        tex.Apply(false);
+    }
+
+    void Update()
+    {
+        if (map[(int)SpawnedPlayer.transform.position.x, (int)SpawnedPlayer.transform.position.y] != 1)
+        {
+            playerX = (int)SpawnedPlayer.transform.position.x;
+            playerY = (int)SpawnedPlayer.transform.position.y;
+            RenderToString();
+        }
     }
 }
