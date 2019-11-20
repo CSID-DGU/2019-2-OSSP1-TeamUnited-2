@@ -99,8 +99,8 @@ public class Unit : MonoBehaviour
     // 기본적으로는 단순히 오브젝트를 파괴하는것으로 처리했습니다.
     // 오버라이딩해서 개별 처리를 구현하시길 바랍니다.
     {
-        if (gameObject.name == "Wall(Clone)")
-            GameObject.Find("GameManager").GetComponent<GameManager>().map[(int)transform.position.x, (int)transform.position.y] = 0;
+        // if (gameObject.name == "Wall(Clone)")
+        //     GameObject.Find("GameManager").GetComponent<GameManager>().map[(int)transform.position.x, (int)transform.position.y] = 0;
 
         Destroy(gameObject);
     }

@@ -45,16 +45,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 100
   height: 100
-  boundary: {fileID: 0}
-  floor: {fileID: 0}
-  wall: {fileID: 0}
-  SpawnedPlayer: {fileID: 0}
+  boundary: {fileID: 4855616639108612217, guid: 76ec0aee80a19aa45b174f48d83945a8,
+    type: 3}
+  floor: {fileID: 2179826274794268848, guid: 505bb711daf3c5f4f9b57bc53bc704be, type: 3}
+  wall: {fileID: 3413562459108856723, guid: 7a4e0694cb5079243a3ba39963639af8, type: 3}
+  plane: {fileID: 0}
+  SpawnedPlayer: {fileID: 6638464269740965934, guid: 58996ba4e6d151a4f8c8a4104dbea4d6,
+    type: 3}
   SpawnedEnemy:
-  - {fileID: 0}
-  SpawnedRandEnemy: []
-  SpawnedItem1: {fileID: 0}
-  SpawnedItem2: {fileID: 0}
-  SpawnedItem3: {fileID: 0}
+  - {fileID: 8323095841562486181, guid: 9afddcd272423534281f9c0a59bfec26, type: 3}
+  - {fileID: 8323095841562486181, guid: 9afddcd272423534281f9c0a59bfec26, type: 3}
+  - {fileID: 8323095841562486181, guid: 9afddcd272423534281f9c0a59bfec26, type: 3}
+  SpawnedRandEnemy:
+  - {fileID: 556268633250779931, guid: d712c028523cdd348aeffffafe7a8681, type: 3}
+  - {fileID: 556268633250779931, guid: d712c028523cdd348aeffffafe7a8681, type: 3}
+  - {fileID: 556268633250779931, guid: d712c028523cdd348aeffffafe7a8681, type: 3}
+  SpawnedItem1: {fileID: 4709412813962144011, guid: 536c6d1572a548940adeb45355eafaa2,
+    type: 3}
+  SpawnedItem2: {fileID: 1712138245859150083, guid: e83e47e070e38054c901b95d3202ffe2,
+    type: 3}
+  SpawnedItem3: {fileID: 2653686936165906729, guid: 889e244a73402154a8b05fc15c604a97,
+    type: 3}
+  miniGold: {fileID: 1290166377913453463, guid: 19fb830134fe5ee4f88a1e6d7c8981f3,
+    type: 3}
   density: 60
   smoothness: 10
   postsmooth: 1
