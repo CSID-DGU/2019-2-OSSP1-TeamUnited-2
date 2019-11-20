@@ -47,16 +47,21 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Game Start");
         BoardSetup();
-
+        Debug.Log("Board setup");
         SpawnedPlayer.SetActive(true);
+        Debug.Log("Player active");
         
         enemyNum = SpawnedEnemy.Length + SpawnedRandEnemy.Length; // 길이 설정
         InitializeGame();
+        Debug.Log("Initialize game");
     }
     void BoardSetup()
     {
+        Debug.Log("Board setup start");
         boardHolder = new GameObject("Board").transform;
+        Debug.Log("BoardHolder created");
 
         for (int x = -1; x < width + 1; ++x)
         {
@@ -71,10 +76,12 @@ public class GameManager : MonoBehaviour
                 instance.transform.SetParent(boardHolder);
             }
         }
+        Debug.Log("instantiated");
 
         map = new int[width, height];
         ArrayList listX = new ArrayList();
         ArrayList listY = new ArrayList();
+        Debug.Log("Map array created");
 
         RandomFillMap();
         for (int i = 0; i < smoothness; ++i)
@@ -85,6 +92,7 @@ public class GameManager : MonoBehaviour
         {
             SmoothMapPsudo();
         }
+        Debug.Log("Map array processed");
 
         for (int y = 0; y < height; ++y)
         {
@@ -112,6 +120,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        Debug.Log("Wall instantiated");
 
         // 플레이어, 적, 아이템 위치 결정.
         int index = Random.Range(0, listX.Count);
@@ -119,7 +128,7 @@ public class GameManager : MonoBehaviour
         listX.RemoveAt(index);
         listY.RemoveAt(index);
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < SpawnedEnemy.Length; i++)
         {
             index = Random.Range(0, listX.Count);
             SpawnedEnemy[i].transform.position = new Vector3((int)listX[index], (int)listY[index], -10);
@@ -131,6 +140,7 @@ public class GameManager : MonoBehaviour
             listX.RemoveAt(index);
             listY.RemoveAt(index);
         }
+        Debug.Log("Calculation finished for item&enemy&player deploying");
 
         GameObject ItemsParent = new GameObject("Items"); // 아이템들의 부모 설정.
         ItemsParent.layer = LayerMask.NameToLayer("Wall"); // 일단 Wall 로 합니다. 추후 변경가능성.
@@ -275,6 +285,7 @@ public class GameManager : MonoBehaviour
     private void InitializeGame()
     {
         tex = new Texture2D(width, height);
+        Debug.Log("TEX GENERATE");
         plane.GetComponent<Renderer>().material.mainTexture = tex;
         plane.GetComponent<Renderer>().material.mainTexture.filterMode = FilterMode.Point;
 
