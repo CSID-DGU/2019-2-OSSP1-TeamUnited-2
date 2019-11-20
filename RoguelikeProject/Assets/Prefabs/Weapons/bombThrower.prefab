@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8888749923460764423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8888749923460764417}
+  - component: {fileID: 6227702297095948972}
+  m_Layer: 0
+  m_Name: bombThrower
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8888749923460764417
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888749923460764423}
+  m_LocalRotation: {x: 0, y: 0, z: -0.9678919, w: -0.2513671}
+  m_LocalPosition: {x: 89.04964, y: 24.858574, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6227702297095948972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888749923460764423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dea9206e506cc494faf7b349a3ad455c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationVector: {x: 0, y: 0}
+  projectile:
+    attribute:
+      damage: 0
+      force: 0
+      areaDamage: 5
+      areaForce: 50
+      areaRadius: 5
+      animationExplosion: {fileID: 7323742082746974975, guid: 70140e9a5e0b5a7478e89ef8f7b4289b,
+        type: 3}
+    shape: {fileID: 1417382109342578088, guid: 27774b184ecbe51499579bb1c733c431, type: 3}
+  autoFire: 0
+  cooldown: 0.5
