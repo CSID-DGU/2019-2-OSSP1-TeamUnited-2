@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         BoardSetup();
 
         SpawnedPlayer.SetActive(true);
-        
+
         enemyNum = SpawnedEnemy.Length + SpawnedRandEnemy.Length; // 길이 설정
         InitializeGame();
     }
@@ -90,12 +90,7 @@ public class GameManager : MonoBehaviour
         {
             for (int x = 0; x < width; ++x)
             {
-                if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
-                {
-                    GameObject instance = Instantiate(boundary, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
-                    instance.transform.SetParent(boardHolder);
-                }
-                else if (map[x, y] == 1)
+                if (map[x, y] == 1)
                 {
                     GameObject toInstantiate = wall;
                     toInstantiate.layer = LayerMask.NameToLayer("Wall");
@@ -277,17 +272,17 @@ public class GameManager : MonoBehaviour
         tex = new Texture2D(width, height);
         plane.GetComponent<Renderer>().material.mainTexture = tex;
         plane.GetComponent<Renderer>().material.mainTexture.filterMode = FilterMode.Point;
-
-        playerX = (int)SpawnedPlayer.transform.position.x;
-        playerY = (int)SpawnedPlayer.transform.position.y;
-        RenderToString();
     }
 
-    private void RenderToString()
+    void Update()
     {
         bool[,] lit = new bool[width, height];
-        int radius = 15;
-        ShadowCaster.ComputeFieldOfViewWithShadowCasting(playerX, playerY, radius, (x1, y1) => map[x1, y1] == 1, (x2, y2) => { lit[x2, y2] = true; });
+        Collider2D[] cols = Physics2D.OverlapCircleAll(SpawnedPlayer.transform.position, 10.0f);
+        foreach (Collider2D col in cols)
+        {
+            if (indexSafe((int)col.gameObject.transform.position.x, (int)col.gameObject.transform.position.y))
+                lit[(int)col.gameObject.transform.position.x, (int)col.gameObject.transform.position.y] = true;
+        }
 
         Color colorFloor = new Color(0f, 0f, 0f, 0f);
 
@@ -296,32 +291,18 @@ public class GameManager : MonoBehaviour
             for (int x = 0; x < width; ++x)
             {
                 if (lit[x, y])
-                {
-                    if (map[x, y] == 1)
-                    {
-                        tex.SetPixel(x, y, colorFloor);
-                    }
-                    else
-                    {
-                        tex.SetPixel(x, y, colorFloor);
-                    }
-                }
+                    tex.SetPixel(x, y, colorFloor);
                 else
-                {
-                    tex.SetPixel(x, y, new Color(0f, 0f, 0f, 0.5f));
-                }
+                    tex.SetPixel(x, y, new Color(0f, 0f, 0f, 1f));
+                lit[x, y] = false;
             }
         }
         tex.Apply(false);
     }
-
-    void Update()
+    bool indexSafe(int x, int y)
     {
-        if (map[(int)SpawnedPlayer.transform.position.x, (int)SpawnedPlayer.transform.position.y] != 1)
-        {
-            playerX = (int)SpawnedPlayer.transform.position.x;
-            playerY = (int)SpawnedPlayer.transform.position.y;
-            RenderToString();
-        }
+        if (x < 0 || x > width - 1 || y < 0 || y > height - 1)
+            return false;
+        else return true;
     }
 }
