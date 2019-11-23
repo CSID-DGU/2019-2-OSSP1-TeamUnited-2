@@ -277,13 +277,23 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         bool[,] lit = new bool[width, height];
-        Collider2D[] cols = Physics2D.OverlapCircleAll(SpawnedPlayer.transform.position, 10.0f);
-        foreach (Collider2D col in cols)
+        float radius = 10.0f;
+        Collider2D[] cols1 = Physics2D.OverlapCircleAll(SpawnedPlayer.transform.position, radius);
+        foreach (Collider2D col in cols1) // 제일 가까운 벽의 거리 조사
+        {
+            if (col.name == "Wall(Clone)")
+            {
+                float distance = (float)Math.Sqrt(Math.Pow((SpawnedPlayer.transform.position.x - col.gameObject.transform.position.x), 2) + Math.Pow((SpawnedPlayer.transform.position.y - col.gameObject.transform.position.y), 2)); // 충돌되는거 거리
+                if (radius > distance)
+                    radius = distance;
+            }
+        }
+        Collider2D[] cols2 = Physics2D.OverlapCircleAll(SpawnedPlayer.transform.position, radius);
+        foreach (Collider2D col in cols2) // 아까 조사한것 바탕으로 시야처리
         {
             if (indexSafe((int)col.gameObject.transform.position.x, (int)col.gameObject.transform.position.y))
                 lit[(int)col.gameObject.transform.position.x, (int)col.gameObject.transform.position.y] = true;
         }
-
         Color colorFloor = new Color(0f, 0f, 0f, 0f);
 
         for (int y = height - 1; y >= 0; --y)
