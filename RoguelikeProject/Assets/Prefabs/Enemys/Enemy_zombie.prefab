@@ -10,13 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 556268633250779925}
   - component: {fileID: 8892253879632237205}
-  - component: {fileID: 556268633250779927}
   - component: {fileID: 556268633250779924}
   - component: {fileID: 8570975761796897940}
   - component: {fileID: 581116653034904072}
   - component: {fileID: 556268633250779929}
   m_Layer: 0
-  m_Name: RandEnemy
+  m_Name: Enemy_zombie
   m_TagString: Enemys
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,34 +52,6 @@ MonoBehaviour:
   weapon: {fileID: 0}
   meleeDamage: 1
   force: 2
---- !u!114 &556268633250779927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 556268633250779931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: -1
 --- !u!50 &556268633250779924
 Rigidbody2D:
   serializedVersion: 4

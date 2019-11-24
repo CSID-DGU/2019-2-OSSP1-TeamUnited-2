@@ -108,8 +108,6 @@ public class GameManager : MonoBehaviour
         width = mapManager.GetComponent<MapManager>().mapWidth;
         height = mapManager.GetComponent<MapManager>().mapHeight;
 
-        Debug.LogError("-------------------");
-
         // 시야 처리 관련
         tex = new Texture2D(width, height);
         plane.GetComponent<Renderer>().material.mainTexture = tex;

@@ -96,8 +96,8 @@ public class MapManager : MonoBehaviour
         while (!deployed)
         {
             Vector2 toDeployOn;
-            toDeployOn.x = dungeon.room.X + Random.Range(0.0f, room.width);
-            toDeployOn.y = dungeon.room.Y + Random.Range(0.0f, room.height);
+            toDeployOn.x = dungeon.room.x + Random.Range(0.0f, dungeon.room.width);
+            toDeployOn.y = dungeon.room.y + Random.Range(0.0f, dungeon.room.height);
             GameObject instance = Instantiate(obj);
             instance.transform.SetParent(transform);
 
@@ -258,7 +258,7 @@ public class MapManager : MonoBehaviour
         seed = System.DateTime.Now.ToString();
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         // Debug.Log(seed);
-        double randomFillPercent = f;
+        double randomFillPercent = density;
 
         for (int x = (int)rect.x; x < rect.xMax; ++x)
         {
