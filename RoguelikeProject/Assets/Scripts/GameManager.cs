@@ -47,16 +47,21 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Game Start");
         BoardSetup();
-
+        Debug.Log("Board setup");
         SpawnedPlayer.SetActive(true);
-
+        Debug.Log("Player active");
+        
         enemyNum = SpawnedEnemy.Length + SpawnedRandEnemy.Length; // 길이 설정
         InitializeGame();
+        Debug.Log("Initialize game");
     }
     void BoardSetup()
     {
+        Debug.Log("Board setup start");
         boardHolder = new GameObject("Board").transform;
+        Debug.Log("BoardHolder created");
 
         for (int x = -1; x < width + 1; ++x)
         {
@@ -71,10 +76,12 @@ public class GameManager : MonoBehaviour
                 instance.transform.SetParent(boardHolder);
             }
         }
+        Debug.Log("instantiated");
 
         map = new int[width, height];
         ArrayList listX = new ArrayList();
         ArrayList listY = new ArrayList();
+        Debug.Log("Map array created");
 
         RandomFillMap();
         for (int i = 0; i < smoothness; ++i)
@@ -85,12 +92,18 @@ public class GameManager : MonoBehaviour
         {
             SmoothMapPsudo();
         }
+        Debug.Log("Map array processed");
 
         for (int y = 0; y < height; ++y)
         {
             for (int x = 0; x < width; ++x)
             {
-                if (map[x, y] == 1)
+                if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
+                {
+                    GameObject instance = Instantiate(boundary, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+                    instance.transform.SetParent(boardHolder);
+                }
+                else if (map[x, y] == 1)
                 {
                     GameObject toInstantiate = wall;
                     toInstantiate.layer = LayerMask.NameToLayer("Wall");
@@ -107,6 +120,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        Debug.Log("Wall instantiated");
 
         // 플레이어, 적, 아이템 위치 결정.
         int index = Random.Range(0, listX.Count);
@@ -126,6 +140,7 @@ public class GameManager : MonoBehaviour
             listX.RemoveAt(index);
             listY.RemoveAt(index);
         }
+        Debug.Log("Calculation finished for item&enemy&player deploying");
 
         GameObject ItemsParent = new GameObject("Items"); // 아이템들의 부모 설정.
         ItemsParent.layer = LayerMask.NameToLayer("Wall"); // 일단 Wall 로 합니다. 추후 변경가능성.
@@ -249,9 +264,9 @@ public class GameManager : MonoBehaviour
 
     bool NoWallSurround(int x, int y) // 목적 : 위치 지정할때 범위에 겹치는것이 없도록 한다. 너무 범위 값이 크면 들어갈 자리가 없어진다.
     {
-        for (int i = x - 3; i <= x + 3; i++)
+        for (int i = x - 5; i <= x + 5; i++)
         {
-            for (int j = y - 3; j <= y + 3; j++)
+            for (int j = y - 5; j <= y + 5; j++)
             {
                 if (i > 0 && i < width && j > 0 && j < height)
                 {
@@ -270,30 +285,21 @@ public class GameManager : MonoBehaviour
     private void InitializeGame()
     {
         tex = new Texture2D(width, height);
+        Debug.Log("TEX GENERATE");
         plane.GetComponent<Renderer>().material.mainTexture = tex;
         plane.GetComponent<Renderer>().material.mainTexture.filterMode = FilterMode.Point;
+
+        playerX = (int)SpawnedPlayer.transform.position.x;
+        playerY = (int)SpawnedPlayer.transform.position.y;
+        RenderToString();
     }
 
-    void Update()
+    private void RenderToString()
     {
         bool[,] lit = new bool[width, height];
-        float radius = 10.0f;
-        Collider2D[] cols1 = Physics2D.OverlapCircleAll(SpawnedPlayer.transform.position, radius);
-        foreach (Collider2D col in cols1) // 제일 가까운 벽의 거리 조사
-        {
-            if (col.name == "Wall(Clone)")
-            {
-                float distance = (float)Math.Sqrt(Math.Pow((SpawnedPlayer.transform.position.x - col.gameObject.transform.position.x), 2) + Math.Pow((SpawnedPlayer.transform.position.y - col.gameObject.transform.position.y), 2)); // 충돌되는거 거리
-                if (radius > distance)
-                    radius = distance;
-            }
-        }
-        Collider2D[] cols2 = Physics2D.OverlapCircleAll(SpawnedPlayer.transform.position, radius);
-        foreach (Collider2D col in cols2) // 아까 조사한것 바탕으로 시야처리
-        {
-            if (indexSafe((int)col.gameObject.transform.position.x, (int)col.gameObject.transform.position.y))
-                lit[(int)col.gameObject.transform.position.x, (int)col.gameObject.transform.position.y] = true;
-        }
+        int radius = 15;
+        ShadowCaster.ComputeFieldOfViewWithShadowCasting(playerX, playerY, radius, (x1, y1) => map[x1, y1] == 1, (x2, y2) => { lit[x2, y2] = true; });
+
         Color colorFloor = new Color(0f, 0f, 0f, 0f);
 
         for (int y = height - 1; y >= 0; --y)
@@ -301,18 +307,32 @@ public class GameManager : MonoBehaviour
             for (int x = 0; x < width; ++x)
             {
                 if (lit[x, y])
-                    tex.SetPixel(x, y, colorFloor);
+                {
+                    if (map[x, y] == 1)
+                    {
+                        tex.SetPixel(x, y, colorFloor);
+                    }
+                    else
+                    {
+                        tex.SetPixel(x, y, colorFloor);
+                    }
+                }
                 else
-                    tex.SetPixel(x, y, new Color(0f, 0f, 0f, 1f));
-                lit[x, y] = false;
+                {
+                    tex.SetPixel(x, y, new Color(0f, 0f, 0f, 0.5f));
+                }
             }
         }
         tex.Apply(false);
     }
-    bool indexSafe(int x, int y)
+
+    void Update()
     {
-        if (x < 0 || x > width - 1 || y < 0 || y > height - 1)
-            return false;
-        else return true;
+        if (map[(int)SpawnedPlayer.transform.position.x, (int)SpawnedPlayer.transform.position.y] != 1)
+        {
+            playerX = (int)SpawnedPlayer.transform.position.x;
+            playerY = (int)SpawnedPlayer.transform.position.y;
+            RenderToString();
+        }
     }
 }
