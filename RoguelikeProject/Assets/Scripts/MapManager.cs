@@ -7,11 +7,7 @@ public class MapManager : MonoBehaviour
     public double density;
     public int smoothness;
     public int postsmooth;
-    protected int[,] map;
-    public int[,] Map
-    {
-        get {return (int[,])map.Clone();}
-    }
+    public int[,] map;
     private Transform boardHolder;
     public GameObject boundary;
     public GameObject floor;
@@ -23,7 +19,7 @@ public class MapManager : MonoBehaviour
     private GameObject[,] boardPositionsNonchange;
     private Transform pos;
     private string seed;
-
+    
     public void CreateBSP(SubDungeon subDungeon)
     {
         Debug.Log("Splitting sub-dungeon " + subDungeon.debugId + ": " + subDungeon.rect);
@@ -162,7 +158,6 @@ public class MapManager : MonoBehaviour
 
     void BoardSetup(Rect rect)
     {
-
         map = new int[mapHeight, mapWidth];
         ArrayList listX = new ArrayList();
         ArrayList listY = new ArrayList();

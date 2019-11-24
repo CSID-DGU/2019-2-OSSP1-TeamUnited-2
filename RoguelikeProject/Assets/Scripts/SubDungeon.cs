@@ -9,6 +9,7 @@ using UnityEngine;
         public Rect room = new Rect(-1, -1, 0, 0); // i.e null
         public int debugId;
         public List<Rect> corridors = new List<Rect>();
+        protected savedAsArray = false;
 
         private static int debugCounter = 0;
 
@@ -242,4 +243,39 @@ using UnityEngine;
             // workaround non nullable structs
             return new Rect(-1, -1, 0, 0);
         }
+            public SubDungeon RandomPopDungeon()
+            // 던전이 빌때까지 차례로 방을 반환합니다.
+            {
+                // 자신이 말단 서브던전이고, 아직 pop된적이 없으면 반환합니다.
+                if (IAmLeaf && !savedAsArray)
+                {
+                    savedAsArray = true;
+                    return this;
+                }
+                // 자신이 말단 서브던전이지만, 이미 pop되었다면 null을 반환합니다.
+                else if (IAmLeaf && savedAsArray)
+                {
+                    return null;
+                }
+                else
+                {
+                    // 자신이 말단이 아닌경우, left부터 차례로 연쇄호출을 시도합니다.
+                    // left 연쇄호출에서 말단 노드를 발견했다면 반환합니다.
+                    SubDungeon nextPop = left.RandomPopDungeon();
+                    if(nextPop != null)
+                    {
+                        return nextPop;
+                    }
+
+                    // left 연쇄호출에서 말단 노드를 찾지 못했을 경우, right 연쇄호출에서 말단 노드를 발견했다면 반환합니다.
+                    nextPop = right.RandomPopDungeon();
+                    if (nextPop != null)
+                    {
+                        return nextPop;
+                    }
+                    
+                    // 더이상 반환할 것이 없습니다. null를 반환합니다.
+                    return null;
+                }
+            }   
     }

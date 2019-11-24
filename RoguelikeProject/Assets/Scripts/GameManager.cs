@@ -10,17 +10,17 @@ public class GameManager : MonoBehaviour
 {
     private GameObject levelImage;
     public GameObject mapManager;
-    protected int[,] map;
+    [HideInInspector]
+    public int[,] map;
     public int width;
     public int height;
-    public GameObject boundary;
-    public GameObject floor;
-    public GameObject wall;
+    // public GameObject boundary;
+    // public GameObject floor;
+    // public GameObject wall;
     public GameObject plane;
 
     private Texture2D tex;
-
-    public GameObject Player;
+    public GameObject playerEntity;
     public GameObject miniGold; // 미니맵에 보여줄 코인
     private int enemyNum; // 적들의 수.
 
@@ -104,18 +104,14 @@ public class GameManager : MonoBehaviour
     {
         // 맵은 게임매니저에서 관리합니다. 일단 최초에 한번 복사하는 방식으로 합니다만, 추후 문제가 발생할 수 있습니다.
         // 참조로 받아오는 편이 나을 수도 있습니다.
-        map = mapManager.GetComponent<MapManager>().Map;
+        map = mapManager.GetComponent<MapManager>().map;
         width = mapManager.GetComponent<MapManager>().mapWidth;
         height = mapManager.GetComponent<MapManager>().mapHeight;
 
-        map = new int[100, 100];
+        Debug.LogError("-------------------");
 
-        foreach (var i in map)
-        {
-            Debug.LogError(map[0,0]);
-        }
+        // 시야 처리 관련
         tex = new Texture2D(width, height);
-        Debug.Log("TEX GENERATE");
         plane.GetComponent<Renderer>().material.mainTexture = tex;
         plane.GetComponent<Renderer>().material.mainTexture.filterMode = FilterMode.Point;
         RenderToString();
@@ -123,12 +119,13 @@ public class GameManager : MonoBehaviour
 
     private void RenderToString()
     {
-        map = new int[width,height];
+        // map = new int[width,height];
         bool[,] lit = new bool[width, height];
         int radius = 15;
-        int playerX = (int)Player.transform.position.x;
-        int playerY = (int)Player.transform.position.y;
-        ShadowCaster.ComputeFieldOfViewWithShadowCasting(playerX, playerY, radius, (x1, y1) => map[x1, y1] == 1, (x2, y2) => { lit[x2, y2] = true; });
+        int playerX = (int)playerEntity.transform.position.x;
+        int playerY = (int)playerEntity.transform.position.y;
+        // Debug.Log(playerX + " "  + playerY);
+        // ShadowCaster.ComputeFieldOfViewWithShadowCasting(playerX, playerY, radius, (x1, y1) => map[x1, y1] == 1, (x2, y2) => { lit[x2, y2] = true; });
 
         Color colorFloor = new Color(0f, 0f, 0f, 0f);
 
@@ -149,7 +146,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    tex.SetPixel(x, y, new Color(0f, 0f, 0f, 0.5f));
+                    tex.SetPixel(x, y, new Color(0f, 0f, 0f, 0.1f));
                 }
             }
         }
@@ -158,7 +155,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // if (map[(int)Player.transform.position.x, (int)Player.transform.position.y] != 1)
+        // if (map[(int)playerEntity.transform.position.x, (int)playerEntity.transform.position.y] != 1)
         {
             // ??? 시야처리 관련?
             RenderToString();
