@@ -595,5 +595,11 @@ PrefabInstance:
       propertyPath: density
       value: 55
       objectReference: {fileID: 0}
+    - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
+        type: 3}
+      propertyPath: corridorTile
+      value: 
+      objectReference: {fileID: 6111554595126647308, guid: b1e594dd4dd219b42afedd777f982350,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: baf532530b84f974aa23c57dc20a8131, type: 3}
