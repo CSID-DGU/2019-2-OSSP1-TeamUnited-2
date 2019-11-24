@@ -66,16 +66,6 @@ public class GameManager : MonoBehaviour
         ArrayList listY = new ArrayList();
         Debug.Log("Map array created");
 
-        RandomFillMap();
-        for (int i = 0; i < smoothness; ++i)
-        {
-            SmoothMap();
-        }
-        for (int i = 0; i < postsmooth; ++i)
-        {
-            SmoothMapPsudo();
-        }
-        Debug.Log("Map array processed");
 
         for (int y = 0; y < height; ++y)
         {
@@ -163,63 +153,6 @@ public class GameManager : MonoBehaviour
         }
         else Debug.Log("아이템 만들 공간 없음..");
     }
-
-    void RandomFillMap()
-    {
-        seed = System.DateTime.Now.ToString();
-        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
-        // Debug.Log(seed);
-        double randomFillPercent = density;
-
-        for (int x = 0; x < width; ++x)
-        {
-            for (int y = 0; y < height; ++y)
-            {
-                if (x == 0 || x == width - 1 || y == 0 || y == height - 1)
-                {
-                    map[x, y] = 1;
-                }
-                else
-                {
-                    map[x, y] = (pseudoRandom.Next(0, 100) < randomFillPercent) ? 1 : 0;
-                }
-            }
-        }
-    }
-    void SmoothMapPsudo()
-    {
-        for (int x = 0; x < width; ++x)
-        {
-            for (int y = 0; y < height; ++y)
-            {
-                int neighbourWallTiles = GetSurroundingWallCount(x, y);
-
-                if (neighbourWallTiles > 4)
-                    map[x, y] = 1;
-                else if (neighbourWallTiles < 4)
-                    map[x, y] = 0;
-            }
-        }
-    }
-
-    void SmoothMap()
-    {
-        int[,] nextMap = new int[width, height];
-        for (int x = 0; x < width; ++x)
-        {
-            for (int y = 0; y < height; ++y)
-            {
-                int neighbourWallTiles = GetSurroundingWallCount(x, y);
-
-                if (neighbourWallTiles > 4)
-                    nextMap[x, y] = 1;
-                else if (neighbourWallTiles < 4)
-                    nextMap[x, y] = 0;
-            }
-        }
-        map = nextMap;
-    }
-
     int GetSurroundingWallCount(int gridX, int gridY)
     {
         int wallCount = 0;
@@ -241,28 +174,6 @@ public class GameManager : MonoBehaviour
             }
         }
         return wallCount;
-    }
-
-
-
-    bool NoWallSurround(int x, int y) // 목적 : 위치 지정할때 범위에 겹치는것이 없도록 한다. 너무 범위 값이 크면 들어갈 자리가 없어진다.
-    {
-        for (int i = x - 5; i <= x + 5; i++)
-        {
-            for (int j = y - 5; j <= y + 5; j++)
-            {
-                if (i > 0 && i < width && j > 0 && j < height)
-                {
-                    if (map[i, j] == 1) // 벽있으면 ㅂ2
-                        return false;
-                    else
-                        map[i, j] = 2; // 조건들을 다 통과할시 이곳에또 안겹치게 설정.
-                }
-                else // 조건이 별로면 ㅂ2
-                    return false;
-            }
-        }
-        return true; // 다 지나왔다면 패스
     }
 
     private void InitializeGame()
