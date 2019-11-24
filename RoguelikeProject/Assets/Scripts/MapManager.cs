@@ -17,9 +17,12 @@ public class MapManager : MonoBehaviour
     public GameObject corridorTile;
     private GameObject[,] boardPositionsFloor;
     private GameObject[,] boardPositionsNonchange;
+    protected SubDungeon rootSubDungeon;
+    protected ArrayList roomList;
     private Transform pos;
     private string seed;
-    
+
+
     public void CreateBSP(SubDungeon subDungeon)
     {
         Debug.Log("Splitting sub-dungeon " + subDungeon.debugId + ": " + subDungeon.rect);
@@ -136,7 +139,7 @@ public class MapManager : MonoBehaviour
 
     public void DrawMap()
     {
-        SubDungeon rootSubDungeon = new SubDungeon(new Rect(0, 0, mapHeight, mapWidth));
+        rootSubDungeon = new SubDungeon(new Rect(0, 0, mapHeight, mapWidth));
         CreateBSP(rootSubDungeon);
         rootSubDungeon.CreateRoom();
 
@@ -147,10 +150,22 @@ public class MapManager : MonoBehaviour
         DrawBoundarys(rootSubDungeon);
         FillRooms(rootSubDungeon);
     }
+    public void StoreMapsIntoRoomList()
+    {
+        roomList = new ArrayList();
+        SubDungeon nextinsert = rootSubDungeon.RandomPopDungeon();
+        while (nextinsert != null)
+        {
+            roomList.Add(nextinsert);
+            nextinsert = rootSubDungeon.RandomPopDungeon();
+        }
+        Debug.Log(roomList.Count);
+    }
 
     private void Start()
     {
         DrawMap();
+        StoreMapsIntoRoomList();
     }
 
 
