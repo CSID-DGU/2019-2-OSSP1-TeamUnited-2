@@ -9,7 +9,7 @@ using UnityEngine;
         public Rect room = new Rect(-1, -1, 0, 0); // i.e null
         public int debugId;
         public List<Rect> corridors = new List<Rect>();
-        protected savedAsArray = false;
+        protected bool savedAsArray = false;
 
         private static int debugCounter = 0;
 
@@ -247,13 +247,13 @@ using UnityEngine;
             // 던전이 빌때까지 차례로 방을 반환합니다.
             {
                 // 자신이 말단 서브던전이고, 아직 pop된적이 없으면 반환합니다.
-                if (IAmLeaf && !savedAsArray)
+                if (IAmLeaf() && !savedAsArray)
                 {
                     savedAsArray = true;
                     return this;
                 }
                 // 자신이 말단 서브던전이지만, 이미 pop되었다면 null을 반환합니다.
-                else if (IAmLeaf && savedAsArray)
+                else if (IAmLeaf() && savedAsArray)
                 {
                     return null;
                 }
