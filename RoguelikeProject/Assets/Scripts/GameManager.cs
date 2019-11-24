@@ -39,8 +39,7 @@ public class GameManager : MonoBehaviour
     public double density;
     public int smoothness;
     public int postsmooth;
-    [HideInInspector]//map 숨기기
-    public int[,] map;
+    private int[,] map;
     private Transform boardHolder;
 
     private string seed;
@@ -276,35 +275,53 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        bool[,] lit = new bool[width, height];
-        float radius = 10.0f;
-        Collider2D[] cols1 = Physics2D.OverlapCircleAll(SpawnedPlayer.transform.position, radius);
-        foreach (Collider2D col in cols1) // 제일 가까운 벽의 거리 조사
+        bool[,] lit = new bool[width, height]; // 크기
+        float radius = 10.0f; // 반지름
+        int layerMask = 1 << 10; // 적은 안보게 함.
+        layerMask = ~layerMask; // 반전시켜서 이것만 걸러내는거
+        Collider2D[] mcols = Physics2D.OverlapCircleAll(SpawnedPlayer.transform.position, radius, layerMask); // 원안에 조사
+        List<Vector2> mcolsVector = new List<Vector2>();
+        foreach (Collider2D co in mcols) // 좌표만 가져옴(int로 캐스팅해서)
         {
-            if (col.name == "Wall(Clone)")
-            {
-                float distance = (float)Math.Sqrt(Math.Pow((SpawnedPlayer.transform.position.x - col.gameObject.transform.position.x), 2) + Math.Pow((SpawnedPlayer.transform.position.y - col.gameObject.transform.position.y), 2)); // 충돌되는거 거리
-                if (radius > distance)
-                    radius = distance;
-            }
+            mcolsVector.Add(new Vector2((int)co.transform.position.x, (int)co.transform.position.y));
         }
-        Collider2D[] cols2 = Physics2D.OverlapCircleAll(SpawnedPlayer.transform.position, radius);
-        foreach (Collider2D col in cols2) // 아까 조사한것 바탕으로 시야처리
+
+        foreach (Vector2 mVec in mcolsVector) // 좌표를 이용해서 시야처리
         {
-            if (indexSafe((int)col.gameObject.transform.position.x, (int)col.gameObject.transform.position.y))
-                lit[(int)col.gameObject.transform.position.x, (int)col.gameObject.transform.position.y] = true;
+            Vector2 rayDirection = mVec - (Vector2)SpawnedPlayer.transform.position; // 방향
+            rayDirection.Normalize();
+            float distance = Vector2.Distance(SpawnedPlayer.transform.position, mVec); // 거리
+            RaycastHit2D[] cols = Physics2D.RaycastAll(SpawnedPlayer.transform.position, rayDirection, distance, layerMask); // 직선상에 있는것
+            int repeat = 0; bool setRepeat = false; // 벽을 어느정도 보여주기 위함.
+            foreach (RaycastHit2D co in cols)
+            {
+                Collider2D[] colliderCount = Physics2D.OverlapPointAll(co.transform.position); // collider를 타일에 달았기 때문에 Wall 이 있는곳에 2개가 나옴.
+                if (setRepeat) // 한번 벽이 나오면 true 가 되어서 repeat을 증가시킴.
+                {
+                    repeat++;
+                    if (repeat > 2 || colliderCount.Length <2) // 벽이 2줄이거나 타일이 나와버리면 그만둔다.
+                        break;
+                }
+
+                if (co.collider.name == "Wall(Clone)")
+                {
+                    setRepeat = true;
+                }
+
+                if (indexSafe((int)co.transform.position.x, (int)co.transform.position.y)) // 배열에 넣음. point를 쓰지말고 transform position 이 딱 맞는다.
+                    lit[(int)co.transform.position.x, (int)co.transform.position.y] = true;
+            }
         }
         Color colorFloor = new Color(0f, 0f, 0f, 0f);
 
-        for (int y = height - 1; y >= 0; --y)
+        for (int y = 0; y < height; y++)
         {
-            for (int x = 0; x < width; ++x)
+            for (int x = 0; x < width; x++)
             {
                 if (lit[x, y])
                     tex.SetPixel(x, y, colorFloor);
                 else
-                    tex.SetPixel(x, y, new Color(0f, 0f, 0f, 1f));
-                lit[x, y] = false;
+                    tex.SetPixel(x, y, new Color(0f, 0f, 0f, 0.5f));
             }
         }
         tex.Apply(false);
