@@ -18,7 +18,7 @@ public class MapManager : MonoBehaviour
     private GameObject[,] boardPositionsFloor;
     private GameObject[,] boardPositionsNonchange;
     protected SubDungeon rootSubDungeon;
-    protected ArrayList roomList;
+    protected ArrayList subDungeonList;
     private Transform pos;
     private string seed;
 
@@ -71,38 +71,43 @@ public class MapManager : MonoBehaviour
             DrawRooms(subDungeon.right);
         }
     }
-    public void DeployItems(SubDungeon subDungeon)
+    public void DeployItems()
     {
-        if (subDungeon == null)
+        foreach (SubDungeon dungeon in subDungeonList)
         {
-            return;
-        }
-        else if (subDungeon.IAmLeaf())
-        {
-
-        }
-        else
-        {
-            DeployItems(subDungeon.left);
-            DeployItems(subDungeon.right);
+            foreach (GameObject item in dungeon.items)
+            {
+                RandomThrowObjectInRoom(dungeon, item);
+            }
         }
     }
-
-    public void SpawnEnemys(SubDungeon subDungeon)
+    public void SpawnEnemys()
     {
-        if (subDungeon == null)
-        {
-            return;
-        }
-        else if (subDungeon.IAmLeaf())
+        foreach (SubDungeon dungeon in subDungeonList)
         {
 
         }
-        else
+    }
+    public void RandomThrowObjectInRoom(SubDungeon dungeon, GameObject obj)
+    // 방 내부에 랜덤하게 아이템, 적을 뿌립니다. 일단은 랜덤 버전만...
+    {
+        bool deployed = false;
+        int trial = 0;
+        while (!deployed)
         {
-            SpawnEnemys(subDungeon.left);
-            SpawnEnemys(subDungeon.right);
-        }    
+            Vector2 toDeployOn;
+            toDeployOn.x = dungeon.room.X + Random.Range(0.0f, room.width);
+            toDeployOn.y = dungeon.room.Y + Random.Range(0.0f, room.height);
+            GameObject instance = Instantiate(obj);
+            instance.transform.SetParent(transform);
+
+            ++trial;
+            if (trial > 100)
+            {
+                Debug.LogError("There is some trouble in deploying object...");
+                break;
+            }
+        }
     }
 
     public void FillRooms(SubDungeon subDungeon)
@@ -117,7 +122,7 @@ public class MapManager : MonoBehaviour
         {
             BoardSetup(subDungeon.room);
         }
-        // 자신이 중간단계(복도)일 경우 재귀 호출
+        // 자신이 복도일 경우 재귀 호출
         else
         {
             FillRooms(subDungeon.left);
@@ -183,22 +188,22 @@ public class MapManager : MonoBehaviour
         DrawBoundarys(rootSubDungeon);
         FillRooms(rootSubDungeon);
     }
-    public void StoreMapsIntoRoomList()
+    public void StoreMapsIntosubDungeonList()
     {
-        roomList = new ArrayList();
+        subDungeonList = new ArrayList();
         SubDungeon nextinsert = rootSubDungeon.RandomPopDungeon();
         while (nextinsert != null)
         {
-            roomList.Add(nextinsert);
+            subDungeonList.Add(nextinsert);
             nextinsert = rootSubDungeon.RandomPopDungeon();
         }
-        Debug.Log(roomList.Count);
+        Debug.Log(subDungeonList.Count);
     }
 
     private void Start()
     {
         DrawMap();
-        StoreMapsIntoRoomList();
+        StoreMapsIntosubDungeonList();
     }
 
 
@@ -210,15 +215,15 @@ public class MapManager : MonoBehaviour
         ArrayList listX = new ArrayList();
         ArrayList listY = new ArrayList();
 
-        RandomFillMap(rect);
-        for (int i = 0; i < smoothness; ++i)
-        {
-            SmoothMap(rect);
-        }
-        for (int i = 0; i < postsmooth; ++i)
-        {
-            SmoothMapPsudo(rect);
-        }
+        // RandomFillMap(rect);
+        // for (int i = 0; i < smoothness; ++i)
+        // {
+        //     SmoothMap(rect);
+        // }
+        // for (int i = 0; i < postsmooth; ++i)
+        // {
+        //     SmoothMapPsudo(rect);
+        // }
 
         for (int y = (int)rect.y; y < rect.yMax; ++y)
         {
@@ -253,7 +258,7 @@ public class MapManager : MonoBehaviour
         seed = System.DateTime.Now.ToString();
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         // Debug.Log(seed);
-        double randomFillPercent = density;
+        double randomFillPercent = f;
 
         for (int x = (int)rect.x; x < rect.xMax; ++x)
         {
