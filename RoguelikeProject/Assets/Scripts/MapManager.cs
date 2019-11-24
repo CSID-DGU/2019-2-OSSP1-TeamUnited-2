@@ -21,8 +21,6 @@ public class MapManager : MonoBehaviour
 
     private string seed;
 
-
-
     public void CreateBSP(SubDungeon subDungeon)
     {
         Debug.Log("Splitting sub-dungeon " + subDungeon.debugId + ": " + subDungeon.rect);
@@ -284,8 +282,6 @@ public class MapManager : MonoBehaviour
         }
         return wallCount;
     }
-
-
 
     bool NoWallSurround(int x, int y, Rect rect) // 목적 : 위치 지정할때 범위에 겹치는것이 없도록 한다. 너무 범위 값이 크면 들어갈 자리가 없어진다.
     {
