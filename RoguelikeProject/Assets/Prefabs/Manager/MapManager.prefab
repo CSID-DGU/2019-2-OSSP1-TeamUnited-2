@@ -50,8 +50,8 @@ MonoBehaviour:
     type: 3}
   floor: {fileID: 2179826274794268848, guid: 505bb711daf3c5f4f9b57bc53bc704be, type: 3}
   wall: {fileID: 3413562459108856723, guid: 7a4e0694cb5079243a3ba39963639af8, type: 3}
-  boardRows: 140
-  boardColumns: 140
+  boardRows: 150
+  boardColumns: 150
   minRoomSize: 15
   maxRoomSize: 25
   corridorTile: {fileID: 2179826274794268848, guid: 505bb711daf3c5f4f9b57bc53bc704be,
