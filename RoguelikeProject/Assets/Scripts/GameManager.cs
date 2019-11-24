@@ -9,7 +9,8 @@ using System.Text;
 public class GameManager : MonoBehaviour
 {
     private GameObject levelImage;
-
+    public GameObject mapManager;
+    protected int[,] map;
     public int width;
     public int height;
     public GameObject boundary;
@@ -28,14 +29,11 @@ public class GameManager : MonoBehaviour
         get { return enemyNum; }
         set { enemyNum = value; }
     }
-    [HideInInspector]//map 숨기기
-    public int[,] map;
     private Transform boardHolder;
 
 
     void Start()
     {        
-        map = new int[width, height];
         InitializeGame();
     }
     // void BoardSetup()
@@ -104,6 +102,18 @@ public class GameManager : MonoBehaviour
     
     private void InitializeGame()
     {
+        // 맵은 게임매니저에서 관리합니다. 일단 최초에 한번 복사하는 방식으로 합니다만, 추후 문제가 발생할 수 있습니다.
+        // 참조로 받아오는 편이 나을 수도 있습니다.
+        map = mapManager.GetComponent<MapManager>().Map;
+        width = mapManager.GetComponent<MapManager>().mapWidth;
+        height = mapManager.GetComponent<MapManager>().mapHeight;
+
+        map = new int[100, 100];
+
+        foreach (var i in map)
+        {
+            Debug.LogError(map[0,0]);
+        }
         tex = new Texture2D(width, height);
         Debug.Log("TEX GENERATE");
         plane.GetComponent<Renderer>().material.mainTexture = tex;
@@ -113,6 +123,7 @@ public class GameManager : MonoBehaviour
 
     private void RenderToString()
     {
+        map = new int[width,height];
         bool[,] lit = new bool[width, height];
         int radius = 15;
         int playerX = (int)Player.transform.position.x;

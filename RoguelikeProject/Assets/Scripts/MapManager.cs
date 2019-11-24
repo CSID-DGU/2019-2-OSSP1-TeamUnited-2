@@ -7,18 +7,21 @@ public class MapManager : MonoBehaviour
     public double density;
     public int smoothness;
     public int postsmooth;
-    private int[,] map;
+    protected int[,] map;
+    public int[,] Map
+    {
+        get {return (int[,])map.Clone();}
+    }
     private Transform boardHolder;
     public GameObject boundary;
     public GameObject floor;
     public GameObject wall;
-    public int boardRows, boardColumns;
+    public int mapHeight, mapWidth;
     public int minRoomSize, maxRoomSize;
     public GameObject corridorTile;
     private GameObject[,] boardPositionsFloor;
     private GameObject[,] boardPositionsNonchange;
     private Transform pos;
-
     private string seed;
 
     public void CreateBSP(SubDungeon subDungeon)
@@ -137,12 +140,12 @@ public class MapManager : MonoBehaviour
 
     public void DrawMap()
     {
-        SubDungeon rootSubDungeon = new SubDungeon(new Rect(0, 0, boardRows, boardColumns));
+        SubDungeon rootSubDungeon = new SubDungeon(new Rect(0, 0, mapHeight, mapWidth));
         CreateBSP(rootSubDungeon);
         rootSubDungeon.CreateRoom();
 
-        boardPositionsFloor = new GameObject[boardRows, boardColumns];
-        boardPositionsNonchange = new GameObject[boardRows, boardColumns];
+        boardPositionsFloor = new GameObject[mapHeight, mapWidth];
+        boardPositionsNonchange = new GameObject[mapHeight, mapWidth];
         DrawCorridors(rootSubDungeon);
         DrawRooms(rootSubDungeon);
         DrawBoundarys(rootSubDungeon);
@@ -160,7 +163,7 @@ public class MapManager : MonoBehaviour
     void BoardSetup(Rect rect)
     {
 
-        map = new int[boardRows, boardColumns];
+        map = new int[mapHeight, mapWidth];
         ArrayList listX = new ArrayList();
         ArrayList listY = new ArrayList();
 
