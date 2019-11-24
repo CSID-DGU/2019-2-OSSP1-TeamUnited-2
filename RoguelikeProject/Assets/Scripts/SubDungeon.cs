@@ -11,8 +11,9 @@ using UnityEngine;
         public List<Rect> corridors = new List<Rect>();
         protected bool savedAsArray = false;
         private static int debugCounter = 0;
-        ArrayList monsters;
-        ArrayList items;
+        protected ArrayList monsters;
+        protected ArrayList items;
+        protected string roomType;
 
         public SubDungeon(Rect mrect)
         {
