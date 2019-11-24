@@ -10,8 +10,9 @@ using UnityEngine;
         public int debugId;
         public List<Rect> corridors = new List<Rect>();
         protected bool savedAsArray = false;
-
         private static int debugCounter = 0;
+        ArrayList monsters;
+        ArrayList items;
 
         public SubDungeon(Rect mrect)
         {

@@ -71,6 +71,39 @@ public class MapManager : MonoBehaviour
             DrawRooms(subDungeon.right);
         }
     }
+    public void DeployItems(SubDungeon subDungeon)
+    {
+        if (subDungeon == null)
+        {
+            return;
+        }
+        else if (subDungeon.IAmLeaf())
+        {
+
+        }
+        else
+        {
+            DeployItems(subDungeon.left);
+            DeployItems(subDungeon.right);
+        }
+    }
+
+    public void SpawnEnemys(SubDungeon subDungeon)
+    {
+        if (subDungeon == null)
+        {
+            return;
+        }
+        else if (subDungeon.IAmLeaf())
+        {
+
+        }
+        else
+        {
+            SpawnEnemys(subDungeon.left);
+            SpawnEnemys(subDungeon.right);
+        }    
+    }
 
     public void FillRooms(SubDungeon subDungeon)
     {
