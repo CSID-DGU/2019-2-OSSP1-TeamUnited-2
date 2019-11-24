@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6638464269740965972}
   - component: {fileID: 2154451577142106397}
   - component: {fileID: 6638464269740965969}
-  - component: {fileID: 4616629094484957985}
-  - component: {fileID: 6654007589446654389}
+  - component: {fileID: 6076545854691674573}
+  - component: {fileID: 3870148666756735010}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6638464269740965934}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 36.928, y: 29.791, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 37.5104, y: 29.5001, z: -10}
+  m_LocalScale: {x: 0.56, y: 0.56, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -73,7 +73,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!212 &4616629094484957985
+--- !u!212 &6076545854691674573
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,7 +121,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &6654007589446654389
+--- !u!60 &3870148666756735010
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
