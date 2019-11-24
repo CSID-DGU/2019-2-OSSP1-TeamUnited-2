@@ -18,15 +18,8 @@ public class GameManager : MonoBehaviour
     public GameObject plane;
 
     private Texture2D tex;
-    private int playerX;
-    private int playerY;
 
-    public GameObject SpawnedPlayer;
-    public GameObject[] SpawnedEnemy;
-    public GameObject[] SpawnedRandEnemy;
-    public GameObject SpawnedItem1;
-    public GameObject SpawnedItem2;
-    public GameObject SpawnedItem3;
+    public GameObject Player;
     public GameObject miniGold; // 미니맵에 보여줄 코인
     private int enemyNum; // 적들의 수.
 
@@ -35,27 +28,17 @@ public class GameManager : MonoBehaviour
         get { return enemyNum; }
         set { enemyNum = value; }
     }
-
-    public double density;
-    public int smoothness;
-    public int postsmooth;
     [HideInInspector]//map 숨기기
     public int[,] map;
     private Transform boardHolder;
 
-    private string seed;
 
     void Start()
     {
-        Debug.Log("Game Start");
         BoardSetup();
-        Debug.Log("Board setup");
-        SpawnedPlayer.SetActive(true);
-        Debug.Log("Player active");
+        Player.SetActive(true);
         
-        enemyNum = SpawnedEnemy.Length + SpawnedRandEnemy.Length; // 길이 설정
         InitializeGame();
-        Debug.Log("Initialize game");
     }
     void BoardSetup()
     {
@@ -124,7 +107,7 @@ public class GameManager : MonoBehaviour
 
         // 플레이어, 적, 아이템 위치 결정.
         int index = Random.Range(0, listX.Count);
-        SpawnedPlayer.transform.position = new Vector3((int)listX[index], (int)listY[index], -10);
+        Player.transform.position = new Vector3((int)listX[index], (int)listY[index], -10);
         listX.RemoveAt(index);
         listY.RemoveAt(index);
 
@@ -289,8 +272,8 @@ public class GameManager : MonoBehaviour
         plane.GetComponent<Renderer>().material.mainTexture = tex;
         plane.GetComponent<Renderer>().material.mainTexture.filterMode = FilterMode.Point;
 
-        playerX = (int)SpawnedPlayer.transform.position.x;
-        playerY = (int)SpawnedPlayer.transform.position.y;
+        playerX = (int)Player.transform.position.x;
+        playerY = (int)Player.transform.position.y;
         RenderToString();
     }
 
@@ -298,6 +281,8 @@ public class GameManager : MonoBehaviour
     {
         bool[,] lit = new bool[width, height];
         int radius = 15;
+        int playerX = (int)Player.transform.position.x;
+        int playerY = (int)Player.transform.position.y;
         ShadowCaster.ComputeFieldOfViewWithShadowCasting(playerX, playerY, radius, (x1, y1) => map[x1, y1] == 1, (x2, y2) => { lit[x2, y2] = true; });
 
         Color colorFloor = new Color(0f, 0f, 0f, 0f);
@@ -328,10 +313,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (map[(int)SpawnedPlayer.transform.position.x, (int)SpawnedPlayer.transform.position.y] != 1)
+        if (map[(int)Player.transform.position.x, (int)Player.transform.position.y] != 1)
         {
-            playerX = (int)SpawnedPlayer.transform.position.x;
-            playerY = (int)SpawnedPlayer.transform.position.y;
             RenderToString();
         }
     }
