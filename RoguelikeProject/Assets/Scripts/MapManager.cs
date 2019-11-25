@@ -22,6 +22,29 @@ public class MapManager : MonoBehaviour
     private Transform pos;
     private string seed;
     
+    public void CreateBSP(SubDungeon subDungeon)
+    {
+        Debug.Log("Splitting sub-dungeon " + subDungeon.debugId + ": " + subDungeon.rect);
+        if (subDungeon.IAmLeaf())
+        {
+            // if the sub-dungeon is too large split it
+            if (subDungeon.rect.width > maxRoomSize
+                || subDungeon.rect.height > maxRoomSize
+                || Random.Range(0.0f, 1.0f) > 0.25)
+            {
+
+                if (subDungeon.Split(minRoomSize, maxRoomSize))
+                {
+                    Debug.Log("Splitted sub-dungeon " + subDungeon.debugId + " in "
+                        + subDungeon.left.debugId + ": " + subDungeon.left.rect + ", "
+                        + subDungeon.right.debugId + ": " + subDungeon.right.rect);
+
+                    CreateBSP(subDungeon.left);
+                    CreateBSP(subDungeon.right);
+                }
+            }
+        }
+    }
     public void DrawRooms(SubDungeon subDungeon)
     {
         if (subDungeon == null)
