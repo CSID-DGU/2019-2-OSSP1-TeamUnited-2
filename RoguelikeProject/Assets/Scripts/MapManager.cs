@@ -16,9 +16,9 @@ public class MapManager : MonoBehaviour
     public int minRoomSize, maxRoomSize;
     public GameObject corridorTile;
     private GameObject[,] boardPositionsFloor;
-    private GameObject[,] boardPositionsNonchange;
+    private GameObject[,] corridorPosition;
     protected SubDungeon rootSubDungeon;
-    protected ArrayList subDungeonList;
+    protected List<SubDungeon> subDungeonList;
     private Transform pos;
     private string seed;
     
@@ -96,8 +96,12 @@ public class MapManager : MonoBehaviour
             Vector2 toDeployOn;
             toDeployOn.x = dungeon.room.x + Random.Range(0.0f, dungeon.room.width);
             toDeployOn.y = dungeon.room.y + Random.Range(0.0f, dungeon.room.height);
-            GameObject instance = Instantiate(obj);
-            instance.transform.SetParent(transform);
+            if (true)
+            {
+                GameObject instance = Instantiate(obj);
+                instance.transform.SetParent(transform);
+                deployed = true;
+            }
 
             ++trial;
             if (trial > 100)
@@ -146,7 +150,7 @@ public class MapManager : MonoBehaviour
                 {
                     GameObject instance = Instantiate(corridorTile, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
                     instance.transform.SetParent(transform);
-                    boardPositionsNonchange[i, j] = instance;
+                    corridorPosition[i, j] = instance;
                 }
             }
         }
@@ -163,11 +167,11 @@ public class MapManager : MonoBehaviour
         {
             for (int j = (int)subDungeon.rect.y; j < subDungeon.rect.yMax; j++)
             {
-                if (boardPositionsFloor[i, j] == null && boardPositionsNonchange[i, j] == null)
+                if (boardPositionsFloor[i, j] == null && corridorPosition[i, j] == null)
                 {
                     GameObject instance = Instantiate(boundary, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
                     instance.transform.SetParent(transform);
-                    boardPositionsNonchange[i, j] = instance;
+                    corridorPosition[i, j] = instance;
                 }
             }
         }
@@ -180,7 +184,7 @@ public class MapManager : MonoBehaviour
         rootSubDungeon.CreateRoom();
 
         boardPositionsFloor = new GameObject[mapHeight, mapWidth];
-        boardPositionsNonchange = new GameObject[mapHeight, mapWidth];
+        corridorPosition = new GameObject[mapHeight, mapWidth];
         DrawCorridors(rootSubDungeon);
         DrawRooms(rootSubDungeon);
         DrawBoundarys(rootSubDungeon);
@@ -188,7 +192,7 @@ public class MapManager : MonoBehaviour
     }
     public void StoreMapsIntosubDungeonList()
     {
-        subDungeonList = new ArrayList();
+        subDungeonList = new List<SubDungeon>();
         SubDungeon nextinsert = rootSubDungeon.RandomPopDungeon();
         while (nextinsert != null)
         {
@@ -209,9 +213,9 @@ public class MapManager : MonoBehaviour
 
     void BoardSetup(Rect rect)
     {
-        map = new int[mapHeight, mapWidth];
-        ArrayList listX = new ArrayList();
-        ArrayList listY = new ArrayList();
+        // map = new int[mapHeight, mapWidth];
+        // ArrayList listX = new ArrayList();
+        // ArrayList listY = new ArrayList();
 
         // RandomFillMap(rect);
         // for (int i = 0; i < smoothness; ++i)
@@ -229,7 +233,7 @@ public class MapManager : MonoBehaviour
             {
                 if (map[x, y] == 1)
                 {
-                    if (boardPositionsNonchange[x, y] == null)
+                    if (corridorPosition[x, y] == null)
                     {
                         GameObject toInstantiate = wall;
                         toInstantiate.layer = LayerMask.NameToLayer("Wall");
@@ -262,13 +266,14 @@ public class MapManager : MonoBehaviour
         {
             for (int y = (int)rect.y; y < rect.yMax; ++y)
             {
+                GameObject toInstantiate = null;
                 if (x == rect.x || x == rect.xMax - 1 || y == rect.y || y == rect.yMax - 1)
                 {
-                    map[x, y] = 1;
+                    toInstantiate = wall;
                 }
                 else
                 {
-                    map[x, y] = (pseudoRandom.Next(0, 100) < randomFillPercent) ? 1 : 0;
+                    toInstantiate = (pseudoRandom.Next(0, 100) < randomFillPercent) ? wall : null;
                 }
             }
         }
