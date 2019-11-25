@@ -15,7 +15,9 @@ public class MapManager : MonoBehaviour
     public int mapHeight, mapWidth;
     public int minRoomSize, maxRoomSize;
     public GameObject corridorTile;
+    private GameObject[,] floorPosition;
     private GameObject[,] boardPositionsFloor;
+    private GameObject[,] tunnelPosition;
     private GameObject[,] corridorPosition;
     private GameObject[,] wallPosition;
     private GameObject[,] boundaryPosition;
@@ -47,7 +49,7 @@ public class MapManager : MonoBehaviour
             }
         }
     }
-    public void DrawRooms(SubDungeon subDungeon)
+    public void DrawRoomsRecursive(SubDungeon subDungeon)
     {
         if (subDungeon == null)
         {
@@ -67,8 +69,8 @@ public class MapManager : MonoBehaviour
         }
         else
         {
-            DrawRooms(subDungeon.left);
-            DrawRooms(subDungeon.right);
+            DrawRoomsRecursive(subDungeon.left);
+            DrawRoomsRecursive(subDungeon.right);
         }
     }
     public void DeployItems()
@@ -95,9 +97,9 @@ public class MapManager : MonoBehaviour
         int trial = 0;
         while (!deployed)
         {
-            Vector2 toDeployOn;
-            toDeployOn.x = dungeon.room.x + Random.Range(0.0f, dungeon.room.width);
-            toDeployOn.y = dungeon.room.y + Random.Range(0.0f, dungeon.room.height);
+            int x = (int)(dungeon.room.x + Random.Range(0.0f, dungeon.room.width));
+            int y = (int)(dungeon.room.y + Random.Range(0.0f, dungeon.room.height));
+            Vector2 toDeployOn = new Vector2(x, y);
             if (true)
             {
                 GameObject instance = Instantiate(obj);
@@ -114,7 +116,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void FillRooms(SubDungeon subDungeon)
+    public void FillRoomsRecursive(SubDungeon subDungeon)
     {
         // TODO :: 서브던전이 없는 상황은 언제 일어나게 되는거죠? 아무튼 예외처리
         if (subDungeon == null)
@@ -129,8 +131,8 @@ public class MapManager : MonoBehaviour
         // 자신이 복도일 경우 재귀 호출
         else
         {
-            FillRooms(subDungeon.left);
-            FillRooms(subDungeon.right);
+            FillRoomsRecursive(subDungeon.left);
+            FillRoomsRecursive(subDungeon.right);
         }
     }
 
@@ -150,17 +152,17 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
-    } 
+    }
 
-    void DrawCorridors(SubDungeon subDungeon)
+    void DrawCorridorsRecursive(SubDungeon subDungeon)
     {
         if (subDungeon == null)
         {
             return;
         }
 
-        DrawCorridors(subDungeon.left);
-        DrawCorridors(subDungeon.right);
+        DrawCorridorsRecursive(subDungeon.left);
+        DrawCorridorsRecursive(subDungeon.right);
 
         foreach (Rect corridor in subDungeon.corridors)
         {
@@ -178,16 +180,25 @@ public class MapManager : MonoBehaviour
 
     void DrawBoundarys(SubDungeon subDungeon)
     {
+        // ??
         if (subDungeon == null)
         {
+            Debug.LogError("Wrong method call");
             return;
         }
 
+        // 바운더리는 room 내부에 설치하지 않습니다.
+        if (subDungeon.IAmLeaf())
+        {
+            return;
+        }
+        
+        // 터널과 이미 설치된 곳을 제외한 모든 rect의 경계에 예외없이 바운더리를 설치합니다.
         for (int i = (int)subDungeon.rect.x; i < subDungeon.rect.xMax; i++)
         {
             for (int j = (int)subDungeon.rect.y; j < subDungeon.rect.yMax; j++)
             {
-                if (boardPositionsFloor[i, j] == null && corridorPosition[i, j] == null)
+                if (boundaryPosition[i, j] == null && tunnelPosition[i, j] == null)
                 {
                     GameObject instance = Instantiate(boundary, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
                     instance.transform.SetParent(transform);
@@ -197,10 +208,23 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void DrawMap()
+    public void SetTunnel(SubDungeon subDungeon)
     {
-
+        foreach (Rect tunnel in subDungeon.tunnels)
+        {
+            for (int y = tunnel.y; y < tunnel.yMax; ++y)
+            {
+                for (int x = tunnel.x; x < tunnel.xMax; ++x)
+                {
+                    GameObject instance = Instantiate(floor);
+                    instance.transform.SetParent(transform);
+                    tunnelPosition[x, y] = instance;
+                    floorPosition[x, y]  = instance;
+                }
+            }
+        }
     }
+
     public void StoreMapsIntosubDungeonList()
     {
         subDungeonList = new List<SubDungeon>();
@@ -216,7 +240,9 @@ public class MapManager : MonoBehaviour
     private void Start()
     {
         // 각종 맵 오브젝트를 정수좌표계에 연동해서 넣을 배열을 초기화합니다.
+        floorPosition               = new GameObject[mapHeight, mapWidth];
         boardPositionsFloor         = new GameObject[mapHeight, mapWidth];
+        tunnelPosition              = new GameObject[mapHeight, mapWidth];
         corridorPosition            = new GameObject[mapHeight, mapWidth];
         wallPosition                = new GameObject[mapHeight, mapWidth];
         boundaryPosition            = new GameObject[mapHeight, mapWidth];
@@ -231,10 +257,10 @@ public class MapManager : MonoBehaviour
         rootSubDungeon.CreateRoomRecursive();
 
         // 
-        DrawCorridors(rootSubDungeon);
-        DrawRooms(rootSubDungeon);
         DrawBoundarys(rootSubDungeon);
-        FillRooms(rootSubDungeon);
+        DrawCorridorsRecursive(rootSubDungeon);
+        DrawRoomsRecursive(rootSubDungeon);
+        FillRoomsRecursive(rootSubDungeon);
         StoreMapsIntosubDungeonList();
     }
 
