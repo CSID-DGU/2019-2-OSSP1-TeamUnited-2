@@ -18,8 +18,9 @@ public class SubDungeon
 
         // 이하 서브던전이 room이 아닐 때 사용되는 변수
         public Rect partition = new Rect (-1, -1, 0, 0); 
-        public bool splitH = false;
-        public bool splitV = false;
+        public enum Alignment { none = 0, vertical, horizontal };
+        public Alignment partitionAlignment = Alignment.none;
+        public List<Rect> tunnels = new List<Rect>();
         
         // 이하 디버그 변수
         public int debugId;
@@ -51,6 +52,8 @@ public class SubDungeon
             // i.e. if too wide split vertically, or too long horizontally,
             // or if nearly square choose vertical or horizontal at random
             float minSplitRate = 0.4f;
+            bool splitH = false;
+            bool splitV = false;
 
             // 가로로 길쭉한 맵은 세로로 자릅니다.
             if (rect.width / rect.height >= 1.05)
@@ -92,6 +95,7 @@ public class SubDungeon
 
                 // 자기 자신에게는 가로로 긴 파티션 할당
                 partition = new Rect(rect.x, split, rect.width, 0);
+                partitionAlignment = Alignment.horizontal;
             }
             // 세로로 자르려는 경우
             else if (splitV)
@@ -110,6 +114,7 @@ public class SubDungeon
                 
                 // 자기 자신에게는 세로로 긴 파티션 할당
                 partition = new Rect(split, rect.y, 0, rect.height);
+                partitionAlignment = Alignment.vertical;
             }
             // 그 외의 경우가 있을 수 있을까요?
             else
@@ -133,6 +138,7 @@ public class SubDungeon
             // 서브던전이 room이 아닌 경우입니다.
             if (!IAmLeaf())
             {
+                CreateTunnel();
                 // CreateCorridorBetween(left, right);
             }
             // 서브던전이 room인 경우입니다.
@@ -152,13 +158,35 @@ public class SubDungeon
             }
         }
 
-        public void CreateTunnel(int turnnelCount)
+        public void CreateTunnel()
         {
             Rect lroom = left.GetRoom();
             Rect rroom = right.GetRoom();
-            int tunnelWidth = 2;
+            int tunnelWidth = 3;
 
+            // 터널 깊이는 양쪽 방에서 추출된 랜덤 방의 평균 변 길이의 절반입니다.
+            int tunnelDepth = (int)((lroom.width + lroom.height + rroom.width + rroom.height) / 4);
+            tunnelDepth = (int)(tunnelDepth * 0.5);
 
+            // 파티션의 모양에 따라 터널을 생성합니다.
+            if(partitionAlignment == Alignment.horizontal)
+            {
+                float tunnelStartingPoint = Random.Range(partition.x, partition.x + partition.width);
+                Rect tunnel = new Rect(tunnelStartingPoint, partition.y - tunnelDepth, tunnelWidth, tunnelDepth * 2);
+                tunnels.Add(tunnel);
+                Debug.Log("tunnelCreated");
+            }
+            else if (partitionAlignment == Alignment.vertical)
+            {
+                float tunnelStartingPoint = Random.Range(partition.y, partition.y + partition.height);
+                Rect tunnel = new Rect(partition.x - tunnelDepth, tunnelStartingPoint, tunnelDepth * 2, tunnelWidth);
+                tunnels.Add(tunnel);
+                Debug.Log("tunnelCreated");
+            }
+            else
+            {
+                Debug.LogError("Try to refer uncreated partition");
+            }         
         }
 
         public void CreateCorridorBetween(SubDungeon left, SubDungeon right)

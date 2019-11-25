@@ -134,30 +134,19 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void FillRoom(rect room)
+    public void FillRoom(Rect room)
     {
         for (int y = (int)room.y; y < room.yMax; ++y)
         {
             for (int x = (int)room.x; x < room.xMax; ++x)
             {
-                if (map[x, y] == 1)
+                if (corridorPosition[x, y] == null)
                 {
-                    if (corridorPosition[x, y] == null)
-                    {
-                        GameObject toInstantiate = wall;
-                        toInstantiate.layer = LayerMask.NameToLayer("Wall");
-                        GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
-                        instance.transform.SetParent(transform);
-                        wallPosition[x, y] = instance;
-                    }
-                }
-                else if (map[x, y] == 0) // 맵이 0이고
-                {
-                    if (NoWallSurround(x, y, rect)) // 주변에 겹칠만한게 없을때.
-                    {
-                        listX.Add(x);
-                        listY.Add(y);
-                    }
+                    GameObject toInstantiate = wall;
+                    toInstantiate.layer = LayerMask.NameToLayer("Wall");
+                    GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+                    instance.transform.SetParent(transform);
+                    wallPosition[x, y] = instance;
                 }
             }
         }
