@@ -94,7 +94,7 @@ public class SubDungeon
                 right = new SubDungeon(new Rect(rect.x, rect.y + split, rect.width, rect.height - split));
 
                 // 자기 자신에게는 가로로 긴 파티션 할당
-                partition = new Rect(rect.x, split, rect.width, 0);
+                partition = new Rect(rect.x, rect.y + split, rect.width, 0);
                 partitionAlignment = Alignment.horizontal;
             }
             // 세로로 자르려는 경우
@@ -113,7 +113,7 @@ public class SubDungeon
                 right = new SubDungeon(new Rect(rect.x + split, rect.y, rect.width - split, rect.height));
                 
                 // 자기 자신에게는 세로로 긴 파티션 할당
-                partition = new Rect(split, rect.y, 0, rect.height);
+                partition = new Rect(rect.x + split, rect.y, 0, rect.height);
                 partitionAlignment = Alignment.vertical;
             }
             // 그 외의 경우가 있을 수 있을까요?
@@ -121,6 +121,7 @@ public class SubDungeon
             {
                 Debug.LogError("Room spliting error");
             }
+            Debug.Log(partition);
 
             return true;
         }
@@ -145,16 +146,15 @@ public class SubDungeon
             if (IAmLeaf())
             {
                 // room의 크기를 결정해줍니다.
-                int roomWidth = (int)Random.Range(rect.width * 0.75f, rect.width - 2);
-                int roomHeight = (int)Random.Range(rect.height * 0.75f, rect.height - 2);
+                int roomWidth = (int)Random.Range(rect.width * 0.5f, rect.width * 0.75f);
+                int roomHeight = (int)Random.Range(rect.height * 0.5f, rect.height * 0.75f);
 
                 // room 은 rect 내부의 들어갈 수 있는 랜덤한 위치 아무데나 들어갑니다.
-                int roomX = (int)Random.Range(1, rect.width - roomWidth - 1);
-                int roomY = (int)Random.Range(1, rect.height - roomHeight - 1);
+                int roomX = (int)Random.Range(3, rect.width - roomWidth - 3);
+                int roomY = (int)Random.Range(3, rect.height - roomHeight - 3);
 
                 // room position will be absolute in the board, not relative to the sub-dungeon
                 room = new Rect(rect.x + roomX, rect.y + roomY, roomWidth, roomHeight);
-                Debug.Log("Created room " + room + " in sub-dungeon " + debugId + " " + rect);
             }
         }
 
@@ -162,7 +162,7 @@ public class SubDungeon
         {
             Rect lroom = left.GetRoom();
             Rect rroom = right.GetRoom();
-            int tunnelWidth = 3;
+            int tunnelWidth = 1;
 
             // 터널 깊이는 양쪽 방에서 추출된 랜덤 방의 평균 변 길이의 절반입니다.
             int tunnelDepth = (int)((lroom.width + lroom.height + rroom.width + rroom.height) / 4);
@@ -171,17 +171,15 @@ public class SubDungeon
             // 파티션의 모양에 따라 터널을 생성합니다.
             if(partitionAlignment == Alignment.horizontal)
             {
-                float tunnelStartingPoint = Random.Range(partition.x, partition.x + partition.width);
+                float tunnelStartingPoint = Random.Range(partition.x + partition.width * 0.25f, partition.x + partition.width * 0.75f);
                 Rect tunnel = new Rect(tunnelStartingPoint, partition.y - tunnelDepth, tunnelWidth, tunnelDepth * 2);
                 tunnels.Add(tunnel);
-                Debug.Log("tunnelCreated");
             }
             else if (partitionAlignment == Alignment.vertical)
             {
-                float tunnelStartingPoint = Random.Range(partition.y, partition.y + partition.height);
+                float tunnelStartingPoint = Random.Range(partition.y + partition.height * 0.25f, partition.y + partition.height * 0.75f);
                 Rect tunnel = new Rect(partition.x - tunnelDepth, tunnelStartingPoint, tunnelDepth * 2, tunnelWidth);
                 tunnels.Add(tunnel);
-                Debug.Log("tunnelCreated");
             }
             else
             {
