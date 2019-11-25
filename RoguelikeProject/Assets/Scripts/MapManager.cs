@@ -235,9 +235,11 @@ public class MapManager : MonoBehaviour
         // 루트 서브던전은 맵 전체크기로 생성합니다.        
         rootSubDungeon = new SubDungeon(new Rect(0, 0, mapHeight, mapWidth));
 
-        // 전체 맵을 재귀호출하여 적당한 구획으로 나눠줍니다.
+        // 전체 맵을 재귀호출하여 적당한 구획(변수명 rect)으로 나눠줍니다.
         CreateBSP(rootSubDungeon);
-        rootSubDungeon.CreateRoom();
+
+        // 재귀호출을 통해 서브던전의 변수 room과 corridor를 정의해줍니다.
+        rootSubDungeon.CreateRoomRecursive();
 
         DrawCorridors(rootSubDungeon);
         DrawRooms(rootSubDungeon);

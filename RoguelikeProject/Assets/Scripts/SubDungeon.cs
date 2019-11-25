@@ -109,24 +109,29 @@ public class SubDungeon
             return true;
         }
 
-        public void CreateRoom()
+        public void CreateRoomRecursive()
         {
             if (left != null)
             {
-                left.CreateRoom();
+                left.CreateRoomRecursive();
             }
             if (right != null)
             {
-                right.CreateRoom();
+                right.CreateRoomRecursive();
             }
+            // 서브던전이 corridor인 경우입니다.
             if (left != null && right != null)
             {
                 CreateCorridorBetween(left, right);
             }
+            // 서브던전이 room인 경우입니다.
             if (IAmLeaf())
             {
+                // room의 크기를 결정해줍니다.
                 int roomWidth = (int)Random.Range(rect.width * 0.75f, rect.width - 2);
                 int roomHeight = (int)Random.Range(rect.height * 0.75f, rect.height - 2);
+
+                // room 은 rect 내부의 들어갈 수 있는 랜덤한 위치 아무데나 들어갑니다.
                 int roomX = (int)Random.Range(1, rect.width - roomWidth - 1);
                 int roomY = (int)Random.Range(1, rect.height - roomHeight - 1);
 
