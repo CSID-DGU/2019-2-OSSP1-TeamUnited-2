@@ -325,7 +325,7 @@ public class GameManager : MonoBehaviour
                 if (lit[x, y])
                     tex.SetPixel(x, y, colorFloor);
                 else
-                    tex.SetPixel(x, y, new Color(0f, 0f, 0f, 0.5f));
+                    tex.SetPixel(x, y, new Color(0f, 0f, 0f, 1f));
             }
         }
         tex.Apply(false);
