@@ -241,6 +241,7 @@ public class MapManager : MonoBehaviour
         // 재귀호출을 통해 서브던전의 변수 room과 corridor를 정의해줍니다.
         rootSubDungeon.CreateRoomRecursive();
 
+        // 
         DrawCorridors(rootSubDungeon);
         DrawRooms(rootSubDungeon);
         DrawBoundarys(rootSubDungeon);
@@ -299,7 +300,7 @@ public class MapManager : MonoBehaviour
         {
             for (int y = (int)rect.y; y < rect.yMax; ++y)
             {
-                int neighbourWallTiles = GetSurroundingWallCount(x, y, rect);
+                int neighbourWallTiles = GetSurroundingWallCount(x, y);
 
                 if (neighbourWallTiles > 4)
                     map[x, y] = 1;
@@ -318,7 +319,7 @@ public class MapManager : MonoBehaviour
         {
             for (int y = (int)rect.y; y < rect.yMax; ++y)
             {
-                int neighbourWallTiles = GetSurroundingWallCount(x, y, rect);
+                int neighbourWallTiles = GetSurroundingWallCount(x, y);
 
                 if (neighbourWallTiles > 4)
                     nextMap[x, y] = 1;
@@ -329,26 +330,17 @@ public class MapManager : MonoBehaviour
         map = nextMap;
     }
 
-    int GetSurroundingWallCount(int gridX, int gridY, Rect rect)
+    int GetSurroundingWallCount(int gridX, int gridY)
     {
         int wallCount = 0;
         for (int neighbourX = gridX - 1; neighbourX <= gridX + 1; neighbourX++)
         {
             for (int neighbourY = gridY - 1; neighbourY <= gridY + 1; neighbourY++)
             {
-                if ()
-                
-
-                if (neighbourX >= rect.x && neighbourX < rect.xMax && neighbourY >= rect.y && neighbourY < rect.yMax)
+                // 우선 wall과 boundary만 고려합니다
+                if (wallPosition[neighbourX, neighbourY] != null || boundaryPosition[neighbourX, neighbourY] != null)
                 {
-                    if (neighbourX != gridX || neighbourY != gridY)
-                    {
-                        wallCount += map[neighbourX, neighbourY];
-                    }
-                }
-                else
-                {
-                    wallCount++;
+                    ++wallCount;
                 }
             }
         }

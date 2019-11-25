@@ -4,16 +4,27 @@ using UnityEngine;
 
 public class SubDungeon
     {
+        // 하위 서브던전
         public SubDungeon left, right;
-        public Rect rect;
-        public Rect room = new Rect(-1, -1, 0, 0); // i.e null
-        public int debugId;
-        public List<Rect> corridors = new List<Rect>();
-        protected bool savedToList = false;
 
+        // 서브던전의 실체를 나타내는 전체 구획
+        public Rect rect;
+
+        // 이하 서브던전이 room일때 사용되는 변수
+        public Rect room = new Rect(-1, -1, 0, 0); // i.e null
+        public List<Rect> corridors = new List<Rect>();
+        public List<GameObject> monsters    = new List<GameObject>();
+        public List<GameObject> items       = new List<GameObject>();
+
+        // 이하 서브던전이 room이 아닐 때 사용되는 변수
+        public Rect partition = new Rect (-1, -1, 0, 0); 
+        public bool splitH = false;
+        public bool splitV = false;
+        
+        // 이하 디버그 변수
+        public int debugId;
         private static int debugCounter = 0;
-        public ArrayList monsters;
-        public ArrayList items;
+        protected bool savedToList = false;
         protected RoomType roomType;
 
         public SubDungeon(Rect mrect)
@@ -39,9 +50,7 @@ public class SubDungeon
             // choose a vertical or horizontal split depending on the proportions
             // i.e. if too wide split vertically, or too long horizontally,
             // or if nearly square choose vertical or horizontal at random
-            bool splitH = false;
-            bool splitV = false;
-            float minSplitRate = 0.25f;
+            float minSplitRate = 0.4f;
 
             // 가로로 길쭉한 맵은 세로로 자릅니다.
             if (rect.width / rect.height >= 1.05)
@@ -60,11 +69,11 @@ public class SubDungeon
                 splitV = true;
             }
 
-            if (Mathf.Min(rect.height, rect.width) / 2 < minRoomSize)
-            {
-                Debug.Log("Sub-dungeon " + debugId + " will be a leaf");
-                return false;
-            }
+            // if (Mathf.Min(rect.height, rect.width) / 2 < minRoomSize)
+            // {
+            //     Debug.Log("Sub-dungeon " + debugId + " will be a leaf");
+            //     return false;
+            // }
 
             // 가로로 자르려는 경우
             if (splitH)
@@ -75,13 +84,14 @@ public class SubDungeon
                     
                 // 방은 최소크기 혹은 최소비율 이상으로 잘려야 합니다.
                 minRoomSize = (int)Mathf.Max(minRoomSize, rect.height * minSplitRate);
-
-                // 양쪽 구획이 최소크기 이상이 되도록 보정합니다.
                 int split = Random.Range(minRoomSize, (int)(rect.height - minRoomSize));
 
-                // 가로로 잘려진 두개의 구획 생성
+                // 가로로 잘려진 두개의 구획 생성 & 하위 노드에 편입 
                 left = new SubDungeon(new Rect(rect.x, rect.y, rect.width, split));
                 right = new SubDungeon(new Rect(rect.x, rect.y + split, rect.width, rect.height - split));
+
+                // 자기 자신에게는 가로로 긴 파티션 할당
+                partition = new Rect(rect.x, split, rect.width, 0);
             }
             // 세로로 자르려는 경우
             else if (splitV)
@@ -92,13 +102,14 @@ public class SubDungeon
 
                 // 방은 최소크기 혹은 최소비율 이상으로 잘려야 합니다.
                 minRoomSize = (int)Mathf.Max(minRoomSize, rect.width * minSplitRate);
-
-                // 양쪽 구획이 최소크기 이상이 되도록 보정합니다.
                 int split = Random.Range(minRoomSize, (int)(rect.width - minRoomSize));
 
-                // 세로로 잘려진 두개의 구획 생성
+                // 세로로 잘려진 두개의 구획 생성 & 하위 노드에 편입
                 left = new SubDungeon(new Rect(rect.x, rect.y, split, rect.height));
                 right = new SubDungeon(new Rect(rect.x + split, rect.y, rect.width - split, rect.height));
+                
+                // 자기 자신에게는 세로로 긴 파티션 할당
+                partition = new Rect(split, rect.y, 0, rect.height);
             }
             // 그 외의 경우가 있을 수 있을까요?
             else
@@ -119,10 +130,10 @@ public class SubDungeon
             {
                 right.CreateRoomRecursive();
             }
-            // 서브던전이 corridor인 경우입니다.
-            if (left != null && right != null)
+            // 서브던전이 room이 아닌 경우입니다.
+            if (!IAmLeaf())
             {
-                CreateCorridorBetween(left, right);
+                // CreateCorridorBetween(left, right);
             }
             // 서브던전이 room인 경우입니다.
             if (IAmLeaf())
@@ -141,6 +152,14 @@ public class SubDungeon
             }
         }
 
+        public void CreateTunnel(int turnnelCount)
+        {
+            Rect lroom = left.GetRoom();
+            Rect rroom = right.GetRoom();
+            int tunnelWidth = 2;
+
+
+        }
 
         public void CreateCorridorBetween(SubDungeon left, SubDungeon right)
         {
