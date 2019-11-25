@@ -30,7 +30,6 @@ public class MapManager : MonoBehaviour
         public int debugId;
         public List<Rect> corridors = new List<Rect>();
         protected bool savedToList = false;
-        public Rect boundaryLine;
 
         private static int debugCounter = 0;
         public ArrayList monsters;
@@ -93,7 +92,7 @@ public class MapManager : MonoBehaviour
                 // 잘랐을때 최소크기 이하면 자르지 않습니다.
                 if (rect.height <= minRoomSize * 2)
                     return false;
-
+                    
                 // 방은 최소크기 혹은 최소비율 이상으로 잘려야 합니다.
                 minRoomSize = (int)Mathf.Max(minRoomSize, rect.height * minSplitRate);
 
@@ -103,8 +102,6 @@ public class MapManager : MonoBehaviour
                 // 가로로 잘려진 두개의 구획 생성
                 left = new SubDungeon(new Rect(rect.x, rect.y, rect.width, split));
                 right = new SubDungeon(new Rect(rect.x, rect.y + split, rect.width, rect.height - split));
-                left.boundaryLine = new Rect(rect.x, rect.y + split, rect.width, 1);
-                right.boundaryLine = new Rect(rect.x, rect.y + split, rect.width, 1);
             }
             // 세로로 자르려는 경우
             else if (splitV)
@@ -122,8 +119,6 @@ public class MapManager : MonoBehaviour
                 // 세로로 잘려진 두개의 구획 생성
                 left = new SubDungeon(new Rect(rect.x, rect.y, split, rect.height));
                 right = new SubDungeon(new Rect(rect.x + split, rect.y, rect.width - split, rect.height));
-                left.boundaryLine = new Rect(rect.x + split, rect.y, 1, rect.height);
-                right.boundaryLine = new Rect(rect.x + split, rect.y, 1, rect.height);
             }
             // 그 외의 경우가 있을 수 있을까요?
             else
@@ -167,7 +162,7 @@ public class MapManager : MonoBehaviour
             Rect lroom = left.GetRoom();
             Rect rroom = right.GetRoom();
             //todo: make corridorWidth changeable at unity inspector
-            int corridorWidth = 1;
+            int corridorWidth = 2;
 
             Debug.Log("Creating corridor(s) between " + left.debugId + "(" + lroom + ") and " + right.debugId + " (" + rroom + ")");
 
@@ -191,58 +186,37 @@ public class MapManager : MonoBehaviour
             // if the points are not aligned horizontally
             if (w != 0)
             {
-                //boundaryLine이 가로로 있는 경우
-                if (left.boundaryLine.height == 1)
+                // choose at random to go horizontal then vertical or the opposite
+                if (Random.Range(0, 1) > 2)
                 {
-                    //lpoint가 rpoint 보다 낮은 경우
+                    // add a corridor to the right
+                    corridors.Add(new Rect(lpoint.x, lpoint.y, Mathf.Abs(w) + 1, corridorWidth));
+
+                    // if left point is below right point go up
+                    // otherwise go down
                     if (h < 0)
                     {
-                        //draw corridors from lpoint to boundaryLine
-                        corridors.Add(new Rect(lpoint.x, lpoint.y, corridorWidth, Mathf.Abs((int)(lpoint.y - left.boundaryLine.y))));
-                        //draw corridors fallowing boundaryLine
-                        corridors.Add(new Rect(lpoint.x, left.boundaryLine.y, Mathf.Abs(w) + 1, corridorWidth));
-                        //draw corridors form boundaryLine to rpoint
-                        corridors.Add(new Rect(rpoint.x, left.boundaryLine.y, corridorWidth, Mathf.Abs((int)(rpoint.y - left.boundaryLine.y))));
+                        corridors.Add(new Rect(rpoint.x, lpoint.y, corridorWidth, Mathf.Abs(h)));
                     }
-                    //lpoint가 rpoint 보다 높은 경우
                     else
                     {
-                        //draw corridors from lpoint to boundaryLine
-                        corridors.Add(new Rect(lpoint.x, left.boundaryLine.y, corridorWidth, Mathf.Abs((int)(lpoint.y - left.boundaryLine.y))));
-                        //draw corridors fallowing boundaryLine
-                        corridors.Add(new Rect(lpoint.x, left.boundaryLine.y, Mathf.Abs(w) + 1, corridorWidth));
-                        //draw corridors form boundaryLine to rpoint
-                        corridors.Add(new Rect(rpoint.x, rpoint.y, corridorWidth, Mathf.Abs((int)(rpoint.y - left.boundaryLine.y))));
+                        corridors.Add(new Rect(rpoint.x, lpoint.y, corridorWidth, -Mathf.Abs(h)));
                     }
                 }
-                //bundaryLine이 세로로 있는 경우
-                else if (left.boundaryLine.width == 1)
-                {
-                    //lpoint 가 rpoint 보다 낮은 경우
-                    if (h < 0)
-                    {
-                        //draw corridors from lpoint to boundaryLine
-                        corridors.Add(new Rect(lpoint.x, lpoint.y, Mathf.Abs((int)(lpoint.x - left.boundaryLine.x)), corridorWidth));
-                        //draw corridors fallowing boundaryLine
-                        corridors.Add(new Rect(left.boundaryLine.x, lpoint.y, corridorWidth, Mathf.Abs(h)));
-                        //draw corridors form boundaryLine to rpoint
-                        corridors.Add(new Rect(left.boundaryLine.x, rpoint.y, Mathf.Abs((int)(left.boundaryLine.x - rpoint.x)), corridorWidth));
-                    }
-                    //lpoint 가 rpoint 보다 높은 경우
-                    else
-                    {
-                        //draw corridors from lpoint to boundaryLine
-                        corridors.Add(new Rect(lpoint.x, lpoint.y, Mathf.Abs((int)(lpoint.x - left.boundaryLine.x)), corridorWidth));
-                        //draw corridors fallowing boundaryLine
-                        corridors.Add(new Rect(left.boundaryLine.x, rpoint.y, corridorWidth, Mathf.Abs(h) + 1));
-                        //draw corridors form boundaryLine to rpoint
-                        corridors.Add(new Rect(left.boundaryLine.x, rpoint.y, Mathf.Abs((int)(left.boundaryLine.x - rpoint.x)), corridorWidth));
-                    }
-                }
-                //error
                 else
                 {
-                    Debug.LogError("Create corridor error");
+                    // go up or down
+                    if (h < 0)
+                    {
+                        corridors.Add(new Rect(lpoint.x, lpoint.y, corridorWidth, Mathf.Abs(h)));
+                    }
+                    else
+                    {
+                        corridors.Add(new Rect(lpoint.x, rpoint.y, corridorWidth, Mathf.Abs(h)));
+                    }
+
+                    // then go right
+                    corridors.Add(new Rect(lpoint.x, rpoint.y, Mathf.Abs(w) + 1, corridorWidth));
                 }
             }
             else
@@ -459,26 +433,6 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    //this fuction is for debug
-    void DrawBL(SubDungeon subDungeon)
-    {
-        if (subDungeon == null)
-        {
-            return;
-        }
-
-        DrawBL(subDungeon.left);
-        DrawBL(subDungeon.right);
-        for (int i = (int)subDungeon.boundaryLine.x; i < subDungeon.boundaryLine.xMax; i++)
-        {
-            for (int j = (int)subDungeon.boundaryLine.y; j < subDungeon.boundaryLine.yMax; j++)
-            {
-                GameObject instance = Instantiate(floor, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
-                instance.transform.SetParent(transform);
-            }
-        }
-    }
-
     void DrawBoundarys(SubDungeon subDungeon)
     {
         if (subDungeon == null)
@@ -509,7 +463,6 @@ public class MapManager : MonoBehaviour
         boardPositionsFloor = new GameObject[mapHeight, mapWidth];
         boardPositionsNonchange = new GameObject[mapHeight, mapWidth];
         DrawCorridors(rootSubDungeon);
-        //DrawBL(rootSubDungeon);
         DrawRooms(rootSubDungeon);
         DrawBoundarys(rootSubDungeon);
         FillRooms(rootSubDungeon);
