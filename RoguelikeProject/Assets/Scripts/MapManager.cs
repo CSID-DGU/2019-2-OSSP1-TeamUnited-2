@@ -17,6 +17,8 @@ public class MapManager : MonoBehaviour
     public GameObject corridorTile;
     private GameObject[,] boardPositionsFloor;
     private GameObject[,] corridorPosition;
+    private GameObject[,] wallPosition;
+    private GameObject[,] boundaryPosition;
     protected SubDungeon rootSubDungeon;
     protected List<SubDungeon> subDungeonList;
     private Transform pos;
@@ -122,7 +124,7 @@ public class MapManager : MonoBehaviour
         // 자신이 실제 서브던전 일 경우
         if (subDungeon.IAmLeaf())
         {
-            BoardSetup(subDungeon.room);
+            FillRoom(subDungeon.room);
         }
         // 자신이 복도일 경우 재귀 호출
         else
@@ -131,6 +133,35 @@ public class MapManager : MonoBehaviour
             FillRooms(subDungeon.right);
         }
     }
+
+    public void FillRoom(rect room)
+    {
+        for (int y = (int)room.y; y < room.yMax; ++y)
+        {
+            for (int x = (int)room.x; x < room.xMax; ++x)
+            {
+                if (map[x, y] == 1)
+                {
+                    if (corridorPosition[x, y] == null)
+                    {
+                        GameObject toInstantiate = wall;
+                        toInstantiate.layer = LayerMask.NameToLayer("Wall");
+                        GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+                        instance.transform.SetParent(transform);
+                        wallPosition[x, y] = instance;
+                    }
+                }
+                else if (map[x, y] == 0) // 맵이 0이고
+                {
+                    if (NoWallSurround(x, y, rect)) // 주변에 겹칠만한게 없을때.
+                    {
+                        listX.Add(x);
+                        listY.Add(y);
+                    }
+                }
+            }
+        }
+    } 
 
     void DrawCorridors(SubDungeon subDungeon)
     {
@@ -171,7 +202,7 @@ public class MapManager : MonoBehaviour
                 {
                     GameObject instance = Instantiate(boundary, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
                     instance.transform.SetParent(transform);
-                    corridorPosition[i, j] = instance;
+                    boundaryPosition[i, j] = instance;
                 }
             }
         }
@@ -179,16 +210,7 @@ public class MapManager : MonoBehaviour
 
     public void DrawMap()
     {
-        rootSubDungeon = new SubDungeon(new Rect(0, 0, mapHeight, mapWidth));
-        CreateBSP(rootSubDungeon);
-        rootSubDungeon.CreateRoom();
 
-        boardPositionsFloor = new GameObject[mapHeight, mapWidth];
-        corridorPosition = new GameObject[mapHeight, mapWidth];
-        DrawCorridors(rootSubDungeon);
-        DrawRooms(rootSubDungeon);
-        DrawBoundarys(rootSubDungeon);
-        FillRooms(rootSubDungeon);
     }
     public void StoreMapsIntosubDungeonList()
     {
@@ -204,7 +226,23 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
-        DrawMap();
+        // 각종 맵 오브젝트를 정수좌표계에 연동해서 넣을 배열을 초기화합니다.
+        boardPositionsFloor         = new GameObject[mapHeight, mapWidth];
+        corridorPosition            = new GameObject[mapHeight, mapWidth];
+        wallPosition                = new GameObject[mapHeight, mapWidth];
+        boundaryPosition            = new GameObject[mapHeight, mapWidth];
+
+        // 루트 서브던전은 맵 전체크기로 생성합니다.        
+        rootSubDungeon = new SubDungeon(new Rect(0, 0, mapHeight, mapWidth));
+
+        // 전체 맵을 재귀호출하여 적당한 구획으로 나눠줍니다.
+        CreateBSP(rootSubDungeon);
+        rootSubDungeon.CreateRoom();
+
+        DrawCorridors(rootSubDungeon);
+        DrawRooms(rootSubDungeon);
+        DrawBoundarys(rootSubDungeon);
+        FillRooms(rootSubDungeon);
         StoreMapsIntosubDungeonList();
     }
 
@@ -227,32 +265,7 @@ public class MapManager : MonoBehaviour
         //     SmoothMapPsudo(rect);
         // }
 
-        for (int y = (int)rect.y; y < rect.yMax; ++y)
-        {
-            for (int x = (int)rect.x; x < rect.xMax; ++x)
-            {
-                if (map[x, y] == 1)
-                {
-                    if (corridorPosition[x, y] == null)
-                    {
-                        GameObject toInstantiate = wall;
-                        toInstantiate.layer = LayerMask.NameToLayer("Wall");
-                        GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
-                        //instance.transform.SetParent(boardHolder);
-                        instance.transform.SetParent(transform);
-                        boardPositionsFloor[x, y] = instance;
-                    }
-                }
-                else if (map[x, y] == 0) // 맵이 0이고
-                {
-                    if (NoWallSurround(x, y, rect)) // 주변에 겹칠만한게 없을때.
-                    {
-                        listX.Add(x);
-                        listY.Add(y);
-                    }
-                }
-            }
-        }
+
     }
 
     void RandomFillMap(Rect rect)
@@ -321,6 +334,9 @@ public class MapManager : MonoBehaviour
         {
             for (int neighbourY = gridY - 1; neighbourY <= gridY + 1; neighbourY++)
             {
+                if ()
+                
+
                 if (neighbourX >= rect.x && neighbourX < rect.xMax && neighbourY >= rect.y && neighbourY < rect.yMax)
                 {
                     if (neighbourX != gridX || neighbourY != gridY)
