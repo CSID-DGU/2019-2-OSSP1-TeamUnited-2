@@ -146,8 +146,8 @@ public class SubDungeon
             if (IAmLeaf())
             {
                 // room의 크기를 결정해줍니다.
-                int roomWidth = (int)Random.Range(rect.width * 0.5f, rect.width * 0.75f);
-                int roomHeight = (int)Random.Range(rect.height * 0.5f, rect.height * 0.75f);
+                int roomWidth = (int)Random.Range(rect.width * 0.75f, rect.width * 0.85f);
+                int roomHeight = (int)Random.Range(rect.height * 0.75f, rect.height * 0.85f);
 
                 // room 은 rect 내부의 들어갈 수 있는 랜덤한 위치 아무데나 들어갑니다.
                 int roomX = (int)Random.Range(3, rect.width - roomWidth - 3);
@@ -162,7 +162,7 @@ public class SubDungeon
         {
             Rect lroom = left.GetRoom();
             Rect rroom = right.GetRoom();
-            int tunnelWidth = 1;
+            int tunnelWidth = 2;
 
             // 터널 깊이는 양쪽 방에서 추출된 랜덤 방의 평균 변 길이의 절반입니다.
             int tunnelDepth = (int)((lroom.width + lroom.height + rroom.width + rroom.height) / 4);
@@ -172,13 +172,13 @@ public class SubDungeon
             if(partitionAlignment == Alignment.horizontal)
             {
                 float tunnelStartingPoint = Random.Range(partition.x + partition.width * 0.25f, partition.x + partition.width * 0.75f);
-                Rect tunnel = new Rect(tunnelStartingPoint, partition.y - tunnelDepth, tunnelWidth, tunnelDepth * 2);
+                Rect tunnel = new Rect(tunnelStartingPoint - tunnelWidth, partition.y - tunnelDepth, tunnelWidth, tunnelDepth * 2);
                 tunnels.Add(tunnel);
             }
             else if (partitionAlignment == Alignment.vertical)
             {
                 float tunnelStartingPoint = Random.Range(partition.y + partition.height * 0.25f, partition.y + partition.height * 0.75f);
-                Rect tunnel = new Rect(partition.x - tunnelDepth, tunnelStartingPoint, tunnelDepth * 2, tunnelWidth);
+                Rect tunnel = new Rect(partition.x - tunnelDepth, tunnelStartingPoint - tunnelWidth, tunnelDepth * 2, tunnelWidth);
                 tunnels.Add(tunnel);
             }
             else

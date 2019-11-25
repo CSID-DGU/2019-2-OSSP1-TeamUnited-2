@@ -120,47 +120,6 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void FillRoomsRecursive(SubDungeon subDungeon)
-    {
-        if (subDungeon == null)
-        {
-            return;
-        }
-        // 자신이 실제 서브던전 일 경우
-        if (subDungeon.IAmLeaf())
-        {
-            // 채우기를 위한 임시 맵 배열 생성
-            int[,] map = new int[mapWidth, mapHeight];
-
-
-            FillRoom(subDungeon.rect);
-        }
-        // 자신이 복도일 경우 재귀 호출
-        else
-        {
-            FillRoomsRecursive(subDungeon.left);
-            FillRoomsRecursive(subDungeon.right);
-        }
-    }
-
-    public void FillRoom(Rect room)
-    {
-        for (int y = (int)room.y; y < room.yMax; ++y)
-        {
-            for (int x = (int)room.x; x < room.xMax; ++x)
-            {
-                if (corridorPosition[x, y] == null)
-                {
-                    GameObject toInstantiate = wall;
-                    toInstantiate.layer = LayerMask.NameToLayer("Wall");
-                    GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
-                    instance.transform.SetParent(transform);
-                    wallPosition[x, y] = instance;
-                }
-            }
-        }
-    }
-
     void DrawCorridorsRecursive(SubDungeon subDungeon)
     {
         if (subDungeon == null)
@@ -274,6 +233,74 @@ public class MapManager : MonoBehaviour
         Debug.Log(subDungeonList.Count);
     }
 
+    public void FillRoomsRecursive(SubDungeon subDungeon)
+    {
+        if (subDungeon == null)
+        {
+            return;
+        }
+        // 자신이 실제 서브던전 일 경우
+        if (subDungeon.IAmLeaf())
+        {
+            // 채우기를 위한 임시 맵 배열 생성
+            int[,] map = new int[mapWidth, mapHeight];
+
+            // rect는 전부 채우고 room은 밀도만큼 채웁니다.
+            RandomFillMap(subDungeon.rect, subDungeon.room, map);
+
+            // tunnel부분은 0으로 채워줍니다.
+            for (int y = 0; y < mapHeight; ++y)
+            {
+                for (int x = 0; x < mapWidth; ++x)
+                {
+                    if (tunnelPosition[x, y] != null)
+                    {
+                        // Debug.LogError("set 0 to : " + x + ", " + y);
+                        map[x, y] = 0;
+                    }
+                }
+            }
+            
+            for (int i = 0; i < smoothness; ++i)
+            {
+                SmoothMap(subDungeon.rect, map);
+            }
+            for (int i = 0; i < postsmooth; ++i)
+            {
+                SmoothMapPsudo(subDungeon.rect, map);
+            }
+
+            for (int y = (int)subDungeon.rect.y; y < subDungeon.rect.yMax; ++y)
+            {
+                for (int x = (int)subDungeon.rect.x; x < subDungeon.rect.xMax; ++x)
+                {
+                    if (map[x,y] == 1 && boundaryPosition[x, y] == null)
+                    {
+                        GameObject toInstantiate = wall;
+                        toInstantiate.layer = LayerMask.NameToLayer("Wall");
+                        GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+                        instance.transform.SetParent(transform);
+                        wallPosition[x, y] = instance;
+                    }
+                    // else
+                    // {
+                    //     GameObject toInstantiate = boundary;
+                    //     toInstantiate.layer = LayerMask.NameToLayer("TEMP");
+                    //     GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+                    //     instance.transform.SetParent(transform);
+                    //     wallPosition[x, y] = instance;
+                    // }
+                }
+            }
+        }
+        // 자신이 복도일 경우 재귀 호출
+        else
+        {
+            FillRoomsRecursive(subDungeon.left);
+            FillRoomsRecursive(subDungeon.right);
+        }
+    }
+
     private void Start()
     {
         // 각종 맵 오브젝트를 정수좌표계에 연동해서 넣을 배열을 초기화합니다.
@@ -334,11 +361,11 @@ public class MapManager : MonoBehaviour
         {
             for (int y = (int)rect.y; y < rect.yMax; ++y)
             {
-                int neighbourWallTiles = GetSurroundingWallCount(x, y);
+                int neighbourWallTiles = GetSurroundingWallCount(x, y, map);
 
-                if (neighbourWallTiles > 4)
+                if (neighbourWallTiles > 5)
                     map[x, y] = 1;
-                else if (neighbourWallTiles < 4)
+                else if (neighbourWallTiles < 5)
                     map[x, y] = 0;
             }
         }
@@ -350,7 +377,7 @@ public class MapManager : MonoBehaviour
         {
             for (int y = (int)rect.y; y < rect.yMax; ++y)
             {
-                int neighbourWallTiles = GetSurroundingWallCount(x, y);
+                int neighbourWallTiles = GetSurroundingWallCount(x, y, map);
 
                 if (neighbourWallTiles > 4)
                     nextMap[x, y] = 1;
@@ -361,15 +388,18 @@ public class MapManager : MonoBehaviour
         map = nextMap;
     }
 
-    int GetSurroundingWallCount(int gridX, int gridY)
+    int GetSurroundingWallCount(int gridX, int gridY, int[,] map)
     {
         int wallCount = 0;
         for (int neighbourX = gridX - 1; neighbourX <= gridX + 1; neighbourX++)
         {
             for (int neighbourY = gridY - 1; neighbourY <= gridY + 1; neighbourY++)
             {
-                // 우선 wall과 boundary만 고려합니다
-                if (wallPosition[neighbourX, neighbourY] != null || boundaryPosition[neighbourX, neighbourY] != null)
+                if (neighbourX < 0 || neighbourX >= mapWidth || neighbourY < 0 || neighbourY >= mapHeight)
+                {
+                    ++wallCount;
+                }
+                else if (map[neighbourX, neighbourY] == 1)
                 {
                     ++wallCount;
                 }
