@@ -39,29 +39,30 @@ public class GameManager : MonoBehaviour
     public double density;
     public int smoothness;
     public int postsmooth;
-    [HideInInspector]//map 숨기기
-    public int[,] map;
+    private int[,] map;
     private Transform boardHolder;
 
     private string seed;
 
     void Start()
     {
-        Debug.Log("Game Start");
+        //Debug.Log("Game Start");
         BoardSetup();
-        Debug.Log("Board setup");
+        //Debug.Log("Board setup");
         SpawnedPlayer.SetActive(true);
-        Debug.Log("Player active");
-        
-        enemyNum = SpawnedEnemy.Length + SpawnedRandEnemy.Length; // 길이 설정
-        InitializeGame();
-        Debug.Log("Initialize game");
+        //Debug.Log("Player active");
+
+        enemyNum = SpawnedEnemy.Length + SpawnedRandEnemy.Length; // 길이 설정 다른데서 쓸거임.
+
+        tex = new Texture2D(width, height);
+        plane.GetComponent<Renderer>().material.mainTexture = tex;
+        plane.GetComponent<Renderer>().material.mainTexture.filterMode = FilterMode.Point;
     }
     void BoardSetup()
     {
-        Debug.Log("Board setup start");
+        //Debug.Log("Board setup start");
         boardHolder = new GameObject("Board").transform;
-        Debug.Log("BoardHolder created");
+        //Debug.Log("BoardHolder created");
 
         for (int x = -1; x < width + 1; ++x)
         {
@@ -76,12 +77,12 @@ public class GameManager : MonoBehaviour
                 instance.transform.SetParent(boardHolder);
             }
         }
-        Debug.Log("instantiated");
+        //Debug.Log("instantiated");
 
         map = new int[width, height];
         ArrayList listX = new ArrayList();
         ArrayList listY = new ArrayList();
-        Debug.Log("Map array created");
+        //Debug.Log("Map array created");
 
         RandomFillMap();
         for (int i = 0; i < smoothness; ++i)
@@ -92,18 +93,13 @@ public class GameManager : MonoBehaviour
         {
             SmoothMapPsudo();
         }
-        Debug.Log("Map array processed");
+        //Debug.Log("Map array processed");
 
         for (int y = 0; y < height; ++y)
         {
             for (int x = 0; x < width; ++x)
             {
-                if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
-                {
-                    GameObject instance = Instantiate(boundary, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
-                    instance.transform.SetParent(boardHolder);
-                }
-                else if (map[x, y] == 1)
+                if (map[x, y] == 1)
                 {
                     GameObject toInstantiate = wall;
                     toInstantiate.layer = LayerMask.NameToLayer("Wall");
@@ -120,7 +116,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log("Wall instantiated");
+        //Debug.Log("Wall instantiated");
 
         // 플레이어, 적, 아이템 위치 결정.
         int index = Random.Range(0, listX.Count);
@@ -140,7 +136,7 @@ public class GameManager : MonoBehaviour
             listX.RemoveAt(index);
             listY.RemoveAt(index);
         }
-        Debug.Log("Calculation finished for item&enemy&player deploying");
+        //Debug.Log("Calculation finished for item&enemy&player deploying");
 
         GameObject ItemsParent = new GameObject("Items"); // 아이템들의 부모 설정.
         ItemsParent.layer = LayerMask.NameToLayer("Wall"); // 일단 Wall 로 합니다. 추후 변경가능성.
@@ -261,12 +257,12 @@ public class GameManager : MonoBehaviour
     }
 
 
-
+    int surroundRange = 3;
     bool NoWallSurround(int x, int y) // 목적 : 위치 지정할때 범위에 겹치는것이 없도록 한다. 너무 범위 값이 크면 들어갈 자리가 없어진다.
     {
-        for (int i = x - 5; i <= x + 5; i++)
+        for (int i = x - surroundRange; i <= x + surroundRange; i++)
         {
-            for (int j = y - 5; j <= y + 5; j++)
+            for (int j = y - surroundRange; j <= y + surroundRange; j++)
             {
                 if (i > 0 && i < width && j > 0 && j < height)
                 {
@@ -281,58 +277,63 @@ public class GameManager : MonoBehaviour
         }
         return true; // 다 지나왔다면 패스
     }
-
-    private void InitializeGame()
+    void Update()
     {
-        tex = new Texture2D(width, height);
-        Debug.Log("TEX GENERATE");
-        plane.GetComponent<Renderer>().material.mainTexture = tex;
-        plane.GetComponent<Renderer>().material.mainTexture.filterMode = FilterMode.Point;
+        bool[,] lit = new bool[width, height]; // 크기
+        float radius = 10.0f; // 반지름
+        int layerMask = 1 << 10; // 적은 안보게 함.
+        layerMask = ~layerMask; // 반전시켜서 이것만 걸러내는거
+        Collider2D[] mcols = Physics2D.OverlapCircleAll(SpawnedPlayer.transform.position, radius, layerMask); // 원안에 조사
+        List<Vector2> mcolsVector = new List<Vector2>();
+        foreach (Collider2D co in mcols) // 좌표만 가져옴(int로 캐스팅해서)
+        {
+            mcolsVector.Add(new Vector2((int)co.transform.position.x, (int)co.transform.position.y));
+        }
 
-        playerX = (int)SpawnedPlayer.transform.position.x;
-        playerY = (int)SpawnedPlayer.transform.position.y;
-        RenderToString();
-    }
+        foreach (Vector2 mVec in mcolsVector) // 좌표를 이용해서 시야처리
+        {
+            Vector2 rayDirection = mVec - (Vector2)SpawnedPlayer.transform.position; // 방향
+            rayDirection.Normalize();
+            float distance = Vector2.Distance(SpawnedPlayer.transform.position, mVec); // 거리
+            RaycastHit2D[] cols = Physics2D.RaycastAll(SpawnedPlayer.transform.position, rayDirection, distance, layerMask); // 직선상에 있는것
+            int repeat = 0; bool setRepeat = false; // 벽을 어느정도 보여주기 위함.
+            foreach (RaycastHit2D co in cols)
+            {
+                Collider2D[] colliderCount = Physics2D.OverlapPointAll(co.transform.position); // collider를 타일에 달았기 때문에 Wall 이 있는곳에 2개가 나옴.
+                if (setRepeat) // 한번 벽이 나오면 true 가 되어서 repeat을 증가시킴.
+                {
+                    repeat++;
+                    if (repeat > 2 || colliderCount.Length < 2) // 벽이 2줄이거나 타일이 나와버리면 그만둔다.
+                        break;
+                }
 
-    private void RenderToString()
-    {
-        bool[,] lit = new bool[width, height];
-        int radius = 15;
-        ShadowCaster.ComputeFieldOfViewWithShadowCasting(playerX, playerY, radius, (x1, y1) => map[x1, y1] == 1, (x2, y2) => { lit[x2, y2] = true; });
+                if (co.collider.name == "Wall(Clone)")
+                {
+                    setRepeat = true;
+                }
 
+                if (indexSafe((int)co.transform.position.x, (int)co.transform.position.y)) // 배열에 넣음. point를 쓰지말고 transform position 이 딱 맞는다.
+                    lit[(int)co.transform.position.x, (int)co.transform.position.y] = true;
+            }
+        }
         Color colorFloor = new Color(0f, 0f, 0f, 0f);
 
-        for (int y = height - 1; y >= 0; --y)
+        for (int y = 0; y < height; y++)
         {
-            for (int x = 0; x < width; ++x)
+            for (int x = 0; x < width; x++)
             {
                 if (lit[x, y])
-                {
-                    if (map[x, y] == 1)
-                    {
-                        tex.SetPixel(x, y, colorFloor);
-                    }
-                    else
-                    {
-                        tex.SetPixel(x, y, colorFloor);
-                    }
-                }
+                    tex.SetPixel(x, y, colorFloor);
                 else
-                {
                     tex.SetPixel(x, y, new Color(0f, 0f, 0f, 0.5f));
-                }
             }
         }
         tex.Apply(false);
     }
-
-    void Update()
+    bool indexSafe(int x, int y)
     {
-        if (map[(int)SpawnedPlayer.transform.position.x, (int)SpawnedPlayer.transform.position.y] != 1)
-        {
-            playerX = (int)SpawnedPlayer.transform.position.x;
-            playerY = (int)SpawnedPlayer.transform.position.y;
-            RenderToString();
-        }
+        if (x < 0 || x > width - 1 || y < 0 || y > height - 1)
+            return false;
+        else return true;
     }
 }
