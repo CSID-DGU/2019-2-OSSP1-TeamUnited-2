@@ -255,8 +255,11 @@ public class MapManager : MonoBehaviour
                 {
                     if (tunnelPosition[x, y] != null)
                     {
-                        // Debug.LogError("set 0 to : " + x + ", " + y);
                         map[x, y] = 0;
+                    }
+                    if (boundaryPosition[x, y] != null)
+                    {
+                        map[x, y] = 1;
                     }
                 }
             }
@@ -282,14 +285,6 @@ public class MapManager : MonoBehaviour
                         instance.transform.SetParent(transform);
                         wallPosition[x, y] = instance;
                     }
-                    // else
-                    // {
-                    //     GameObject toInstantiate = boundary;
-                    //     toInstantiate.layer = LayerMask.NameToLayer("TEMP");
-                    //     GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
-                    //     instance.transform.SetParent(transform);
-                    //     wallPosition[x, y] = instance;
-                    // }
                 }
             }
         }
@@ -304,15 +299,15 @@ public class MapManager : MonoBehaviour
     private void Start()
     {
         // 각종 맵 오브젝트를 정수좌표계에 연동해서 넣을 배열을 초기화합니다.
-        floorPosition               = new GameObject[mapHeight, mapWidth];
-        boardPositionsFloor         = new GameObject[mapHeight, mapWidth];
-        tunnelPosition              = new GameObject[mapHeight, mapWidth];
-        corridorPosition            = new GameObject[mapHeight, mapWidth];
-        wallPosition                = new GameObject[mapHeight, mapWidth];
-        boundaryPosition            = new GameObject[mapHeight, mapWidth];
+        boardPositionsFloor         = new GameObject[mapWidth, mapHeight];
+        tunnelPosition              = new GameObject[mapWidth, mapHeight];
+        floorPosition               = new GameObject[mapWidth, mapHeight];
+        corridorPosition            = new GameObject[mapWidth, mapHeight];
+        wallPosition                = new GameObject[mapWidth, mapHeight];
+        boundaryPosition            = new GameObject[mapWidth, mapHeight];
 
         // 루트 서브던전은 맵 전체크기로 생성합니다.        
-        rootSubDungeon = new SubDungeon(new Rect(0, 0, mapHeight, mapWidth));
+        rootSubDungeon = new SubDungeon(new Rect(0, 0, mapWidth, mapHeight));
 
         // 전체 맵을 재귀호출하여 적당한 구획(변수명 rect)으로 나눠줍니다.
         CreateBSP(rootSubDungeon);
