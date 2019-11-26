@@ -10,8 +10,6 @@ public class GameManager : MonoBehaviour
 {
     private GameObject levelImage;
 
-    public int width;
-    public int height;
     public GameObject boundary;
     public GameObject floor;
     public GameObject wall;
@@ -62,15 +60,14 @@ public class GameManager : MonoBehaviour
 
         enemyNum = SpawnedEnemy.Length + SpawnedRandEnemy.Length; // 길이 설정 다른데서 쓸거임.
 
-        tex = new Texture2D(width, height);
-        Debug.Log("zzzzzzzzzzzzz");
+        tex = new Texture2D(boardRows, boardColumns);
         plane.GetComponent<Renderer>().material.mainTexture = tex;
         plane.GetComponent<Renderer>().material.mainTexture.filterMode = FilterMode.Point;
     }
 
     void Update()
     {
-        bool[,] lit = new bool[width, height]; // 크기
+        bool[,] lit = new bool[boardRows, boardColumns]; // 크기
         float radius = 10.0f; // 반지름
         int layerMask = 1 << 10; // 적은 안보게 함.
         layerMask = ~layerMask; // 반전시켜서 이것만 걸러내는거
@@ -98,7 +95,7 @@ public class GameManager : MonoBehaviour
                         break;
                 }
 
-                if (co.collider.name == "Wall(Clone)")
+                if (co.collider.name == "Wall(Clone)" || co.collider.name == "Boundary(Clone)")
                 {
                     setRepeat = true;
                 }
@@ -109,9 +106,9 @@ public class GameManager : MonoBehaviour
         }
         Color colorFloor = new Color(0f, 0f, 0f, 0f);
 
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < boardColumns; y++)
         {
-            for (int x = 0; x < width; x++)
+            for (int x = 0; x < boardRows; x++)
             {
                 if (lit[x, y])
                     tex.SetPixel(x, y, colorFloor);
@@ -123,7 +120,7 @@ public class GameManager : MonoBehaviour
     }
     bool indexSafe(int x, int y)
     {
-        if (x < 0 || x > width - 1 || y < 0 || y > height - 1)
+        if (x < 0 || x > boardRows - 1 || y < 0 || y > boardColumns - 1)
             return false;
         else return true;
     }
