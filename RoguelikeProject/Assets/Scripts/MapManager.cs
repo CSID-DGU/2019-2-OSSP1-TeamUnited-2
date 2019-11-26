@@ -5,7 +5,6 @@ using UnityEngine;
 public class MapManager : MonoBehaviour
 {
     public double density;
-    public int smoothness;
     public int postsmooth;
     public int[,] map;
     private Transform boardHolder;
@@ -263,11 +262,6 @@ public class MapManager : MonoBehaviour
                     }
                 }
             }
-            
-            for (int i = 0; i < smoothness; ++i)
-            {
-                SmoothMap(subDungeon.rect, map);
-            }
             for (int i = 0; i < postsmooth; ++i)
             {
                 SmoothMapPsudo(subDungeon.rect, map);
@@ -295,7 +289,6 @@ public class MapManager : MonoBehaviour
             FillRoomsRecursive(subDungeon.right);
         }
     }
-
     private void Start()
     {
         // 각종 맵 오브젝트를 정수좌표계에 연동해서 넣을 배열을 초기화합니다.
@@ -365,24 +358,6 @@ public class MapManager : MonoBehaviour
             }
         }
     }
-    void SmoothMap(Rect rect, int[,] map)
-    {
-        int[,] nextMap = new int[(int)rect.xMax, (int)rect.yMax];
-        for (int x = (int)rect.x; x < rect.xMax; ++x)
-        {
-            for (int y = (int)rect.y; y < rect.yMax; ++y)
-            {
-                int neighbourWallTiles = GetSurroundingWallCount(x, y, map);
-
-                if (neighbourWallTiles > 4)
-                    nextMap[x, y] = 1;
-                else if (neighbourWallTiles < 4)
-                    nextMap[x, y] = 0;
-            }
-        }
-        map = nextMap;
-    }
-
     int GetSurroundingWallCount(int gridX, int gridY, int[,] map)
     {
         int wallCount = 0;

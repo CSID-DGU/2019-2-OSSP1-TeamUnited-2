@@ -422,33 +422,39 @@ PrefabInstance:
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
       propertyPath: minRoomSize
-      value: 25
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
       propertyPath: maxRoomSize
-      value: 35
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
       propertyPath: mapHeight
-      value: 150
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
       propertyPath: mapWidth
-      value: 150
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
       propertyPath: postsmooth
-      value: 8
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
       propertyPath: smoothness
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
+        type: 3}
+      propertyPath: corridorTile
+      value: 
+      objectReference: {fileID: 2179826274794268848, guid: 505bb711daf3c5f4f9b57bc53bc704be,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: baf532530b84f974aa23c57dc20a8131, type: 3}
 --- !u!1 &899491818 stripped

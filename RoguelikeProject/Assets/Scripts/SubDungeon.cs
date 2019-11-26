@@ -150,8 +150,10 @@ public class SubDungeon
                 int roomHeight = (int)Random.Range(rect.height * 0.75f, rect.height * 0.85f);
 
                 // room 은 rect 내부의 들어갈 수 있는 랜덤한 위치 아무데나 들어갑니다.
-                int roomX = (int)Random.Range(3, rect.width - roomWidth - 3);
-                int roomY = (int)Random.Range(3, rect.height - roomHeight - 3);
+                int roomX = (int)(rect.width - roomWidth) / 2;
+                // (int)Random.Range(3, rect.width - roomWidth - 3);
+                int roomY = (int)(rect.height - roomHeight) / 2;
+                // (int)Random.Range(3, rect.height - roomHeight - 3);
 
                 // room position will be absolute in the board, not relative to the sub-dungeon
                 room = new Rect(rect.x + roomX, rect.y + roomY, roomWidth, roomHeight);
