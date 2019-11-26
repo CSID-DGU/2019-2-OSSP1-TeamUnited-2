@@ -351,7 +351,7 @@ public class MapManager : MonoBehaviour
             {
                 int neighbourWallTiles = GetSurroundingWallCount(x, y, map);
 
-                if (neighbourWallTiles > 5)
+                if (neighbourWallTiles >= 5)
                     map[x, y] = 1;
                 else if (neighbourWallTiles < 5)
                     map[x, y] = 0;
@@ -369,6 +369,14 @@ public class MapManager : MonoBehaviour
                 {
                     ++wallCount;
                 }
+                else if (boundaryPosition[neighbourX,neighbourY] != null)
+                {
+                    wallCount += 4;
+                }
+                // else if (tunnelPosition[neighbourX,neighbourY] != null)
+                // {
+                //     wallCount -= 0;
+                // }
                 else if (map[neighbourX, neighbourY] == 1)
                 {
                     ++wallCount;

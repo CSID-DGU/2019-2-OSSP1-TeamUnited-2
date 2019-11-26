@@ -417,17 +417,17 @@ PrefabInstance:
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
       propertyPath: density
-      value: 55
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
       propertyPath: minRoomSize
-      value: 30
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
       propertyPath: maxRoomSize
-      value: 40
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
@@ -442,7 +442,7 @@ PrefabInstance:
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
       propertyPath: postsmooth
-      value: 500
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
