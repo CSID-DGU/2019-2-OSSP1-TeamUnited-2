@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,6 +27,7 @@ public class SubDungeon
         private static int debugCounter = 0;
         protected bool savedToList = false;
         protected RoomType roomType;
+        public Rect boundaryLine;
 
         public SubDungeon(Rect mrect)
         {
@@ -93,6 +94,10 @@ public class SubDungeon
                 left = new SubDungeon(new Rect(rect.x, rect.y, rect.width, split));
                 right = new SubDungeon(new Rect(rect.x, rect.y + split, rect.width, rect.height - split));
 
+                // 하위 노드에 바운더리 위치 할당
+                left.boundaryLine = new Rect(rect.x, rect.y + split, rect.width, 1);
+                right.boundaryLine = new Rect(rect.x, rect.y + split, rect.width, 1);
+
                 // 자기 자신에게는 가로로 긴 파티션 할당
                 partition = new Rect(rect.x, rect.y + split, rect.width, 0);
                 partitionAlignment = Alignment.horizontal;
@@ -111,6 +116,10 @@ public class SubDungeon
                 // 세로로 잘려진 두개의 구획 생성 & 하위 노드에 편입
                 left = new SubDungeon(new Rect(rect.x, rect.y, split, rect.height));
                 right = new SubDungeon(new Rect(rect.x + split, rect.y, rect.width - split, rect.height));
+
+                // 하위 노드에 바윈더리 위치 할당
+                left.boundaryLine = new Rect(rect.x + split, rect.y, 1, rect.height);
+                right.boundaryLine = new Rect(rect.x + split, rect.y, 1, rect.height);
                 
                 // 자기 자신에게는 세로로 긴 파티션 할당
                 partition = new Rect(rect.x + split, rect.y, 0, rect.height);
@@ -121,8 +130,6 @@ public class SubDungeon
             {
                 Debug.LogError("Room spliting error");
             }
-            Debug.Log(partition);
-
             return true;
         }
 
@@ -213,42 +220,63 @@ public class SubDungeon
             int w = (int)(lpoint.x - rpoint.x);
             int h = (int)(lpoint.y - rpoint.y);
 
-            Debug.Log("lpoint: " + lpoint + ", rpoint: " + rpoint + ", w: " + w + ", h: " + h);
+            //Debug.Log("lpoint: " + lpoint + ", rpoint: " + rpoint + ", w: " + w + ", h: " + h);
 
             // if the points are not aligned horizontally
             if (w != 0)
             {
-                // choose at random to go horizontal then vertical or the opposite
-                if (Random.Range(0, 1) > 2)
+                //boundaryLine이 가로로 있는 경우
+                if (left.boundaryLine.height == 1)
                 {
-                    // add a corridor to the right
-                    corridors.Add(new Rect(lpoint.x, lpoint.y, Mathf.Abs(w) + 1, corridorWidth));
-
-                    // if left point is below right point go up
-                    // otherwise go down
+                    //lpoint가 rpoint 보다 낮은 경우
                     if (h < 0)
                     {
-                        corridors.Add(new Rect(rpoint.x, lpoint.y, corridorWidth, Mathf.Abs(h)));
+                        //draw corridors from lpoint to boundaryLine
+                        corridors.Add(new Rect(lpoint.x, lpoint.y, corridorWidth, Mathf.Abs((int)(lpoint.y - left.boundaryLine.y))));
+                        //draw corridors fallowing boundaryLine
+                        corridors.Add(new Rect(lpoint.x, left.boundaryLine.y, Mathf.Abs(w) + 1, corridorWidth));
+                        //draw corridors form boundaryLine to rpoint
+                        corridors.Add(new Rect(rpoint.x, left.boundaryLine.y, corridorWidth, Mathf.Abs((int)(rpoint.y - left.boundaryLine.y))));
                     }
+                    //lpoint가 rpoint 보다 높은 경우
                     else
                     {
-                        corridors.Add(new Rect(rpoint.x, lpoint.y, corridorWidth, -Mathf.Abs(h)));
+                        //draw corridors from lpoint to boundaryLine
+                        corridors.Add(new Rect(lpoint.x, left.boundaryLine.y, corridorWidth, Mathf.Abs((int)(lpoint.y - left.boundaryLine.y))));
+                        //draw corridors fallowing boundaryLine
+                        corridors.Add(new Rect(lpoint.x, left.boundaryLine.y, Mathf.Abs(w) + 1, corridorWidth));
+                        //draw corridors form boundaryLine to rpoint
+                        corridors.Add(new Rect(rpoint.x, rpoint.y, corridorWidth, Mathf.Abs((int)(rpoint.y - left.boundaryLine.y))));
                     }
                 }
-                else
+                //bundaryLine이 세로로 있는 경우
+                else if (left.boundaryLine.width == 1)
                 {
-                    // go up or down
+                    //lpoint 가 rpoint 보다 낮은 경우
                     if (h < 0)
                     {
-                        corridors.Add(new Rect(lpoint.x, lpoint.y, corridorWidth, Mathf.Abs(h)));
+                        //draw corridors from lpoint to boundaryLine
+                        corridors.Add(new Rect(lpoint.x, lpoint.y, Mathf.Abs((int)(lpoint.x - left.boundaryLine.x)), corridorWidth));
+                        //draw corridors fallowing boundaryLine
+                        corridors.Add(new Rect(left.boundaryLine.x, lpoint.y, corridorWidth, Mathf.Abs(h)));
+                        //draw corridors form boundaryLine to rpoint
+                        corridors.Add(new Rect(left.boundaryLine.x, rpoint.y, Mathf.Abs((int)(left.boundaryLine.x - rpoint.x)), corridorWidth));
                     }
+                    //lpoint 가 rpoint 보다 높은 경우
                     else
                     {
-                        corridors.Add(new Rect(lpoint.x, rpoint.y, corridorWidth, Mathf.Abs(h)));
+                        //draw corridors from lpoint to boundaryLine
+                        corridors.Add(new Rect(lpoint.x, lpoint.y, Mathf.Abs((int)(lpoint.x - left.boundaryLine.x)), corridorWidth));
+                        //draw corridors fallowing boundaryLine
+                        corridors.Add(new Rect(left.boundaryLine.x, rpoint.y, corridorWidth, Mathf.Abs(h) + 1));
+                        //draw corridors form boundaryLine to rpoint
+                        corridors.Add(new Rect(left.boundaryLine.x, rpoint.y, Mathf.Abs((int)(left.boundaryLine.x - rpoint.x)), corridorWidth));
                     }
-
-                    // then go right
-                    corridors.Add(new Rect(lpoint.x, rpoint.y, Mathf.Abs(w) + 1, corridorWidth));
+                }
+                //error
+                else
+                {
+                    //Debug.LogError("Create corridor error");
                 }
             }
             else
@@ -265,10 +293,10 @@ public class SubDungeon
                 }
             }
 
-            Debug.Log("Corridors: ");
+            //Debug.Log("Corridors: ");
             foreach (Rect corridor in corridors)
             {
-                Debug.Log("corridor: " + corridor);
+                //Debug.Log("corridor: " + corridor);
             }
         }
 
@@ -334,3 +362,5 @@ public class SubDungeon
             }
         }   
     }
+
+    

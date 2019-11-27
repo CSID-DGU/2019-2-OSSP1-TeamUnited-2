@@ -32,73 +32,18 @@ public class GameManager : MonoBehaviour
     private Transform boardHolder;
 
 
+    public int boardRows, boardColumns;
+    public int minRoomSize, maxRoomSize;
+    public GameObject corridorTile;
+    private GameObject[,] boardPositionsFloor;
+    private GameObject[,] boardPositionsNonchange;
+    private Transform pos;
+
+
     void Start()
     {        
         InitializeGame();
     }
-    // void BoardSetup()
-    // {
-    //     Debug.Log("Board setup start");
-    //     boardHolder = new GameObject("Board").transform;
-    //     Debug.Log("BoardHolder created");
-
-    //     for (int x = -1; x < width + 1; ++x)
-    //     {
-    //         for (int y = -1; y < height + 1; ++y)
-    //         {
-    //             GameObject toInstantiate = floor;
-    //             if (x == -1 || x == width || y == -1 || y == height)
-    //             {
-    //                 toInstantiate = boundary;
-    //             }
-    //             GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
-    //             instance.transform.SetParent(boardHolder);
-    //         }
-    //     }
-    //     Debug.Log("instantiated");
-
-    //     map = new int[width, height];
-    //     ArrayList listX = new ArrayList();
-    //     ArrayList listY = new ArrayList();
-
-    //     GameObject ItemsParent = new GameObject("Items"); // 아이템들의 부모 설정.
-    //     ItemsParent.layer = LayerMask.NameToLayer("Wall"); // 일단 Wall 로 합니다. 추후 변경가능성.
-    //     GameObject[] healtem = new GameObject[10];
-    //     if (listX.Count > 10)
-    //     {
-    //         for (int i = 0; i < 10; i++)
-    //         {
-    //             index = Random.Range(0, listX.Count);
-    //             healtem[i] = Instantiate(SpawnedItem1, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
-    //             healtem[i].transform.SetParent(ItemsParent.transform);
-    //             listX.RemoveAt(index);
-    //             listY.RemoveAt(index);
-    //         }
-    //     }
-    //     else Debug.Log("하트 만들 공간 없음..");
-    //     if (listX.Count > 10)
-    //     {
-    //         GameObject[] coin = new GameObject[5];
-    //         GameObject[] miniCoin = new GameObject[5];
-    //         GameObject[] bomtem = new GameObject[5];
-    //         for (int i = 0; i < 5; i++)
-    //         {
-    //             index = Random.Range(0, listX.Count);
-    //             coin[i] = Instantiate(SpawnedItem2, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
-    //             miniCoin[i] = Instantiate(miniGold, coin[i].transform) as GameObject;
-    //             coin[i].transform.SetParent(ItemsParent.transform);
-    //             listX.RemoveAt(index);
-    //             listY.RemoveAt(index);
-
-    //             index = Random.Range(0, listX.Count);
-    //             bomtem[i] = Instantiate(SpawnedItem3, new Vector3((int)listX[index], (int)listY[index], -10), Quaternion.identity) as GameObject;
-    //             bomtem[i].transform.SetParent(ItemsParent.transform);
-    //             listX.RemoveAt(index);
-    //             listY.RemoveAt(index);
-    //         }
-    //     }
-    //     else Debug.Log("아이템 만들 공간 없음..");
-    // }
     
     private void InitializeGame()
     {

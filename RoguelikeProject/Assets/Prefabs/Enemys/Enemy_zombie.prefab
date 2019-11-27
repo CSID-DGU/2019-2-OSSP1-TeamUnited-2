@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8570975761796897940}
   - component: {fileID: 581116653034904072}
   - component: {fileID: 556268633250779929}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy_zombie
   m_TagString: Enemys
   m_Icon: {fileID: 0}
@@ -292,7 +292,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: e0f6b8df91a5ac2429ad61e4781a0162, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
