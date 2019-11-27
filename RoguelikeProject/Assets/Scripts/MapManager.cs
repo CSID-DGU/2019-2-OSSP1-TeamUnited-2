@@ -24,7 +24,6 @@ public class MapManager : MonoBehaviour
     protected List<SubDungeon> subDungeonList;
     private Transform pos;
     private string seed;
-    
     public void CreateBSP(SubDungeon subDungeon)
     {
         Debug.Log("Splitting sub-dungeon " + subDungeon.debugId + ": " + subDungeon.rect);
