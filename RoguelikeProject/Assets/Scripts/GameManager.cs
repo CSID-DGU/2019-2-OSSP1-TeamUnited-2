@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     // public GameObject floor;
     // public GameObject wall;
     public GameObject plane;
-
     private Texture2D tex;
     public GameObject playerEntity;
     public GameObject miniGold; // 미니맵에 보여줄 코인
@@ -29,15 +28,15 @@ public class GameManager : MonoBehaviour
         get { return enemyNum; }
         set { enemyNum = value; }
     }
-    private Transform boardHolder;
 
+    // private Transform boardHolder;
+    // public int boardRows, boardColumns;
+    // public int minRoomSize, maxRoomSize;
+    // public GameObject corridorTile;
+    // private GameObject[,] boardPositionsFloor;
+    // private GameObject[,] boardPositionsNonchange;
+    // private Transform pos;
 
-    public int boardRows, boardColumns;
-    public int minRoomSize, maxRoomSize;
-    public GameObject corridorTile;
-    private GameObject[,] boardPositionsFloor;
-    private GameObject[,] boardPositionsNonchange;
-    private Transform pos;
 
 
     void Start()

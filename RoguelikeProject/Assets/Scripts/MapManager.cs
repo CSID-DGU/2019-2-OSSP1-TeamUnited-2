@@ -329,7 +329,7 @@ public class MapManager : MonoBehaviour
         {
             for (int y = (int)rect.y; y < rect.yMax; ++y)
             {
-                map[x, y] = 1;
+                map[x, y] = (pseudoRandom.Next(0, 100) < 90) ? 1 : 0;
             }
         }
         // room 내부는 랜덤값으로 채웁니다.
