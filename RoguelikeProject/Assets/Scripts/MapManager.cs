@@ -92,6 +92,19 @@ public class MapManager : MonoBehaviour
 
         }
     }
+
+    public bool IsSafeToDeploy(int x, int y)
+    {
+        if (wallPosition[x, y] || boundaryPosition[x, y])
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    
     public void RandomThrowObjectInRoom(SubDungeon dungeon, GameObject obj)
     // 방 내부에 랜덤하게 아이템, 적을 뿌립니다. 일단은 랜덤 버전만...
     {
@@ -102,7 +115,7 @@ public class MapManager : MonoBehaviour
             int x = (int)(dungeon.room.x + Random.Range(0.0f, dungeon.room.width));
             int y = (int)(dungeon.room.y + Random.Range(0.0f, dungeon.room.height));
             Vector2 toDeployOn = new Vector2(x, y);
-            if (true)
+            if (IsSafeToDeploy(x, y))
             {
                 GameObject instance = Instantiate(obj);
                 instance.transform.SetParent(transform);
