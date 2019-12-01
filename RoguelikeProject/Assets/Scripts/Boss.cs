@@ -26,7 +26,7 @@ public class Boss : Unit
 
         // 실제 연산
         BossHP -= actualDamage;
-
+        Debug.Log("Boss Hit!! : " + actualDamage + ", " + BossHP);
         // 추적된 값을 반환합니다.        
         return actualDamage;
     }
