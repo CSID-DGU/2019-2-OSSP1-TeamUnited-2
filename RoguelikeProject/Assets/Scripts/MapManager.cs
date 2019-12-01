@@ -14,7 +14,6 @@ public class MapManager : MonoBehaviour
     public int minRoomSize, maxRoomSize;
     public GameObject corridorTile;
     private GameObject[,] floorPosition;
-    private GameObject[,] floorPosition;
     private GameObject[,] tunnelPosition;
     private GameObject[,] corridorPosition;
     private GameObject[,] wallPosition;
