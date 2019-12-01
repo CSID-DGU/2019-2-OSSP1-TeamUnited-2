@@ -15,5 +15,21 @@ public class Room
 {
     public RoomType type;
     public int weight;
+    public EnemyPool[] enemies;
+    public ItemPool[] items;
+}
+
+[System.Serializable]
+public class EnemyPool
+{
+    public GameObject enemy;
+    public int weight;
+}
+
+[System.Serializable]
+public class ItemPool
+{
+    public GameObject item;
+    public int weight;
 }
 

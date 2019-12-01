@@ -20,7 +20,7 @@ public class MapManager : MonoBehaviour
     private GameObject[,] boundaryPosition;
     protected SubDungeon rootSubDungeon;
     protected List<SubDungeon> subDungeonList;
-    public RoomList pool;
+    public Room[] roomPool;
     private Transform pos;
     private string seed;
     public void CreateBSP(SubDungeon subDungeon)
@@ -50,7 +50,7 @@ public class MapManager : MonoBehaviour
     {
         // 전체 풀의 weight를 측정합니다.
         int totalweight = 0;
-        foreach(Room room in pool.rooms)
+        foreach(Room room in roomPool)
         {
             totalweight += room.weight;
         }
@@ -60,7 +60,7 @@ public class MapManager : MonoBehaviour
         
         // 차례로 weight를 가산하며 목표 지점이 넘긴 시점에 room을 반환합니다.
         int currentPoint = 0;
-        foreach(Room room in pool.rooms)
+        foreach(Room room in roomPool)
         {
             currentPoint += room.weight;
             if (currentPoint > targetPoint)
