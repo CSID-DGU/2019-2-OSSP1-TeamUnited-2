@@ -555,7 +555,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b75c9c03f128eb144a2706256e90b6e6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -867,7 +867,7 @@ PrefabInstance:
     - target: {fileID: 3098805989945518164, guid: cb3f16a31fa19bf499694e23efecb9e4,
         type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 48
+      value: 2608
       objectReference: {fileID: 0}
     - target: {fileID: 3098805989945518164, guid: cb3f16a31fa19bf499694e23efecb9e4,
         type: 3}
