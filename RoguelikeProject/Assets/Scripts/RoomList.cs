@@ -7,7 +7,7 @@ public enum RoomType {common, boss, treasure, horde}
 [System.Serializable]
 public class RoomList
 {
-    public Room[] Rooms;
+    public Room[] rooms;
 }
 
 [System.Serializable]
@@ -15,5 +15,5 @@ public class Room
 {
     public RoomType type;
     public int weight;
-}   
+}
 

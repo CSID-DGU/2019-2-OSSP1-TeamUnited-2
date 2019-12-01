@@ -20,6 +20,7 @@ public class MapManager : MonoBehaviour
     private GameObject[,] boundaryPosition;
     protected SubDungeon rootSubDungeon;
     protected List<SubDungeon> subDungeonList;
+    public RoomList pool;
     private Transform pos;
     private string seed;
     public void CreateBSP(SubDungeon subDungeon)
@@ -45,6 +46,34 @@ public class MapManager : MonoBehaviour
             }
         }
     }
+    public Room GetRandomRoomFromPool()
+    {
+        // 전체 풀의 weight를 측정합니다.
+        int totalweight = 0;
+        foreach(Room room in pool.rooms)
+        {
+            totalweight += room.weight;
+        }
+        
+        // 목표 지점을 잡습니다.
+        int targetPoint = Random.Range(0, totalweight);
+        
+        // 차례로 weight를 가산하며 목표 지점이 넘긴 시점에 room을 반환합니다.
+        int currentPoint = 0;
+        foreach(Room room in pool.rooms)
+        {
+            currentPoint += room.weight;
+            if (currentPoint > targetPoint)
+            {
+                return room;
+            }
+        }
+
+        // 제대로 생성이 되지 않았을 경우
+        Debug.LogError("Critical error on room weight calculation");
+        return null;
+    }
+
     public void DrawFloorsRecursive(SubDungeon subDungeon)
     {
         if (subDungeon == null)
