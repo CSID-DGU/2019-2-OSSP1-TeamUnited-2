@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-enum RoomType {common, boss, treasure, horde}
+public enum RoomType {common, boss, treasure, horde}
 
 [System.Serializable]
 public class RoomList
@@ -13,7 +13,7 @@ public class RoomList
 [System.Serializable]
 public class Room
 {
-    public string type;
+    public RoomType type;
     public int weight;
 }   
 

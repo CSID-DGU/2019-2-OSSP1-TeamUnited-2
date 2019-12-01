@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     {
         // 맵은 게임매니저에서 관리합니다. 일단 최초에 한번 복사하는 방식으로 합니다만, 추후 문제가 발생할 수 있습니다.
         // 참조로 받아오는 편이 나을 수도 있습니다.
-        map = mapManager.GetComponent<MapManager>().map;
+        // map = mapManager.GetComponent<MapManager>().map;
         width = mapManager.GetComponent<MapManager>().mapWidth;
         height = mapManager.GetComponent<MapManager>().mapHeight;
 
@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
                 if (lit[x, y])
                     tex.SetPixel(x, y, colorFloor);
                 else
-                    tex.SetPixel(x, y, new Color(0f, 0f, 0f, 1f));
+                    tex.SetPixel(x, y, new Color(0f, 0f, 0f, 0.25f));
             }
         }
         tex.Apply(false);

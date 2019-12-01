@@ -26,7 +26,7 @@ public class SubDungeon
         public int debugId;
         private static int debugCounter = 0;
         protected bool savedToList = false;
-        protected RoomType roomType;
+        protected Room roomType;
         public Rect boundaryLine;
 
         public SubDungeon(Rect mrect)
