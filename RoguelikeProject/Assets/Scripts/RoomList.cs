@@ -10,9 +10,9 @@ public class RoomType
     public RoomCategory type;
     public int guaranteedAmount;
     public int weight;
-    public int enemySpawnCostTotal;
+    public int maxEnemyCost;
     public EnemyType[] enemies;
-    public int itemSpawnCostTotal;
+    public int maxItemCost;
     public ItemType[] items;
 }
 

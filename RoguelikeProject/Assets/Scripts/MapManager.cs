@@ -62,7 +62,7 @@ public class MapManager : MonoBehaviour
         
         // 차례로 weight를 가산하며 목표 지점이 넘긴 시점에 room을 반환합니다.
         int currentPoint = 0;
-        foreach(RoomType room in roomTypes)
+        foreach(var room in roomTypes)
         {
             currentPoint += room.weight;
             if (currentPoint > targetPoint)
@@ -121,13 +121,14 @@ public class MapManager : MonoBehaviour
         }
 
         // 랜덤 수량 enemy 소환을 위한 총 비용
-        int targetEnemyCost = roomType.enemySpawnCostTotal;
-        int spawnedEnemyCost = 0;
+        int maxEnemyCost = roomType.maxEnemyCost;
+        int spawnedEnemyPoint = 0;
 
         // 소환된 수량이 total cost를 넘을때까지 소환
-        while (spawnedEnemyCost < targetEnemyCost)
+        while (spawnedEnemyPoint < maxEnemyCost)
         {
             // weight 비율에 따라 소환
+            bool spawned = false;
             int targetPoint = Random.Range(0, enemyTotalWeight);
             int currentPoint = 0;
             foreach (EnemyType enemy in roomType.enemies)
@@ -135,9 +136,16 @@ public class MapManager : MonoBehaviour
                 currentPoint += enemy.weight;
                 if (currentPoint > targetPoint)
                 {
-                    spawnedEnemyCost += enemy.cost;
+                    spawnedEnemyPoint += enemy.cost;
                     RandomThrowObjectInRoom(dungeon, enemy.type);
+                    Debug.Log("Enemy Spawned : " + enemy.type.GetComponent<Unit>());
+                    spawned = true;
                 }
+            }
+            if (!spawned)
+            {
+                Debug.LogError("Trouble on spawning");
+                break;
             }
         }
 

@@ -55,18 +55,34 @@ MonoBehaviour:
   maxRoomSize: 25
   corridorTile: {fileID: 2179826274794268848, guid: ebc089732e774a6448277162c9a0b0af,
     type: 3}
-  roomPool:
-  - type: 1
-    guaranteedAmount: 1
-    weight: 100
-    enemySpawnCostTotal: 0
-    enemies: []
-    itemSpawnCostTotal: 0
-    items: []
+  roomTypes:
   - type: 0
     guaranteedAmount: 1
     weight: 0
     enemySpawnCostTotal: 0
     enemies: []
+    itemSpawnCostTotal: 0
+    items: []
+  - type: 1
+    guaranteedAmount: 1
+    weight: 0
+    enemySpawnCostTotal: 0
+    enemies: []
+    itemSpawnCostTotal: 0
+    items: []
+  - type: 0
+    guaranteedAmount: 0
+    weight: 100
+    enemySpawnCostTotal: 100
+    enemies:
+    - type: {fileID: 8323095841562486181, guid: 9afddcd272423534281f9c0a59bfec26,
+        type: 3}
+      cost: 10
+      weight: 20
+      guaranteedAmount: 0
+    - type: {fileID: 556268633250779931, guid: d712c028523cdd348aeffffafe7a8681, type: 3}
+      cost: 30
+      weight: 10
+      guaranteedAmount: 0
     itemSpawnCostTotal: 0
     items: []
