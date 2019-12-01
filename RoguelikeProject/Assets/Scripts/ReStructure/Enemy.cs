@@ -17,7 +17,7 @@ public class Enemy : Unit
         if (GetComponent<Animator>())
             animator = GetComponent<Animator>();
 
-        InvokeRepeating("FindPlayer", 0, 1);
+        InvokeRepeating("FindPlayer", Random.Range(0.0f, 1.0f), 1);
     }
     protected new void Update()
     {
@@ -45,7 +45,7 @@ public class Enemy : Unit
     {
         if (target == null)
         {
-            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 40.0f);
+            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 15.0f);
             foreach (Collider2D col in cols)
             {
                 if (col.gameObject.GetComponent<Player>())

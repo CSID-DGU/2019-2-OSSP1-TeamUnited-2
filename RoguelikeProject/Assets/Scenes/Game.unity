@@ -442,22 +442,22 @@ PrefabInstance:
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
       propertyPath: minRoomSize
-      value: 25
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
       propertyPath: maxRoomSize
-      value: 35
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
       propertyPath: mapHeight
-      value: 125
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
       propertyPath: mapWidth
-      value: 125
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
@@ -488,6 +488,11 @@ PrefabInstance:
     - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
         type: 3}
       propertyPath: roomPool.Array.data[0].weight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2717145535574407899, guid: baf532530b84f974aa23c57dc20a8131,
+        type: 3}
+      propertyPath: roomTypes.Array.data[2].maxEnemyCost
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -679,12 +684,12 @@ PrefabInstance:
     - target: {fileID: 556367623223075989, guid: 3edd353273b741c46a76dc15df5fd9fc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 62
+      value: 49.5
       objectReference: {fileID: 0}
     - target: {fileID: 556367623223075989, guid: 3edd353273b741c46a76dc15df5fd9fc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 62
+      value: 49.5
       objectReference: {fileID: 0}
     - target: {fileID: 556367623223075989, guid: 3edd353273b741c46a76dc15df5fd9fc,
         type: 3}
@@ -734,12 +739,12 @@ PrefabInstance:
     - target: {fileID: 556367623223075989, guid: 3edd353273b741c46a76dc15df5fd9fc,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 12.5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 556367623223075989, guid: 3edd353273b741c46a76dc15df5fd9fc,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 12.5
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3edd353273b741c46a76dc15df5fd9fc, type: 3}
@@ -893,11 +898,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3098805989945518164, guid: cb3f16a31fa19bf499694e23efecb9e4,
-        type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 2608
       objectReference: {fileID: 0}
     - target: {fileID: 3098805989945518164, guid: cb3f16a31fa19bf499694e23efecb9e4,
         type: 3}

@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
                 if (indexSafe((int)co.transform.position.x, (int)co.transform.position.y)) // 배열에 넣음. point를 쓰지말고 transform position 이 딱 맞는다.
                     lit[(int)co.transform.position.x, (int)co.transform.position.y] = true;
             }
-        }
+        }   
         Color colorFloor = new Color(0f, 0f, 0f, 0f);
 
         for (int y = 0; y < height; y++)

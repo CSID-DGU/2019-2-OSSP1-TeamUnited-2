@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1603801582754585727}
   - component: {fileID: 5977466483006452126}
-  - component: {fileID: 61179127371049970}
+  - component: {fileID: 4594633143994927827}
   m_Layer: 9
   m_Name: Tile
   m_TagString: Blocks
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &61179127371049970
+--- !u!61 &4594633143994927827
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -104,5 +104,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.27, y: 1.26}
   m_EdgeRadius: 0

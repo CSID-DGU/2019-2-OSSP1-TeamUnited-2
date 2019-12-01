@@ -52,10 +52,8 @@ public class MapManager : MonoBehaviour
         int totalWeight = 0;
         foreach(var room in roomTypes)
         {
-            Debug.Log("weight + " + room.weight);
             totalWeight += room.weight;
         }
-        Debug.Log("total weight : " + totalWeight);
         
         // 목표 지점을 잡습니다.
         int targetPoint = Random.Range(0, totalWeight);
@@ -77,7 +75,7 @@ public class MapManager : MonoBehaviour
     }
     public RoomType GetRoomTypeFromPool(RoomCategory category)
     {
-        foreach (RoomType room in roomTypes)
+        foreach (var room in roomTypes)
         {
             if (room.type == category)
             {
@@ -103,11 +101,15 @@ public class MapManager : MonoBehaviour
         // 확정 수량 enemy 소환
         foreach (EnemyType enemy in roomType.enemies)
         {
+            Debug.Log("spawning enemys..");
             if (enemy.guaranteedAmount > 0)
             {
+                Debug.Log("spawning guaranteed amount..");
                 for (int i = 0; i < enemy.guaranteedAmount; ++i)
                 {
+                    Debug.Log("random throw..");
                     RandomThrowObjectInRoom(dungeon, enemy.type);
+                    Debug.Log("random throw complete");
                 }
             }
         }
@@ -137,7 +139,7 @@ public class MapManager : MonoBehaviour
                 if (currentPoint > targetPoint)
                 {
                     spawnedEnemyPoint += enemy.cost;
-                    RandomThrowObjectInRoom(dungeon, enemy.type);
+                    // RandomThrowObjectInRoom(dungeon, enemy.type);
                     Debug.Log("Enemy Spawned : " + enemy.type.GetComponent<Unit>());
                     spawned = true;
                 }
@@ -244,6 +246,8 @@ public class MapManager : MonoBehaviour
             {
                 GameObject instance = Instantiate(obj);
                 instance.transform.SetParent(transform);
+                instance.transform.position = new Vector3(x, y, -10);
+                Debug.Log("Deploy on : " + x + ", " + y);
                 deployed = true;
             }
 

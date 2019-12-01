@@ -59,30 +59,30 @@ MonoBehaviour:
   - type: 0
     guaranteedAmount: 1
     weight: 0
-    enemySpawnCostTotal: 0
+    maxEnemyCost: 0
     enemies: []
-    itemSpawnCostTotal: 0
+    maxItemCost: 0
     items: []
   - type: 1
     guaranteedAmount: 1
     weight: 0
-    enemySpawnCostTotal: 0
+    maxEnemyCost: 0
     enemies: []
-    itemSpawnCostTotal: 0
+    maxItemCost: 0
     items: []
-  - type: 0
+  - type: 2
     guaranteedAmount: 0
     weight: 100
-    enemySpawnCostTotal: 100
+    maxEnemyCost: 5
     enemies:
     - type: {fileID: 8323095841562486181, guid: 9afddcd272423534281f9c0a59bfec26,
         type: 3}
       cost: 10
       weight: 20
-      guaranteedAmount: 0
+      guaranteedAmount: 1
     - type: {fileID: 556268633250779931, guid: d712c028523cdd348aeffffafe7a8681, type: 3}
       cost: 30
       weight: 10
-      guaranteedAmount: 0
-    itemSpawnCostTotal: 0
+      guaranteedAmount: 1
+    maxItemCost: 0
     items: []
