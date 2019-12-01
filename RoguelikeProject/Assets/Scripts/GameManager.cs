@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 {
     private GameObject levelImage;
     public GameObject mapManager;
+    public GameObject boss;
     [HideInInspector]
     public int[,] map;
     public int width;
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
         set { enemyNum = value; }
     }
 
+    private string seed;
     // private Transform boardHolder;
     // public int boardRows, boardColumns;
     // public int minRoomSize, maxRoomSize;
@@ -56,6 +58,12 @@ public class GameManager : MonoBehaviour
         tex = new Texture2D(width, height);
         plane.GetComponent<Renderer>().material.mainTexture = tex;
         plane.GetComponent<Renderer>().material.mainTexture.filterMode = FilterMode.Point;
+
+
+        seed = System.DateTime.Now.ToString();
+        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+        GameObject instance = Instantiate(boss, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
+        instance.transform.GetChild(0).Translate(new Vector3(pseudoRandom.Next(20, 80), pseudoRandom.Next(0, 100), 0f));
     }
     void Update()
     {
