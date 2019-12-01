@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+enum RoomType {common, boss, treasure, horde}
+
 [System.Serializable]
 public class RoomList
 {
-    public RoomType[] Rooms;
+    public Room[] Rooms;
 }
 
 [System.Serializable]
-public class RoomType
+public class Room
 {
     public string type;
     public int weight;

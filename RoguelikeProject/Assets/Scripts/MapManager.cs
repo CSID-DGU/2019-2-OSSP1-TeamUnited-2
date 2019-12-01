@@ -6,7 +6,6 @@ public class MapManager : MonoBehaviour
 {
     public double density;
     public int postsmooth;
-    public int[,] map;
     private Transform boardHolder;
     public GameObject boundary;
     public GameObject floor;
@@ -15,7 +14,7 @@ public class MapManager : MonoBehaviour
     public int minRoomSize, maxRoomSize;
     public GameObject corridorTile;
     private GameObject[,] floorPosition;
-    private GameObject[,] boardPositionsFloor;
+    private GameObject[,] floorPosition;
     private GameObject[,] tunnelPosition;
     private GameObject[,] corridorPosition;
     private GameObject[,] wallPosition;
@@ -59,13 +58,12 @@ public class MapManager : MonoBehaviour
             {
                 for (int j = (int)subDungeon.rect.y; j < subDungeon.rect.yMax; j++)
                 {
-                    if (boardPositionsFloor[i, j] == null)
+                    if (floorPosition[i, j] == null)
                     {
                         GameObject instance = Instantiate(floor, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
                         instance.transform.SetParent(transform);
-                        boardPositionsFloor[i, j] = instance;
+                        floorPosition[i, j] = instance;
                     }
-
                 }
             }
         }
@@ -112,7 +110,7 @@ public class MapManager : MonoBehaviour
             ++trial;
             if (trial > 100)
             {
-                Debug.LogError("There is some trouble in deploying object...");
+                Debug.LogError("Got trouble in deploying object...");
                 break;
             }
         }
@@ -291,7 +289,7 @@ public class MapManager : MonoBehaviour
     private void Start()
     {
         // 각종 맵 오브젝트를 정수좌표계에 연동해서 넣을 배열을 초기화합니다.
-        boardPositionsFloor         = new GameObject[mapWidth, mapHeight];
+        floorPosition         = new GameObject[mapWidth, mapHeight];
         tunnelPosition              = new GameObject[mapWidth, mapHeight];
         floorPosition               = new GameObject[mapWidth, mapHeight];
         corridorPosition            = new GameObject[mapWidth, mapHeight];
