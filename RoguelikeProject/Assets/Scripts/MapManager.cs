@@ -13,11 +13,11 @@ public class MapManager : MonoBehaviour
     public int mapHeight, mapWidth;
     public int minRoomSize, maxRoomSize;
     public GameObject corridorTile;
-    private GameObject[,] floorPosition;
-    private GameObject[,] tunnelPosition;
-    private GameObject[,] corridorPosition;
-    private GameObject[,] wallPosition;
-    private GameObject[,] boundaryPosition;
+    public GameObject[,] floorPosition;
+    public GameObject[,] tunnelPosition;
+    public GameObject[,] corridorPosition;
+    public GameObject[,] wallPosition;
+    public GameObject[,] boundaryPosition;
     protected SubDungeon rootSubDungeon;
     protected List<SubDungeon> subDungeonList;
     public RoomType[] roomTypes;

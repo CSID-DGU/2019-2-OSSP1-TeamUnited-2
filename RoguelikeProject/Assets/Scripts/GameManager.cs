@@ -91,11 +91,12 @@ public class GameManager : MonoBehaviour
                 if (setRepeat) // 한번 벽이 나오면 true 가 되어서 repeat을 증가시킴.
                 {
                     repeat++;
-                    if (repeat > 2 || colliderCount.Length < 2) // 벽이 2줄이거나 타일이 나와버리면 그만둔다.
+                    if (repeat > 1 || colliderCount.Length < 2) // 벽이 2줄이거나 타일이 나와버리면 그만둔다.
                         break;
                 }
-
-                if (co.collider.name == "Wall(Clone)" || co.collider.name == "Boundary(Clone)")
+                int x = (int)co.transform.position.x;
+                int y = (int)co.transform.position.y;
+                if (mapManager.GetComponent<MapManager>().wallPosition[x, y] || mapManager.GetComponent<MapManager>().boundaryPosition[x, y])
                 {
                     setRepeat = true;
                 }
