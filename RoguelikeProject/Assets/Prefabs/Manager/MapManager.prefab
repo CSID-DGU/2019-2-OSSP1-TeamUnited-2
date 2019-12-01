@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   density: 40
-  smoothness: 10
   postsmooth: 2
   boundary: {fileID: 4855616639108612217, guid: 76ec0aee80a19aa45b174f48d83945a8,
     type: 3}
@@ -56,3 +55,18 @@ MonoBehaviour:
   maxRoomSize: 25
   corridorTile: {fileID: 2179826274794268848, guid: ebc089732e774a6448277162c9a0b0af,
     type: 3}
+  roomPool:
+  - type: 1
+    guaranteedAmount: 1
+    weight: 100
+    enemySpawnCostTotal: 0
+    enemies: []
+    itemSpawnCostTotal: 0
+    items: []
+  - type: 0
+    guaranteedAmount: 1
+    weight: 0
+    enemySpawnCostTotal: 0
+    enemies: []
+    itemSpawnCostTotal: 0
+    items: []

@@ -20,7 +20,7 @@ public class MapManager : MonoBehaviour
     private GameObject[,] boundaryPosition;
     protected SubDungeon rootSubDungeon;
     protected List<SubDungeon> subDungeonList;
-    public Room[] roomPool;
+    public RoomType[] roomTypes;
     private Transform pos;
     private string seed;
     public void CreateBSP(SubDungeon subDungeon)
@@ -46,21 +46,23 @@ public class MapManager : MonoBehaviour
             }
         }
     }
-    public Room GetRandomRoomFromPool()
+    public RoomType GetRandomRoomtypeFromPool()
     {
         // 전체 풀의 weight를 측정합니다.
-        int totalweight = 0;
-        foreach(Room room in roomPool)
+        int totalWeight = 0;
+        foreach(var room in roomTypes)
         {
-            totalweight += room.weight;
+            Debug.Log("weight + " + room.weight);
+            totalWeight += room.weight;
         }
+        Debug.Log("total weight : " + totalWeight);
         
         // 목표 지점을 잡습니다.
-        int targetPoint = Random.Range(0, totalweight);
+        int targetPoint = Random.Range(0, totalWeight);
         
         // 차례로 weight를 가산하며 목표 지점이 넘긴 시점에 room을 반환합니다.
         int currentPoint = 0;
-        foreach(Room room in roomPool)
+        foreach(RoomType room in roomTypes)
         {
             currentPoint += room.weight;
             if (currentPoint > targetPoint)
@@ -70,8 +72,97 @@ public class MapManager : MonoBehaviour
         }
 
         // 제대로 생성이 되지 않았을 경우
-        Debug.LogError("Critical error on room weight calculation");
+        Debug.LogError("Critical error on room weight calculation : " + currentPoint + ", " + targetPoint);
         return null;
+    }
+    public RoomType GetRoomTypeFromPool(RoomCategory category)
+    {
+        foreach (RoomType room in roomTypes)
+        {
+            if (room.type == category)
+            {
+                return room;
+            }
+        }
+
+        Debug.LogError("Trouble on find spicified roomtype : " + category);
+        return null;
+    }
+
+    public void SpawnObjectsToEveryDungeons()
+    {
+        foreach (SubDungeon dungeon in subDungeonList)
+        {
+            SpawnObjectsInDungeon(dungeon);
+        }
+    }
+
+    public void SpawnObjectsInDungeon(SubDungeon dungeon)
+    {
+        RoomType roomType = dungeon.roomType;
+        // 확정 수량 enemy 소환
+        foreach (EnemyType enemy in roomType.enemies)
+        {
+            if (enemy.guaranteedAmount > 0)
+            {
+                for (int i = 0; i < enemy.guaranteedAmount; ++i)
+                {
+                    RandomThrowObjectInRoom(dungeon, enemy.type);
+                }
+            }
+        }
+
+        // enemy 랜덤 소환 시작
+        // 전체 풀의 weight 측정
+        int enemyTotalWeight = 0;
+        foreach (EnemyType enemy in roomType.enemies)
+        {
+            enemyTotalWeight += enemy.weight;
+        }
+
+        // 랜덤 수량 enemy 소환을 위한 총 비용
+        int targetEnemyCost = roomType.enemySpawnCostTotal;
+        int spawnedEnemyCost = 0;
+
+        // 소환된 수량이 total cost를 넘을때까지 소환
+        while (spawnedEnemyCost < targetEnemyCost)
+        {
+            // weight 비율에 따라 소환
+            int targetPoint = Random.Range(0, enemyTotalWeight);
+            int currentPoint = 0;
+            foreach (EnemyType enemy in roomType.enemies)
+            {
+                currentPoint += enemy.weight;
+                if (currentPoint > targetPoint)
+                {
+                    spawnedEnemyCost += enemy.cost;
+                    RandomThrowObjectInRoom(dungeon, enemy.type);
+                }
+            }
+        }
+
+        // // 확정 수량 item 소환
+        // foreach (EnemyType item in roomType.items)
+        // {
+        //     if (enemy.guaranteedAmount > 0)
+        //     {
+        //         foreach (int i in enemy.guaranteedAmount)
+        //         {
+        //             RandomThrowObjectInRoom(enemy.type);
+        //         }
+        //     }
+        // }
+
+
+        // // item 랜덤 소환 시작
+        // // 전체 풀의 weight 측정
+        // int itemTotalWeight = 0;
+        // foreach (ItemType item in roomType.items)
+        // {
+        //     itemTotalWeight += item.weight;
+        // }
+
+
     }
 
     public void DrawFloorsRecursive(SubDungeon subDungeon)
@@ -270,6 +361,20 @@ public class MapManager : MonoBehaviour
         Debug.Log(subDungeonList.Count);
     }
 
+    public void SetRoomTypeForSubdungeons()
+    {
+        subDungeonList[0].roomType = GetRoomTypeFromPool(RoomCategory.home);
+        subDungeonList[1].roomType = GetRoomTypeFromPool(RoomCategory.boss);
+
+        foreach (SubDungeon dungeon in subDungeonList)
+        {
+            if (dungeon.roomType == null)
+            {
+                dungeon.roomType = GetRandomRoomtypeFromPool(); 
+            }
+        }
+    }
+
     public void FillRoomsRecursive(SubDungeon subDungeon)
     {
         if (subDungeon == null)
@@ -330,7 +435,6 @@ public class MapManager : MonoBehaviour
     private void Start()
     {
         // 각종 맵 오브젝트를 정수좌표계에 연동해서 넣을 배열을 초기화합니다.
-        floorPosition         = new GameObject[mapWidth, mapHeight];
         tunnelPosition              = new GameObject[mapWidth, mapHeight];
         floorPosition               = new GameObject[mapWidth, mapHeight];
         corridorPosition            = new GameObject[mapWidth, mapHeight];
@@ -353,6 +457,9 @@ public class MapManager : MonoBehaviour
         DrawFloorsRecursive(rootSubDungeon);
         FillRoomsRecursive(rootSubDungeon);
         StoreMapsIntosubDungeonList();
+        SetRoomTypeForSubdungeons();
+        SpawnObjectsToEveryDungeons();
+
     }
 
 
@@ -396,6 +503,7 @@ public class MapManager : MonoBehaviour
             }
         }
     }
+
     int GetSurroundingWallCount(int gridX, int gridY, int[,] map)
     {
         int wallCount = 0;

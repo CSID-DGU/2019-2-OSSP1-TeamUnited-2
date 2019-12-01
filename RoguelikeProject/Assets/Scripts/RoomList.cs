@@ -2,34 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum RoomType {common, boss, treasure, horde}
+public enum RoomCategory {home, boss, common, treasure}
 
 [System.Serializable]
-public class RoomList
+public class RoomType
 {
-    public Room[] rooms;
+    public RoomCategory type;
+    public int guaranteedAmount;
+    public int weight;
+    public int enemySpawnCostTotal;
+    public EnemyType[] enemies;
+    public int itemSpawnCostTotal;
+    public ItemType[] items;
 }
 
 [System.Serializable]
-public class Room
+public class EnemyType
 {
-    public RoomType type;
+    public GameObject type;
+    public int cost;
     public int weight;
-    public EnemyPool[] enemies;
-    public ItemPool[] items;
+    public int guaranteedAmount;
 }
 
 [System.Serializable]
-public class EnemyPool
+public class ItemType
 {
-    public GameObject enemy;
+    public GameObject type;
+    public int cost;
     public int weight;
-}
-
-[System.Serializable]
-public class ItemPool
-{
-    public GameObject item;
-    public int weight;
+    public int guaranteedAmount;
 }
 
