@@ -10,6 +10,7 @@ public class Player : Unit
     // public GameObject weapon1;
     public GameObject mainWeapon;
     public GameObject faceArrow; // 플레이어가 보는 방향을 그래픽적으로 표현하기 위한 이미지
+    public GameObject aimObject;
 
     new void Start()
     {
@@ -22,6 +23,7 @@ public class Player : Unit
         // 플레이어의 방향을 알려주기 위한 화살표 인스턴스를 생성하고, 부모를 플레이어로 설정해줍니다.
         faceArrow = Instantiate(faceArrow, (Vector2)transform.position, Quaternion.identity) as GameObject;
         faceArrow.transform.SetParent(gameObject.transform);
+        aimObject = Instantiate(aimObject, (Vector2)transform.position, Quaternion.identity) as GameObject;
 
         // 무기 인스턴스 생성
         Wield(mainWeapon);
@@ -115,6 +117,9 @@ public class Player : Unit
         // TODO :: 현재 마우스 방향으로 즉시 회전하게 되어있습니다, 시간지연을 넣는 편이 부드러울 것입니다.
         Vector3 mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+        aimObject.transform.position = mousePosition;
+        aimObject.transform.Translate(0, 0, 10f);
         Vector2 mouseDirection = (Vector2)(mousePosition - transform.position);
         mouseDirection.Normalize();
 
