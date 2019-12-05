@@ -188,7 +188,7 @@ public class MapManager : MonoBehaviour
                 {
                     if (floorPosition[i, j] == null)
                     {
-                        GameObject toInstantiate = floor[(int)Random.Range(0, floor.Length - 1)];
+                        GameObject toInstantiate = floor[Random.Range(0, floor.Length)];
                         GameObject instance = Instantiate(toInstantiate, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
                         instance.transform.SetParent(transform);
                         floorPosition[i, j] = instance;
