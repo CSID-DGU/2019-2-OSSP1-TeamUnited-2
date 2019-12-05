@@ -20,10 +20,6 @@ public class Boss : Unit
 
         float angle = Mathf.Atan2(transform.position.y - target.transform.position.y, transform.position.x - target.transform.position.x) * Mathf.Rad2Deg;
 
-        // 실제 연산
-        BossHP -= actualDamage;
-        Debug.Log("Boss Hit!! : " + actualDamage + ", " + BossHP);
-
         transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
     }
     protected override void SelfDestruction()
