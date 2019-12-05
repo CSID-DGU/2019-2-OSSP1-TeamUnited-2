@@ -22,11 +22,10 @@ public class Enemy : Unit
     protected new void Update()
     {
         base.Update();
-
         if (target)
         {
             Vector2 direction = target.transform.position - transform.position;
-            Move(direction);
+           Move(direction);
         }
     }
     protected override void SelfDestruction()

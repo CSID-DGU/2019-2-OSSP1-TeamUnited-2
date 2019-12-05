@@ -4,42 +4,35 @@ using UnityEngine;
 
 public class Boss : Unit
 {
-    public static int BossHP;
+    public GameObject target;
     public int meleeDamage;
     public double force;
 
-    protected override void SelfDestruction()
-    {
-        gameObject.transform.parent.parent.gameObject.SetActive(false);
-        //Destroy(gameObject.transform.parent.parent.gameObject);
-    }
-
     protected override void Start()
     {
-        BossHP = 5000;
+        currentHP = HP;
     }
-
-    public override int GetDamage(int damage)
+    protected new void Update()
     {
-        // 실제로 받게 될 데미지를 추적연산합니다.
-        int actualDamage = damage;
+        base.Update();
+        Vector2 direction = target.transform.position - transform.position;
+        Move(direction);
+
+        float angle = Mathf.Atan2(transform.position.y - target.transform.position.y, transform.position.x - target.transform.position.x) * Mathf.Rad2Deg;
 
         // 실제 연산
         BossHP -= actualDamage;
         Debug.Log("Boss Hit!! : " + actualDamage + ", " + BossHP);
-        // 추적된 값을 반환합니다.        
-        return actualDamage;
+
+        transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+    }
+    protected override void SelfDestruction()
+    {
+        Destroy(gameObject);
     }
     void OnCollisionStay2D(Collision2D coll)
     {
         if (coll.gameObject.GetComponent<Player>())
             coll.gameObject.GetComponent<Player>().GetStrike(new Strike(meleeDamage, force, transform.position));
-    }
-    protected new void Update()
-    {
-        if (BossHP <= 0)
-        {
-            SelfDestruction();
-        }
     }
 }
