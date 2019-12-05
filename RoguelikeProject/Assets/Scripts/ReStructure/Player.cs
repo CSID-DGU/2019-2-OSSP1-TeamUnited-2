@@ -132,6 +132,25 @@ public class Player : Unit
         // 플레이어가 보는 방향을 그래픽적으로 표현
         faceArrow.transform.position = (Vector2)((Vector2)transform.position + rotationVector);
 
+        //현재 무기의 위치 
+        Vector2 positionOnScreen = faceArrow.transform.position;
+
+        //// 무기와 마우스의 위치의 각도 
+        float angle = AngleBetweenTwoPoints(positionOnScreen, mousePosition);
+        angle += 90.0f;
+        Debug.Log(positionOnScreen + " " + mousePosition + " " + angle);
+
+        //// 각도만큼 로테이션값 주기 
+        faceArrow.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+
+
+
+        float AngleBetweenTwoPoints(Vector3 a, Vector3 b)
+        {
+            return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
+        }
+
+
         // 마우스 입력를 Wieldable 객체로 연결
         if (Input.GetMouseButtonDown(0))
         {
