@@ -6,7 +6,6 @@ public class MapManager : MonoBehaviour
 {
     public double density;
     public int postsmooth;
-    private Transform boardHolder;
     public GameObject boundary;
     public GameObject floor;
     public GameObject wall;
@@ -73,7 +72,7 @@ public class MapManager : MonoBehaviour
         Debug.LogError("Critical error on room weight calculation : " + currentPoint + ", " + targetPoint);
         return null;
     }
-    public RoomType GetRoomTypeFromPool(RoomCategory category)
+    public RoomType GetRoomtypeFromPool(RoomCategory category)
     {
         foreach (var room in roomTypes)
         {
@@ -361,7 +360,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void StoreMapsIntosubDungeonList()
+    public void StoreMapsIntoSubDungeonList()
     {
         subDungeonList = new List<SubDungeon>();
         SubDungeon nextinsert = rootSubDungeon.RandomPopDungeon();
@@ -373,10 +372,10 @@ public class MapManager : MonoBehaviour
         Debug.Log(subDungeonList.Count);
     }
 
-    public void SetRoomTypeForSubdungeons()
+    public void SetRoomTypeForSubDungeons()
     {
-        subDungeonList[0].roomType = GetRoomTypeFromPool(RoomCategory.home);
-        subDungeonList[1].roomType = GetRoomTypeFromPool(RoomCategory.boss);
+        subDungeonList[0].roomType = GetRoomtypeFromPool(RoomCategory.home);
+        subDungeonList[subDungeonList.Count - 1].roomType = GetRoomtypeFromPool(RoomCategory.boss);
 
         foreach (SubDungeon dungeon in subDungeonList)
         {
@@ -468,8 +467,8 @@ public class MapManager : MonoBehaviour
         // DrawCorridorsRecursive(rootSubDungeon);
         DrawFloorsRecursive(rootSubDungeon);
         FillRoomsRecursive(rootSubDungeon);
-        StoreMapsIntosubDungeonList();
-        SetRoomTypeForSubdungeons();
+        StoreMapsIntoSubDungeonList();
+        SetRoomTypeForSubDungeons();
         SpawnObjectsToEveryDungeons();
 
     }
