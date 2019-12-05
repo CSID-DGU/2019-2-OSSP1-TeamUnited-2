@@ -7,7 +7,7 @@ public class MapManager : MonoBehaviour
     public double density;
     public int postsmooth;
     public GameObject boundary;
-    public GameObject floor;
+    public GameObject[] floor;
     public GameObject wall;
     public int mapHeight, mapWidth;
     public int minRoomSize, maxRoomSize;
@@ -188,7 +188,8 @@ public class MapManager : MonoBehaviour
                 {
                     if (floorPosition[i, j] == null)
                     {
-                        GameObject instance = Instantiate(floor, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
+                        GameObject toInstantiate = floor[(int)Random.Range(0, floor.Length - 1)];
+                        GameObject instance = Instantiate(toInstantiate, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
                         instance.transform.SetParent(transform);
                         floorPosition[i, j] = instance;
                     }
