@@ -128,13 +128,12 @@ public class Player : Unit
         faceArrow.transform.position = (Vector2)((Vector2)transform.position + rotationVector);
 
         //현재 무기의 위치 
-        Vector2 positionOnScreen = (Vector2)Camera.main.WorldToViewportPoint(faceArrow.transform.position);
-
-        ////현재 마우스의 위치 
-        Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(mousePosition);
+        Vector2 positionOnScreen = faceArrow.transform.position;
 
         //// 무기와 마우스의 위치의 각도 
-        float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+        float angle = AngleBetweenTwoPoints(positionOnScreen, mousePosition);
+        angle += 90.0f;
+        Debug.Log(positionOnScreen + " " + mousePosition + " " + angle);
 
         //// 각도만큼 로테이션값 주기 
         faceArrow.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
