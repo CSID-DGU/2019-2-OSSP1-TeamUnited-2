@@ -47,8 +47,17 @@ MonoBehaviour:
   postsmooth: 2
   boundary: {fileID: 4855616639108612217, guid: 76ec0aee80a19aa45b174f48d83945a8,
     type: 3}
-  floor: {fileID: 2179826274794268848, guid: 505bb711daf3c5f4f9b57bc53bc704be, type: 3}
-  wall: {fileID: 3413562459108856723, guid: 7a4e0694cb5079243a3ba39963639af8, type: 3}
+  floor:
+  - {fileID: 2179826274794268848, guid: 8bf174a64243b434ab63f0c9c76161e8, type: 3}
+  - {fileID: 2179826274794268848, guid: a2c7b4d53fa3cf542a41432bf2105d05, type: 3}
+  - {fileID: 2179826274794268848, guid: 13a21362198011344b125ea80dec7912, type: 3}
+  - {fileID: 2179826274794268848, guid: affa43b1ab919bc458e12ee644df4f60, type: 3}
+  - {fileID: 2179826274794268848, guid: 6c30e6c40c449e34bb47fa970b3786a9, type: 3}
+  wall:
+  - {fileID: 3444526259515327240, guid: 1ac36ce5a6fd7f54f9f829b205ed3a22, type: 3}
+  - {fileID: 1653295614333819707, guid: 629fcbc6f0f0058498e9f04d5f6dce20, type: 3}
+  - {fileID: 5908290880633559475, guid: 7888912ab8721ab48ba451ca94971576, type: 3}
+  - {fileID: 9053873612509751624, guid: bc375bf44dcbf2b4d80c165569e25d3b, type: 3}
   mapHeight: 100
   mapWidth: 100
   minRoomSize: 20

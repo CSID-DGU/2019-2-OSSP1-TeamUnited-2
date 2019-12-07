@@ -8,7 +8,7 @@ public class MapManager : MonoBehaviour
     public int postsmooth;
     public GameObject boundary;
     public GameObject[] floor;
-    public GameObject wall;
+    public GameObject[] wall;
     public int mapHeight, mapWidth;
     public int minRoomSize, maxRoomSize;
     public GameObject corridorTile;
@@ -428,7 +428,7 @@ public class MapManager : MonoBehaviour
                 {
                     if (map[x,y] == 1 && boundaryPosition[x, y] == null)
                     {
-                        GameObject toInstantiate = wall;
+                        GameObject toInstantiate = wall[Random.Range(0, wall.Length)];
                         toInstantiate.layer = LayerMask.NameToLayer("Wall");
                         GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
                         instance.transform.SetParent(transform);
