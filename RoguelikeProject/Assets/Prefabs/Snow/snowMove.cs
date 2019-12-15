@@ -23,14 +23,15 @@ public class snowMove : MonoBehaviour
 
         if (transform.position.y > 0)
         {
+            transform.GetChild(0).rotation = Quaternion.Euler(0, 0, Random.Range(0, 360) * Time.deltaTime * 10);
             if (go1 > 0)
             {
-                transform.Translate(direction, flow, 0);
+                transform.Translate(direction * Time.deltaTime * 10, flow * Time.deltaTime * 10, 0);
                 go1--;
             }
             else if (go2 > 0)
             {
-                transform.Translate(-direction, flow, 0);
+                transform.Translate(-direction * Time.deltaTime * 10, flow * Time.deltaTime * 10, 0);
                 go2--;
             }
             else
