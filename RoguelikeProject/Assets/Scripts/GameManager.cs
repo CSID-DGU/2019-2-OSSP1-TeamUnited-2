@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 {
     private GameObject levelImage;
     public GameObject mapManager;
-    public GameObject boss;
+    public GameObject snow;
     [HideInInspector]
     public int[,] map;
     public int width;
@@ -58,6 +58,10 @@ public class GameManager : MonoBehaviour
         tex = new Texture2D(width, height);
         plane.GetComponent<Renderer>().material.mainTexture = tex;
         plane.GetComponent<Renderer>().material.mainTexture.filterMode = FilterMode.Point;
+        for(int i = 0; i < 21; i++)
+        {
+            Instantiate(snow, new Vector3(5*i, 100,-10), Quaternion.identity);
+        }
     }
     void Update()
     {
