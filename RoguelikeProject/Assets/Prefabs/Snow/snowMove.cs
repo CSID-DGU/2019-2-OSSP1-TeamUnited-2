@@ -11,10 +11,10 @@ public class snowMove : MonoBehaviour
     void Start()
     {
         originalTransform = transform.position;
-        go1 = Random.Range(10, 50);
-        go2 = Random.Range(10, 50);
-        direction = Random.Range(-0.5f, 0.5f);
-        flow = Random.Range(-1f, 0f);
+        go1 = Random.Range(10, 30);
+        go2 = Random.Range(10, 30);
+        direction = Random.Range(-0.4f, 0.4f);
+        flow = Random.Range(-0.4f, -0.2f);
     }
 
     // Update is called once per frame
@@ -35,13 +35,13 @@ public class snowMove : MonoBehaviour
             }
             else
             {
-                go1 = Random.Range(10, 50);
-                go2 = Random.Range(10, 50);
+                go1 = Random.Range(10, 30);
+                go2 = Random.Range(10, 30);
             }
         }
         else
         {
-            flow = Random.Range(-1f, 0f);
+            flow = Random.Range(-0.4f, -0.2f);
             transform.position = originalTransform;
         }
     }

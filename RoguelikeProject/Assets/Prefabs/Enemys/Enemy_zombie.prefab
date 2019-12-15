@@ -50,6 +50,8 @@ MonoBehaviour:
   HP: 20
   maxSpeed: 5
   weapon: {fileID: 0}
+  heartPotion: {fileID: 2739193053811911754, guid: e5d93f1d2b2b63e458c4a72702173ba9,
+    type: 3}
   meleeDamage: 1
   force: 2
 --- !u!50 &556268633250779924
