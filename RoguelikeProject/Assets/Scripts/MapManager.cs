@@ -336,7 +336,8 @@ public class MapManager : MonoBehaviour
                         // Debug.LogError("Try to draw tunnel on floor (tunnel should be deployed first)");
                         Destroy(floorPosition[x,y]);
                     }
-                    GameObject instance = Instantiate(corridorTile, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+                    GameObject toInstantiate = floor[Random.Range(0, floor.Length)];
+                    GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
                     instance.transform.SetParent(transform);
                     tunnelPosition[x, y] = instance;
                     floorPosition[x, y]  = instance;

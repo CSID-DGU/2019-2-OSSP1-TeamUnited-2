@@ -78,7 +78,7 @@ public class Player : Unit
     {
         // 주 무기의 인스턴스를 생성하고 부모를 플레이어로 설정.
         mainWeapon = Instantiate(newWeapon);
-        mainWeapon.transform.SetParent(gameObject.transform);
+        mainWeapon.transform.SetParent(GameObject.Find("GameManager").transform);
 
         // 무기의 소유자를 설정해줍니다.
         if (mainWeapon.GetComponent<Wieldable>() == false)
