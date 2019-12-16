@@ -72,7 +72,7 @@ public class Player : Unit
     }
     void nextScene()
     {
-        SceneManager.LoadScene("Main", LoadSceneMode.Single);
+        SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
     }
     public void Wield(GameObject newWeapon)
     {
