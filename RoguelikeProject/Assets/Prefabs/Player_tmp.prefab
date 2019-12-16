@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 9
-  maxSpeed: 20
+  maxSpeed: 25
   mainWeapon: {fileID: 2618062061517797899, guid: fa8ab87752704a24c946612d51e9b787,
     type: 3}
   aimObject: {fileID: 8981572646870425014, guid: 17f353e288df74540b62094d63060ea4,
