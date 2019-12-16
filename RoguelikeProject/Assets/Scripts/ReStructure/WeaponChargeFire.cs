@@ -9,7 +9,6 @@ public class WeaponChargeFire : Wieldable
     public double[] chargeTime;
     protected double chargeWait = 0;
     protected int chargeLevel = 0;
-
     public override void OnPush()
     {
         if (!chargeFire)

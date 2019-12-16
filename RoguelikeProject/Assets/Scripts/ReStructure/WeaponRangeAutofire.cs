@@ -14,18 +14,15 @@ public class WeaponRangeAutofire : Wieldable
     }
     protected void Fire()
     {
-        lock(this)
+        if (cooldownWait <= 0)
         {
-            if (cooldownWait <= 0)
+            if (projectile.Entity == null)
             {
-                if (projectile.Entity == null)
-                {
-                    Debug.LogError("Projectile should be instantiated before use");
-                    return;
-                }
-                FireRangeDirect(projectile.Entity);
-                cooldownWait = cooldown;
+                Debug.LogError("Projectile should be instantiated before use");
+                return;
             }
+            FireRangeDirect(projectile.Entity);
+            cooldownWait = cooldown;
         }
     }
 

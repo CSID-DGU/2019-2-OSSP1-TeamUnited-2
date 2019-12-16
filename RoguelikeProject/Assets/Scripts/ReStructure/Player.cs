@@ -11,6 +11,8 @@ public class Player : Unit
     public GameObject mainWeapon;
     public GameObject faceArrow; // 플레이어가 보는 방향을 그래픽적으로 표현하기 위한 이미지
     public GameObject aimObject;
+    [HideInInspector]
+    public float angle;
 
     new void Start()
     {
@@ -136,8 +138,7 @@ public class Player : Unit
         Vector2 positionOnScreen = faceArrow.transform.position;
 
         //// 무기와 마우스의 위치의 각도 
-        float angle = AngleBetweenTwoPoints(positionOnScreen, mousePosition);
-        angle += 90.0f;
+        angle = AngleBetweenTwoPoints(positionOnScreen, mousePosition) + 90.0f;
         Debug.Log(positionOnScreen + " " + mousePosition + " " + angle);
 
         //// 각도만큼 로테이션값 주기 

@@ -54,16 +54,21 @@ public abstract class Wieldable : MonoBehaviour
         // Vector2 positionOnScreen = owner.transform.position;
 
         //현재 마우스의 위치 
-        Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(owner.transform.position) + rotationVector;
+        // Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(owner.transform.position) + rotationVector;
         // Vector2 mouseOnScreen = (Vector2)owner.transform.position + rotationVector;
+        
+        Vector3 mouseOnScreen = Input.mousePosition;
+        mouseOnScreen = Camera.main.ScreenToWorldPoint(mouseOnScreen);
 
         // 무기와 마우스의 위치의 각도 
-        float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+        // float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
         // Debug.Log("Player Position : " + positionOnScreen +  ", Mouse Position : " + mouseOnScreen + ", Angle : " +  angle);
+        float angle = GameObject.Find("Player").GetComponent<Player>().angle;
 
         // 각도만큼 로테이션값 주기 
-        projectile.GetComponent<ProjectileOnHit>().transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+        projectile.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
         
+
         // 무기의 방향으로 발사합니다. 탄속은 아직 유동옵션은 아닙니다.
         projectile.GetComponent<Rigidbody2D>().AddForce(rotationVector * 1000.0f);
     }
