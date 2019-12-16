@@ -46,7 +46,7 @@ MonoBehaviour:
   rotationVector: {x: 0, y: 0}
   projectile:
     attribute:
-      damage: 1
+      damage: 2
       force: 10
       areaDamage: 0
       areaForce: 0

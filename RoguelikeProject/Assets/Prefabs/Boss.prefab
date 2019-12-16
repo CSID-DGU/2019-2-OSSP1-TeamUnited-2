@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acd7bda684e2dec4780fb21041c8cd1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 10
+  HP: 30
   maxSpeed: 5
   target: {fileID: 0}
   meleeDamage: 2

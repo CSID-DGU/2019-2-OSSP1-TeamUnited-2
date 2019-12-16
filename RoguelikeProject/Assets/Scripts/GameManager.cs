@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerEntity;
     public GameObject miniGold; // 미니맵에 보여줄 코인
     private int enemyNum; // 적들의 수.
+    private int tick; // 흐른 시간 
 
     public int EnemyNum
     {
@@ -83,56 +84,61 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        bool[,] lit = new bool[width, height]; // 크기
-        float radius = 10.0f; // 반지름
-        int layerMask = 1 << 10; // 적은 안보게 함.
-        layerMask = ~layerMask; // 반전시켜서 이것만 걸러내는거
-        Collider2D[] mcols = Physics2D.OverlapCircleAll(playerEntity.transform.position, radius, layerMask); // 원안에 조사
-        List<Vector2> mcolsVector = new List<Vector2>();
-        foreach (Collider2D co in mcols) // 좌표만 가져옴(int로 캐스팅해서)
+        ++tick;
+        if (tick % 2 == 0)
         {
-            mcolsVector.Add(new Vector2((int)co.transform.position.x, (int)co.transform.position.y));
-        }
-        foreach (Vector2 mVec in mcolsVector) // 좌표를 이용해서 시야처리
-        {
-            Vector2 rayDirection = mVec - (Vector2)playerEntity.transform.position; // 방향
-            rayDirection.Normalize();
-            float distance = Vector2.Distance(playerEntity.transform.position, mVec); // 거리
-            RaycastHit2D[] cols = Physics2D.RaycastAll(playerEntity.transform.position, rayDirection, distance, layerMask); // 직선상에 있는것
-            int repeat = 0; bool setRepeat = false; // 벽을 어느정도 보여주기 위함.
-            foreach (RaycastHit2D co in cols)
+            bool[,] lit = new bool[width, height]; // 크기
+            float radius = 10.0f; // 반지름
+            int layerMask = 1 << 10; // 적은 안보게 함.
+            layerMask = ~layerMask; // 반전시켜서 이것만 걸러내는거
+            Collider2D[] mcols = Physics2D.OverlapCircleAll(playerEntity.transform.position, radius, layerMask); // 원안에 조사
+            List<Vector2> mcolsVector = new List<Vector2>();
+            foreach (Collider2D co in mcols) // 좌표만 가져옴(int로 캐스팅해서)
             {
-                Collider2D[] colliderCount = Physics2D.OverlapPointAll(co.transform.position); // collider를 타일에 달았기 때문에 Wall 이 있는곳에 2개가 나옴.
-
-                if (setRepeat) // 한번 벽이 나오면 true 가 되어서 repeat을 증가시킴.
-                {
-                    repeat++;
-                    if (repeat > 1 || colliderCount.Length < 2) // 벽이 2줄이거나 타일이 나와버리면 그만둔다.
-                        break;
-                }
-                int x = (int)co.transform.position.x;
-                int y = (int)co.transform.position.y;
-                if (mapManager.GetComponent<MapManager>().wallPosition[x, y] || mapManager.GetComponent<MapManager>().boundaryPosition[x, y])
-                {
-                    setRepeat = true;
-                }
-                if (indexSafe((int)co.transform.position.x, (int)co.transform.position.y)) // 배열에 넣음. point를 쓰지말고 transform position 이 딱 맞는다.
-                    lit[(int)co.transform.position.x, (int)co.transform.position.y] = true;
+                mcolsVector.Add(new Vector2((int)co.transform.position.x, (int)co.transform.position.y));
             }
-        }
-        Color colorFloor = new Color(0f, 0f, 0f, 0f);
-
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
+            foreach (Vector2 mVec in mcolsVector) // 좌표를 이용해서 시야처리
             {
-                if (lit[x, y])
-                    tex.SetPixel(x, y, colorFloor);
-                else
-                    tex.SetPixel(x, y, new Color(0f, 0f, 0f, 0.25f));
+                Vector2 rayDirection = mVec - (Vector2)playerEntity.transform.position; // 방향
+                rayDirection.Normalize();
+                float distance = Vector2.Distance(playerEntity.transform.position, mVec); // 거리
+                RaycastHit2D[] cols = Physics2D.RaycastAll(playerEntity.transform.position, rayDirection, distance, layerMask); // 직선상에 있는것
+                int repeat = 0; bool setRepeat = false; // 벽을 어느정도 보여주기 위함.
+                foreach (RaycastHit2D co in cols)
+                {
+                    Collider2D[] colliderCount = Physics2D.OverlapPointAll(co.transform.position); // collider를 타일에 달았기 때문에 Wall 이 있는곳에 2개가 나옴.
+
+                    if (setRepeat) // 한번 벽이 나오면 true 가 되어서 repeat을 증가시킴.
+                    {
+                        repeat++;
+                        if (repeat > 1 || colliderCount.Length < 2) // 벽이 2줄이거나 타일이 나와버리면 그만둔다.
+                            break;
+                    }
+                    int x = (int)co.transform.position.x;
+                    int y = (int)co.transform.position.y;
+                    if (mapManager.GetComponent<MapManager>().wallPosition[x, y] || mapManager.GetComponent<MapManager>().boundaryPosition[x, y])
+                    {
+                        setRepeat = true;
+                    }
+                    if (indexSafe((int)co.transform.position.x, (int)co.transform.position.y)) // 배열에 넣음. point를 쓰지말고 transform position 이 딱 맞는다.
+                        lit[(int)co.transform.position.x, (int)co.transform.position.y] = true;
+                }
             }
+            Color colorFloor = new Color(0f, 0f, 0f, 0f);
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    if (lit[x, y])
+                        tex.SetPixel(x, y, colorFloor);
+                    else
+                        tex.SetPixel(x, y, new Color(0f, 0f, 0f, 0.25f));
+                }
+            }
+            tex.Apply(false);
         }
-        tex.Apply(false);
+
     }
     bool indexSafe(int x, int y)
     {
