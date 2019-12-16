@@ -43,7 +43,7 @@ public abstract class Wieldable : MonoBehaviour
         
         // 피아식별 등의 처리를 위해 공격주체(owner)와 부모를 설정해줍니다.
         projectile.GetComponent<ProjectileOnHit>().Attacker = owner;
-        projectile.transform.SetParent(owner.transform);
+        projectile.transform.SetParent(GameObject.Find("GameManager").transform);
 
         // 투사체는 반드시 공격자의 정보를 담고 있어야 합니다.
         // Debug.Log("Projectile fired, Attacker: " + projectile.GetComponent<ProjectileOnHit>().Attacker.GetInstanceID());

@@ -118,6 +118,7 @@ public class Player : Unit
 
         aimObject.transform.position = mousePosition;
         aimObject.transform.Translate(0, 0, 10f);
+        aimObject.transform.SetParent(GameObject.Find("GameManager").transform);
         Vector2 mouseDirection = (Vector2)(mousePosition - transform.position);
         mouseDirection.Normalize();
 
@@ -138,7 +139,7 @@ public class Player : Unit
         // Debug.Log(positionOnScreen + " " + mousePosition + " " + angle);
 
         //// 각도만큼 로테이션값 주기 
-        transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+        transform.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
 
 
 

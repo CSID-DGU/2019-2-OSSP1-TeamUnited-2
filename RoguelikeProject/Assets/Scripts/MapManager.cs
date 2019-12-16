@@ -96,7 +96,9 @@ public class MapManager : MonoBehaviour
 
     public void SpawnObjectsInDungeon(SubDungeon dungeon)
     {
+        // 방의 종류
         RoomType roomType = dungeon.roomType;
+
         // 확정 수량 enemy 소환
         foreach (EnemyType enemy in roomType.enemies)
         {
@@ -229,6 +231,31 @@ public class MapManager : MonoBehaviour
         else
         {
             return true;
+        }
+    }
+
+    public void RelocateUnitInRoom(SubDungeon dungeon, GameObject target)
+    {
+        bool deployed = false;
+        int trial = 0;
+        while (!deployed)
+        {
+            int x = (int)(dungeon.room.x + Random.Range(0.0f, dungeon.room.width));
+            int y = (int)(dungeon.room.y + Random.Range(0.0f, dungeon.room.height));
+            Vector2 toDeployOn = new Vector2(x, y);
+            if (IsSafeToDeploy(x, y))
+            {
+                target.transform.position = new Vector3(x, y, -10);
+                Debug.Log("Player deployed on : " + x + ", " + y);
+                deployed = true;
+            }
+
+            ++trial;
+            if (trial > 100)
+            {
+                Debug.LogError("Got trouble in deploying object...");
+                break;
+            }
         }
     }
 
@@ -377,6 +404,7 @@ public class MapManager : MonoBehaviour
     public void SetRoomTypeForSubDungeons()
     {
         subDungeonList[0].roomType = GetRoomtypeFromPool(RoomCategory.home);
+        RelocateUnitInRoom(subDungeonList[0], GameObject.Find("Player"));
         subDungeonList[subDungeonList.Count - 1].roomType = GetRoomtypeFromPool(RoomCategory.boss);
 
         foreach (SubDungeon dungeon in subDungeonList)

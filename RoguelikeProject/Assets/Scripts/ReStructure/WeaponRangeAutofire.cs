@@ -12,7 +12,7 @@ public class WeaponRangeAutofire : Wieldable
         Debug.Log("Range Autofire Initialize");
         ProjectileInstantiation(projectile);
     }
-    protected void Fire()
+    protected void TryFire()
     {
         if (cooldownWait <= 0)
         {
@@ -28,16 +28,13 @@ public class WeaponRangeAutofire : Wieldable
 
     public override void OnPush()
     {
-        if (!autoFire)
-        {
-            Fire();
-        }
+        TryFire();
     }
     public override void OnHold()
     {
         if (autoFire)
         {
-            Fire();
+            TryFire();
         }
     }
     public override void OnRelease() {}

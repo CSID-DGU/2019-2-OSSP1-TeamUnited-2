@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Boss : Unit
 {
     public GameObject target;
+    private GameObject player;
     public int meleeDamage;
     public double force;
 

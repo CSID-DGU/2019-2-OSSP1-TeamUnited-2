@@ -6,6 +6,7 @@ public class Enemy : Unit
 {
     public Wieldable weapon;
     protected GameObject target;
+    protected GameObject player;
     public GameObject heartPotion;
     public int meleeDamage;
     public double force;
@@ -41,16 +42,30 @@ public class Enemy : Unit
     }
     void FindPlayer()
     {
-        if (target == null)
+        player = GameObject.Find("Player");
+
+        float distance = Vector2.Distance(player.transform.position, transform.position);
+        if (distance < 15.0f)
         {
-            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 15.0f);
-            foreach (Collider2D col in cols)
-            {
-                if (col.gameObject.GetComponent<Player>())
-                {
-                    target = col.gameObject;
-                }
-            }
+            Debug.Log("Tracking" + distance);
+            target = player;
         }
+        else
+        {
+            Debug.Log("idle");
+            target = null;
+        }
+
+        // if (target == null)
+        // {
+        //     Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 15.0f);
+        //     foreach (Collider2D col in cols)
+        //     {
+        //         if (col.gameObject.GetComponent<Player>())
+        //         {
+        //             target = col.gameObject;
+        //         }
+        //     }
+        // }
     }
 }
