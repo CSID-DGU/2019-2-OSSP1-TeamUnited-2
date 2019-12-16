@@ -6,13 +6,14 @@ public class Enemy : Unit
 {
     public Wieldable weapon;
     protected GameObject target;
+    public GameObject heartPotion;
     public int meleeDamage;
     public double force;
 
     protected override void Start()
     {
         currentHP = HP;
-        
+
         // 애니메이터가 있다면 설정해줍니다.
         if (GetComponent<Animator>())
             animator = GetComponent<Animator>();
@@ -25,11 +26,12 @@ public class Enemy : Unit
         if (target)
         {
             Vector2 direction = target.transform.position - transform.position;
-           Move(direction);
+            Move(direction);
         }
     }
     protected override void SelfDestruction()
     {
+        Instantiate(heartPotion, transform.position, Quaternion.identity);
         Destroy(gameObject);
         Debug.Log(GameObject.Find("GameManager").GetComponent<GameManager>().EnemyNum);
         if (--GameObject.Find("GameManager").GetComponent<GameManager>().EnemyNum == 0)
