@@ -47,12 +47,12 @@ public class Enemy : Unit
         float distance = Vector2.Distance(player.transform.position, transform.position);
         if (distance < 15.0f)
         {
-            Debug.Log("Tracking" + distance);
+            // Debug.Log("Tracking" + distance);
             target = player;
         }
         else
         {
-            Debug.Log("idle");
+            // Debug.Log("idle");
             target = null;
         }
 

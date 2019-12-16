@@ -71,12 +71,22 @@ MonoBehaviour:
     maxEnemyCost: 0
     enemies: []
     maxItemCost: 0
-    items: []
+    items:
+    - type: {fileID: 8212254249458757666, guid: 7184e221c4610334b8c5861645974092,
+        type: 3}
+      cost: 0
+      weight: 0
+      guaranteedAmount: 1
   - type: 1
     guaranteedAmount: 1
     weight: 0
     maxEnemyCost: 0
-    enemies: []
+    enemies:
+    - type: {fileID: 4447526705949448730, guid: 1ea6ed409a25df044b13e88bfd18cc2c,
+        type: 3}
+      cost: 0
+      weight: 0
+      guaranteedAmount: 1
     maxItemCost: 0
     items: []
   - type: 2

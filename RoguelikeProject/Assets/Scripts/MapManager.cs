@@ -102,15 +102,15 @@ public class MapManager : MonoBehaviour
         // 확정 수량 enemy 소환
         foreach (EnemyType enemy in roomType.enemies)
         {
-            Debug.Log("spawning enemys..");
+            // Debug.Log("spawning enemys..");
             if (enemy.guaranteedAmount > 0)
             {
-                Debug.Log("spawning guaranteed amount..");
+                // Debug.Log("spawning guaranteed amount..");
                 for (int i = 0; i < enemy.guaranteedAmount; ++i)
                 {
-                    Debug.Log("random throw..");
+                    // Debug.Log("random throw..");
                     RandomThrowObjectInRoom(dungeon, enemy.type);
-                    Debug.Log("random throw complete");
+                    // Debug.Log("random throw complete");
                 }
             }
         }
@@ -152,17 +152,21 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        // // 확정 수량 item 소환
-        // foreach (EnemyType item in roomType.items)
-        // {
-        //     if (enemy.guaranteedAmount > 0)
-        //     {
-        //         foreach (int i in enemy.guaranteedAmount)
-        //         {
-        //             RandomThrowObjectInRoom(enemy.type);
-        //         }
-        //     }
-        // }
+        // 확정 수량 item 소환
+        foreach (ItemType item in roomType.items)
+        {
+            // Debug.Log("spawning items..");
+            if (item.guaranteedAmount > 0)
+            {
+                // Debug.Log("spawning guaranteed amount item..");
+                for (int i = 0; i < item.guaranteedAmount; ++i)
+                {
+                    // Debug.Log("random throw..");
+                    RandomThrowObjectInRoom(dungeon, item.type);
+                    // Debug.Log("random throw complete");
+                }
+            }
+        }
 
 
         // // item 랜덤 소환 시작

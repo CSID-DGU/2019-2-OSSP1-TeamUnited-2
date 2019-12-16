@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 3142883737157497834}
   - component: {fileID: 3142883737157497835}
   m_Layer: 11
-  m_Name: block
+  m_Name: MinimapImg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
