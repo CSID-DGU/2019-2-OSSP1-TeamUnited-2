@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private GameObject levelImage;
     public GameObject mapManager;
     public GameObject snow;
+    public GameObject minimap;
     [HideInInspector]
     public int[,] map;
     public int width;
@@ -54,10 +55,27 @@ public class GameManager : MonoBehaviour
         width = mapManager.GetComponent<MapManager>().mapWidth;
         height = mapManager.GetComponent<MapManager>().mapHeight;
 
+
         // 시야 처리 관련
         tex = new Texture2D(width, height);
         plane.GetComponent<Renderer>().material.mainTexture = tex;
         plane.GetComponent<Renderer>().material.mainTexture.filterMode = FilterMode.Point;
+
+        minimap.GetComponent<Camera>().orthographicSize = (width + height) / 4 +2;
+        minimap.transform.position = new Vector3(width / 2f, height / 2f, -10);
+        plane.transform.position = new Vector3(width / 2f - 0.5f, height / 2f - 0.5f, -5);
+
+        plane.transform.localScale = new Vector3(width / 10f, 1, height / 10f);
+        Debug.Log(height);
+        Debug.Log(height);
+        Debug.Log(height);
+        Debug.Log(height);
+        Debug.Log(height);
+        Debug.Log(height);
+        Debug.Log(height);
+        Debug.Log(height);
+        Debug.Log(height);
+        Debug.Log(height);
         for (int i = 0; i < 21; i++)
         {
             Instantiate(snow, new Vector3(5 * i, 100, -10), Quaternion.identity);
