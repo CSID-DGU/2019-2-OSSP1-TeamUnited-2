@@ -99,9 +99,9 @@ public class Player : Unit
         {
             invincible -= Time.deltaTime;
             if (invincible % 0.5 > 0.25)
-                transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 90);
+                transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 90);
             else
-                transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 255);
+                transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 255);
         }
 
         // 방향키를 입력받아 이동을 처리하기 위해 Move 메서드를 호출합니다.

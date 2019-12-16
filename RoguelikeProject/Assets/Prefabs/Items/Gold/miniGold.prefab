@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6533023988314258036}
   - component: {fileID: 1865220241212691701}
-  m_Layer: 4
+  m_Layer: 11
   m_Name: miniGold
   m_TagString: Untagged
   m_Icon: {fileID: 0}

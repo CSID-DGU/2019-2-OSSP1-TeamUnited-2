@@ -53,4 +53,13 @@ public class ItemBox : Unit
         Instantiate(bombItem, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
+
+    public override int GetDamage(int damage)
+    {
+        if (GameObject.Find("Player").GetComponent<Player>().CoinScore >= 5)
+        {
+            base.GetDamage(damage);
+        }
+        return 0;
+    }
 }
