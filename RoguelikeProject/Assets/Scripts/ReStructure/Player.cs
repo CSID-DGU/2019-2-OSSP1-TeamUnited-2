@@ -9,7 +9,6 @@ public class Player : Unit
     protected double invincible; // 단위는 초 입니다. (Time.deltaTime 사용)
     // public GameObject weapon1;
     public GameObject mainWeapon;
-    public GameObject faceArrow; // 플레이어가 보는 방향을 그래픽적으로 표현하기 위한 이미지
     public GameObject aimObject;
     [HideInInspector]
     public float angle;
@@ -22,10 +21,7 @@ public class Player : Unit
         invincible = 5.0;
         currentHP = 5;
 
-        // 플레이어의 방향을 알려주기 위한 화살표 인스턴스를 생성하고, 부모를 플레이어로 설정해줍니다.
-        faceArrow = Instantiate(faceArrow, (Vector2)transform.position, Quaternion.identity) as GameObject;
-        faceArrow.transform.SetParent(gameObject.transform);
-        aimObject = Instantiate(aimObject, (Vector2)transform.position, Quaternion.identity) as GameObject;
+        aimObject = Instantiate(aimObject, (Vector2)transform.position, Quaternion.identity, transform);
 
         // 무기 인스턴스 생성
         Wield(mainWeapon);
@@ -103,9 +99,9 @@ public class Player : Unit
         {
             invincible -= Time.deltaTime;
             if (invincible % 0.5 > 0.25)
-                GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 90);
+                transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 90);
             else
-                GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 255);
+                transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 255);
         }
 
         // 방향키를 입력받아 이동을 처리하기 위해 Move 메서드를 호출합니다.
@@ -132,17 +128,17 @@ public class Player : Unit
         // transform.rotation = Quaternion.Euler(10,10,10);
 
         // 플레이어가 보는 방향을 그래픽적으로 표현
-        faceArrow.transform.position = (Vector2)((Vector2)transform.position + rotationVector);
+        //transform.GetChild(0).transform.position = (Vector2)((Vector2)transform.position + rotationVector);
 
         //현재 무기의 위치 
-        Vector2 positionOnScreen = faceArrow.transform.position;
+        Vector2 positionOnScreen = transform.GetChild(0).transform.position;
 
         //// 무기와 마우스의 위치의 각도 
         angle = AngleBetweenTwoPoints(positionOnScreen, mousePosition) + 90.0f;
-        Debug.Log(positionOnScreen + " " + mousePosition + " " + angle);
+        // Debug.Log(positionOnScreen + " " + mousePosition + " " + angle);
 
         //// 각도만큼 로테이션값 주기 
-        faceArrow.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+        transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
 
 
 
