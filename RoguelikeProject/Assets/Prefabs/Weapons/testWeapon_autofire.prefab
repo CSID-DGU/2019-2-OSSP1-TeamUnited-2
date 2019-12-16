@@ -47,7 +47,7 @@ MonoBehaviour:
   projectile:
     attribute:
       damage: 2
-      force: 10
+      force: 2
       areaDamage: 0
       areaForce: 0
       areaRadius: 0

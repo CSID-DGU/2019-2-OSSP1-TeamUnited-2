@@ -80,13 +80,22 @@ MonoBehaviour:
   - type: 1
     guaranteedAmount: 1
     weight: 0
-    maxEnemyCost: 0
+    maxEnemyCost: 100
     enemies:
     - type: {fileID: 4447526705949448730, guid: 1ea6ed409a25df044b13e88bfd18cc2c,
         type: 3}
       cost: 0
       weight: 0
       guaranteedAmount: 1
+    - type: {fileID: 8323095841562486181, guid: 9afddcd272423534281f9c0a59bfec26,
+        type: 3}
+      cost: 10
+      weight: 10
+      guaranteedAmount: 0
+    - type: {fileID: 556268633250779931, guid: d712c028523cdd348aeffffafe7a8681, type: 3}
+      cost: 10
+      weight: 2
+      guaranteedAmount: 5
     maxItemCost: 0
     items: []
   - type: 2

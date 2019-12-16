@@ -30,7 +30,7 @@ public class Boss : Unit
     protected override void SelfDestruction()
     {
         Destroy(gameObject);
-        //SceneManager.LoadScene("GameClear", LoadSceneMode.Single);
+        SceneManager.LoadScene("GameClear", LoadSceneMode.Single);
     }
     void OnCollisionStay2D(Collision2D coll)
     {
