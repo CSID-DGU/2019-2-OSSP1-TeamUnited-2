@@ -33,9 +33,6 @@ public class Enemy : Unit
     {
         Instantiate(heartPotion, transform.position, Quaternion.identity);
         Destroy(gameObject);
-        Debug.Log(GameObject.Find("GameManager").GetComponent<GameManager>().EnemyNum);
-        if (--GameObject.Find("GameManager").GetComponent<GameManager>().EnemyNum == 0)
-            GameObject.Find("backGround").GetComponent<BackGround>().nextStage();
     }
     void OnCollisionStay2D(Collision2D coll)
     {

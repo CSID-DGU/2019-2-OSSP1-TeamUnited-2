@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8409368400207089965}
   - component: {fileID: 60645222887143390}
   m_Layer: 0
-  m_Name: bomb
+  m_Name: item_bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 8888749923460764423, guid: f2dd0039b17932a4780c0647389a016b, type: 3}
+  weaponImage: {fileID: 2800000, guid: 4431157a7f2973844abd7415c32e8731, type: 3}
 --- !u!212 &8409368400207089965
 SpriteRenderer:
   m_ObjectHideFlags: 0

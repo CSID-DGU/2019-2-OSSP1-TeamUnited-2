@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Boss : Unit
 {
@@ -25,6 +26,7 @@ public class Boss : Unit
     protected override void SelfDestruction()
     {
         Destroy(gameObject);
+        //SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }
     void OnCollisionStay2D(Collision2D coll)
     {
